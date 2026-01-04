@@ -3,13 +3,13 @@
   --color-brand: #2f16ff;
 
   /* Primary Blue Scale */
-  --color-primary: #0c0073;          /* Deep Blue */
-  --color-primary-light: #a4adff;    /* Light Blue */
-  --color-primary-lighter: #edefff;  /* Light blue 2 */
+  --color-primary: #0c0073; /* Deep Blue */
+  --color-primary-light: #a4adff; /* Light Blue */
+  --color-primary-lighter: #edefff; /* Light blue 2 */
 
   /* Neutral / Text */
-  --color-black: #222222;             /* main text */
-  --color-black-2: #333333;           /* sub text */
+  --color-black: #222222; /* main text */
+  --color-black-2: #333333; /* sub text */
   --color-white: #ffffff;
 
   /* Gray Scale */
