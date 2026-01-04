@@ -1,0 +1,41 @@
+:root {
+  /* Font Family */
+  --font-title: "Samsung Sharp Sans", "Inter", system-ui, sans-serif;
+  --font-body: "Pretendard", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Font Weight  */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Heading */
+  --text-heading-1-size: 24px;
+  --text-heading-1-weight: var(--font-weight-medium);
+
+  --text-heading-1-regular-size: 24px;
+  --text-heading-1-regular-weight: var(--font-weight-regular);
+
+  --text-heading-4-size: 24px;
+  --text-heading-4-weight: var(--font-weight-regular);
+
+  /* Body */
+  --text-body-1-size: 22px;
+  --text-body-1-weight: var(--font-weight-bold);
+
+  --text-body-2-size: 20px;
+  --text-body-2-weight: var(--font-weight-regular);
+
+  --text-body-3-size: 18px;
+  --text-body-3-weight: var(--font-weight-bold);
+
+  --text-body-4-size: 16px;
+  --text-body-4-weight: var(--font-weight-regular);
+
+  /* Detail */
+  --text-detail-1-size: 14px;
+  --text-detail-1-weight: var(--font-weight-regular);
+
+  --text-detail-2-size: 12px;
+  --text-detail-2-weight: var(--font-weight-regular);
+}

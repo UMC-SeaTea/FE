@@ -1,0 +1,24 @@
+:root {
+  /* Brand */
+  --color-brand: #2f16ff;
+
+  /* Primary Blue Scale */
+  --color-primary: #0c0073; /* Deep Blue */
+  --color-primary-light: #a4adff; /* Light Blue */
+  --color-primary-lighter: #edefff; /* Light blue 2 */
+
+  /* Neutral / Text */
+  --color-black: #222222; /* main text */
+  --color-black-2: #333333; /* sub text */
+  --color-white: #ffffff;
+
+  /* Gray Scale */
+  --color-gray-100: #77767e; /* gray scale 1 */
+  --color-gray-200: #909096; /* gray scale 2 */
+  --color-gray-300: #bbbac2; /* gray scale 3 */
+  --color-gray-400: #dedede; /* gray scale 4 */
+  --color-gray-500: #f6f6f6; /* gray scale 5 */
+
+  /* Layout */
+  --color-footer: #0a0a0a;
+}
