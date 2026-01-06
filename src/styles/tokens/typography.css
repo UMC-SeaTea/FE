@@ -1,41 +1,69 @@
 :root {
-  /* Font Family */
+  /* =========================
+     Font Family
+  ========================= */
   --font-title: "Samsung Sharp Sans", "Inter", system-ui, sans-serif;
   --font-body: "Pretendard", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  /* Font Weight  */
+  /* =========================
+     Font Weight
+  ========================= */
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Heading */
-  --text-heading-1-size: 24px;
-  --text-heading-1-weight: var(--font-weight-medium);
+  /* =========================
+     Samsung Sharp Sans (Title)
+  ========================= */
+  --text-title-1-size: 42px;
+  --text-title-1-weight: var(--font-weight-bold);
 
-  --text-heading-1-regular-size: 24px;
-  --text-heading-1-regular-weight: var(--font-weight-regular);
+  --text-logo-title-size: 40px;
+  --text-logo-title-weight: var(--font-weight-medium);
 
-  --text-heading-4-size: 24px;
-  --text-heading-4-weight: var(--font-weight-regular);
+  --text-title-2-size: 28px;
+  --text-title-2-weight: var(--font-weight-medium);
 
-  /* Body */
-  --text-body-1-size: 22px;
-  --text-body-1-weight: var(--font-weight-bold);
+  --text-title-3-size: 24px;
+  --text-title-3-weight: var(--font-weight-medium);
 
-  --text-body-2-size: 20px;
-  --text-body-2-weight: var(--font-weight-regular);
+  --text-title-4-size: 22px;
+  --text-title-4-weight: var(--font-weight-regular);
 
-  --text-body-3-size: 18px;
-  --text-body-3-weight: var(--font-weight-bold);
+  /* =========================
+     Pretendard (Body)
+  ========================= */
+  --text-body-title-size: 18px;
+  --text-body-title-weight: var(--font-weight-semibold);
 
-  --text-body-4-size: 16px;
-  --text-body-4-weight: var(--font-weight-regular);
+  --text-body-1-size: 16px;
+  --text-body-1-weight: var(--font-weight-semibold);
 
-  /* Detail */
-  --text-detail-1-size: 14px;
-  --text-detail-1-weight: var(--font-weight-regular);
+  --text-body-2-size: 16px;
+  --text-body-2-weight: var(--font-weight-medium);
 
-  --text-detail-2-size: 12px;
+  --text-body-3-size: 14px;
+  --text-body-3-weight: var(--font-weight-semibold);
+
+  --text-body-4-size: 14px;
+  --text-body-4-weight: var(--font-weight-medium);
+
+  --text-body-5-size: 14px;
+  --text-body-5-weight: var(--font-weight-regular);
+
+  /* =========================
+     Detail
+  ========================= */
+  --text-detail-1-size: 13px;
+  --text-detail-1-weight: var(--font-weight-medium);
+
+  --text-detail-2-size: 13px;
   --text-detail-2-weight: var(--font-weight-regular);
+
+  --text-detail-3-size: 12px;
+  --text-detail-3-weight: var(--font-weight-medium);
+
+  --text-detail-4-size: 12px;
+  --text-detail-4-weight: var(--font-weight-regular);
 }
