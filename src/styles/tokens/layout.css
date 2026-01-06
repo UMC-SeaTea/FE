@@ -1,4 +1,4 @@
-:root {
-  --layout-margin: 20px;   /* screen side padding */
-  --layout-gutter: 10px;   /* gap between items */
+@theme {
+  --layout-margin: 20px; /* screen side padding */
+  --layout-gutter: 10px; /* gap between items */
 }

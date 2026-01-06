@@ -1,31 +1,31 @@
-:root {
+@theme {
   /* Brand Identity */
-  --color-brand: #2f16ff;        /* Brand Identity Colors */
+  --color-brand: #2f16ff; /* Brand Identity Colors */
 
   /* Main Blue Scale */
-  --color-deep-blue: #0c0073;    /* Deep Blue */
-  --color-main-blue: #2f16ff;    /* Main Blue */
-  --color-light-blue: #a4adff;   /* Light Blue */
+  --color-deep-blue: #0c0073; /* Deep Blue */
+  --color-main-blue: #2f16ff; /* Main Blue */
+  --color-light-blue: #a4adff; /* Light Blue */
   --color-light-blue-2: #edefff; /* Light Blue 2 */
 
   /* Neutral / Text */
-  --color-black: #222222;        /* Black */
-  --color-black-2: #333333;      /* Black 2 */
-  --color-white: #ffffff;        /* White */
+  --color-black: #222222; /* Black */
+  --color-black-2: #333333; /* Black 2 */
+  --color-white: #ffffff; /* White */
 
   /* Gray Scale */
-  --color-gray-100: #77767e;     /* Gray Scale 1 */
-  --color-gray-200: #909096;     /* Gray Scale 2 */
-  --color-gray-300: #bbbac2;     /* Gray Scale 3 */
-  --color-gray-400: #dedede;     /* Gray Scale 4 */
-  --color-gray-500: #f6f6f6;     /* Gray Scale 5 */
+  --color-gray-100: #77767e; /* Gray Scale 1 */
+  --color-gray-200: #909096; /* Gray Scale 2 */
+  --color-gray-300: #bbbac2; /* Gray Scale 3 */
+  --color-gray-400: #dedede; /* Gray Scale 4 */
+  --color-gray-500: #f6f6f6; /* Gray Scale 5 */
 
   /* Layout */
-  --color-footer: #0a0a0a;       /* Footer */
+  --color-footer: #0a0a0a; /* Footer */
 
   /* Cool green Variation (for card color) */
-  --color-card-purple: #a89eff;  /* puple */
-  --color-card-pink: #c898ff;    /* pink */
-  --color-card-blue: #78c2ff;    /* blue */
-  --color-card-green: #6dedd4;   /* green */
+  --color-card-purple: #a89eff; /* puple */
+  --color-card-pink: #c898ff; /* pink */
+  --color-card-blue: #78c2ff; /* blue */
+  --color-card-green: #6dedd4; /* green */
 }
