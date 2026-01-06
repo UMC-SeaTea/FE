@@ -37,7 +37,6 @@ export default {
         title: 'var(--font-title)',
         body: 'var(--font-body)',
       },
-
       borderRadius: {
         sm: 'var(--radius-sm)',
         md: 'var(--radius-md)',
