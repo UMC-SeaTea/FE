@@ -1,10 +1,10 @@
 import './App.css';
-import SideBarTest from './components/common/SideBarTest';
+import SpaceCardMini from './components/common/SpaceCardMini';
 
 function App() {
   return (
     <>
-      <SideBarTest />
+      <SpaceCardMini />
     </>
   );
 }
