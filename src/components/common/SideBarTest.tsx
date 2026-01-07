@@ -1,4 +1,4 @@
-import teatImg from '../../assets/tea.svg';
+import teatImg from '../../assets/images/tea.png';
 import ButtonMedium from './Button/ButtonMedium';
 
 const SideBarTest = () => {
