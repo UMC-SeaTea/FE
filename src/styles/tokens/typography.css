@@ -68,3 +68,13 @@
   --text-detail-4: 12px;
   --text-detail-4--font-weight: var(--font-weight-regular);
 }
+
+@layer utilities {
+  .font-title {
+    font-family: var(--font-title);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+}
