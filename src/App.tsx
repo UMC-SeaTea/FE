@@ -1,7 +1,12 @@
 import './App.css';
+import TastingNote from './components/common/TastingNote';
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <TastingNote />
+    </>
+  );
 }
 
 export default App;
