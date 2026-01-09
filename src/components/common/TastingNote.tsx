@@ -6,7 +6,7 @@ const TastingNote = () => {
           {/* 위 텍스트 */}
           <div className="flex flex-col justify-between gap-[12px] w-full">
             <p className="font-body text-body-1">테이스팅 노트란?</p>
-            <p className="font-body text-body-5 text-black-2 leading-[1.4] tracking-[-0.28px]">
+            <p className="font-body text-body-5 text-black-2">
               티 테이스팅 노트는 차에 실제로 첨가된 재료가 아닌, 차의 맛과 향을
               감각적으로 표현하는 용어입니다.
               <br />
