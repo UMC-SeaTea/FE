@@ -1,18 +1,17 @@
-import { useState } from 'react';
 type SideBarProps = {
   text: string;
+  isActive: boolean;
+  onClick?: () => void;
 };
 import moveButton from '../../assets/moveButton.svg';
 
-const SideBar = ({ text }: SideBarProps) => {
-  const [isActive, setIsActive] = useState(false);
-
+const SideBarComponent = ({ text, isActive, onClick }: SideBarProps) => {
   return (
     <>
       <div
         className={`w-[335px] h-[64px] bg-white py-[16px] pl-[16px] cursor-pointer
         ${isActive ? 'flex gap-[6px]' : ''}`}
-        onClick={() => setIsActive(!isActive)}
+        onClick={onClick}
       >
         <p
           className={`font-body text-[22px]
@@ -26,4 +25,4 @@ const SideBar = ({ text }: SideBarProps) => {
   );
 };
 
-export default SideBar;
+export default SideBarComponent;
