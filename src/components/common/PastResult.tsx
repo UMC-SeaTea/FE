@@ -1,12 +1,12 @@
 
-import bgFloral from '../assets/images/pastResultBgImages/bgFloral.jpg';
-import bgNutty from '../assets/images/pastResultBgImages/bgNutty.jpg';
-import bgSweet from '../assets/images/pastResultBgImages/bgSweet.jpg';
-import bgSpices from '../assets/images/pastResultBgImages/bgSpices.jpg';
-import bgSmoky from '../assets/images/pastResultBgImages/bgSmoky.jpg';
-import bgFruity from '../assets/images/pastResultBgImages/bgFruity.jpg';
-import bgOceanic from '../assets/images/pastResultBgImages/bgOceanic.jpg';
-import bgEarthy from '../assets/images/pastResultBgImages/bgEarthy.jpg';
+import bgFloral from '../../assets/images/pastResultBgImages/bgFloral.jpg';
+import bgNutty from '../../assets/images/pastResultBgImages/bgNutty.jpg';
+import bgSweet from '../../assets/images/pastResultBgImages/bgSweet.jpg';
+import bgSpices from '../../assets/images/pastResultBgImages/bgSpices.jpg';
+import bgSmoky from '../../assets/images/pastResultBgImages/bgSmoky.jpg';
+import bgFruity from '../../assets/images/pastResultBgImages/bgFruity.jpg';
+import bgOceanic from '../../assets/images/pastResultBgImages/bgOceanic.jpg';
+import bgEarthy from '../../assets/images/pastResultBgImages/bgEarthy.jpg';
 
 const bgImageMap: Record<string, string> = {
   Floral: bgFloral,

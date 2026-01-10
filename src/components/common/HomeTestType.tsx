@@ -1,12 +1,12 @@
-import Floral from '../assets/images/tastingNoteTypeImages/floral.png';
-import Nutty from '../assets/images/tastingNoteTypeImages/nutty.png';
-import Sweet from '../assets/images/tastingNoteTypeImages/sweet.png';
-import Spices from '../assets/images/tastingNoteTypeImages/spices.png';
-import Smoky from '../assets/images/tastingNoteTypeImages/smoky.png';
-import Fruity from '../assets/images/tastingNoteTypeImages/fruity.png';
-import Oceanic from '../assets/images/tastingNoteTypeImages/oceanic.png';
-import Earthy from '../assets/images/tastingNoteTypeImages/earthy.png';
-import moveButton from "../assets/homeTestTypeMoveButton.svg";
+import Floral from '../../assets/images/tastingNoteTypeImages/floral.png';
+import Nutty from '../../assets/images/tastingNoteTypeImages/nutty.png';
+import Sweet from '../../assets/images/tastingNoteTypeImages/sweet.png';
+import Spices from '../../assets/images/tastingNoteTypeImages/spices.png';
+import Smoky from '../../assets/images/tastingNoteTypeImages/smoky.png';
+import Fruity from '../../assets/images/tastingNoteTypeImages/fruity.png';
+import Oceanic from '../../assets/images/tastingNoteTypeImages/oceanic.png';
+import Earthy from '../../assets/images/tastingNoteTypeImages/earthy.png';
+import moveButton from "../../assets/homeTestTypeMoveButton.svg";
 
 
 const typeConfig: Record<string, { 
