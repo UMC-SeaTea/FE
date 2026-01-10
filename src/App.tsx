@@ -1,12 +1,9 @@
+import { RouterProvider } from 'react-router-dom';
 import './App.css';
-import ErrorPage from './pages/ErrorPage';
+import router from './routes';
 
 function App() {
-  return (
-    <>
-      <ErrorPage />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
