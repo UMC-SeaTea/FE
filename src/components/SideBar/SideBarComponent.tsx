@@ -1,25 +1,29 @@
 type SideBarProps = {
   text: string;
-  isActive: boolean;
-  onClick?: () => void;
+  onClick?(): void;
 };
 import moveButton from '../../assets/moveButton.svg';
 
-const SideBarComponent = ({ text, isActive, onClick }: SideBarProps) => {
+const SideBarComponent = ({ text, onClick }: SideBarProps) => {
   return (
     <>
       <div
-        className={`w-[335px] h-[64px] bg-white py-[16px] pl-[16px] cursor-pointer
-        ${isActive ? 'flex gap-[6px]' : ''}`}
+        className="group flex w-[335px] h-[64px] bg-white py-[16px] pl-[16px] cursor-pointer
+        group-hover:gap-[6px]"
         onClick={onClick}
       >
         <p
-          className={`font-body text-[22px]
-            ${isActive ? 'text-brand font-semibold' : 'text-black font-medium'}`}
+          className="font-body text-[22px] text-black font-medium
+            group-hover:text-brand 
+              group-hover:font-semibold"
         >
           {text}
         </p>
-        {isActive && <img src={moveButton} alt="MoveButton" />}
+        <img
+          src={moveButton}
+          alt="MoveButton"
+          className="opacity-0 group-hover:opacity-100 transition-opacity"
+        />
       </div>
     </>
   );
