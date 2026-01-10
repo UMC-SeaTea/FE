@@ -1,12 +1,10 @@
 import './App.css';
-import SideBar from './components/SideBar/SideBar';
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
   return (
     <>
-      <div className="bg-gray-200 min-h-screen">
-        <SideBar />
-      </div>
+      <ErrorPage />
     </>
   );
 }
