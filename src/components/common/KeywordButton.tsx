@@ -13,17 +13,16 @@ const KeywordButton = ({ text, onClick }: Props) => {
         h-[35px]
         px-[12px] py-[8px]
         rounded-[100px]
-        bg-[var(--color-gray-500)]
+        bg-gray-500
       "
     >
       <span
         className="
-          font-[var(--font-body)]
-          text-[14px]
-          font-medium
+          font-body
+          text-body-4
           leading-[140%]
           tracking-[-0.025em]
-          text-[var(--color-gray-100)]
+          text-gray-100
         "
       >
         {text}

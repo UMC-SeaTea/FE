@@ -14,8 +14,8 @@ const RefreshButton = ({ onClick, ariaLabel = "새로고침" }: Props) => {
       className="
         w-[28px] h-[28px]
         rounded-[100px]
-        border border-[var(--color-gray-400)]
-        bg-[var(--color-white)]
+        border border-gray-400
+        bg-white
         p-[7px]
         inline-flex items-center justify-center
       "

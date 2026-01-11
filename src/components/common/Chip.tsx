@@ -39,12 +39,12 @@ const Chip = ({
   className = "",
 }: Props) => {
   const base =
-    "inline-flex items-center justify-center h-[32px] px-[20px] py-[6px] rounded-[4px]";
+    "inline-flex items-center justify-center h-[32px] px-[20px] py-[6px] rounded-sm";
 
   const container =
     variant === "filled"
-      ? "bg-[var(--color-black)]"
-      : "bg-[var(--color-white)] border border-[var(--color-black)]";
+      ? "bg-black"
+      : "bg-white border border-black";
 
   return (
     <button
@@ -53,7 +53,7 @@ const Chip = ({
       className={`${base} ${container} ${className}`}
     >
       <span
-        className={`font-[var(--font-body)] text-[14px] font-medium ${TEXT_COLOR_CLASS[textColor]}`}
+        className={`font-body text-detail-1 ${TEXT_COLOR_CLASS[textColor]}`}
       >
         {label}
       </span>

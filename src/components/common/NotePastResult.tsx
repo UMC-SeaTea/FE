@@ -9,17 +9,17 @@ const NotePastResult = ({ text }: Props) => {
         inline-flex items-center
         h-[28px]
         px-[12px] py-[4px]
-        border border-[var(--color-white)]
-        bg-[var(--color-gray-20)]
+        border border-white
+        bg-gray-200
       "
     >
       <span
         className="
-          font-[var(--font-body)]
+          font-body
           text-[16px]
           font-regular
           leading-[140%]
-          text-[var(--color-white)]
+          text-white
         "
       >
         {text}

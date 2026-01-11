@@ -13,20 +13,13 @@ const FeedbackGoodButton = ({ label, onClick }: Props) => {
       className="
         w-[134px] h-[42px] px-[16px] py-[10px]
         rounded-[100px] border
-        border-[var(--color-brand)]
-        bg-[var(--color-light-blue-2)]
+        border-brand
+        bg-light-blue-2
         flex items-center justify-center gap-[10px]
       "
     >
-      <img src={good} alt="" className="w-[16px] h-[16px]" />
-      <span
-        className="
-          font-[var(--font-body)]
-          text-[14px]
-          font-medium
-          text-[var(--color-main-blue)]
-        "
-      >
+      <img src={good} alt="" className="w-[20px] h-[20px]" />
+      <span className="font-body text-body-4 text-main-blue">
         {label}
       </span>
     </button>
