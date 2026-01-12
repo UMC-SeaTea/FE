@@ -2,6 +2,7 @@ import NavBar from '../components/common/NavBar';
 import menu from '../assets/menu_black.svg';
 import HomeTestType from '../components/common/HomeTestType';
 import SpaceCardMini from '../components/common/SpaceCardMini';
+import SideBarTest from '../components/common/SideBarTest';
 
 const HomePage = () => {
   return (
@@ -27,6 +28,8 @@ const HomePage = () => {
             </p>
             <SpaceCardMini />
           </div>
+          {/* 지금, 어떤 휴식이 필요하신가요? */}
+          <SideBarTest />
         </div>
       </div>
     </>
