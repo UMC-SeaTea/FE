@@ -2,6 +2,7 @@ import MainLayout from '../layouts/MainLayout';
 import ErrorPage from '../pages/ErrorPage';
 import HomePage from '../pages/HomePage';
 import MapPage from '../pages/Map/MapPage';
+import SpaceRecommend from '../pages/SpaceRecommend';
 
 export const publicRoutes = [
   {
@@ -13,6 +14,7 @@ export const publicRoutes = [
       { path: '/explore', element: <></> },
       { path: '/mypage', element: <></> },
       { path: '/diagnosis', element: <></> },
+      { path: '/recommend', element: <SpaceRecommend /> },
     ],
   },
 ];
