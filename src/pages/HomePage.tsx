@@ -4,8 +4,11 @@ import HomeTestType from '../components/common/HomeTestType';
 import SpaceCardMini from '../components/common/SpaceCardMini';
 import SideBarTest from '../components/common/SideBarTest';
 import Carousel from '../components/common/Carousel';
+import { useState } from 'react';
+import SideBarContainer from '../components/SideBar/SideBarContainer';
 
 const HomePage = () => {
+  const [navOpen, setNavOpen] = useState(false);
   return (
     <>
       <div className="flex flex-col gap-[42px]">
@@ -14,8 +17,10 @@ const HomePage = () => {
             variant="2"
             text="SeaTea"
             icon={menu}
-            className="border-b border-[#000]"
+            className="border-b border-[#000] relative z-[60]"
+            onClick={() => setNavOpen((prev) => !prev)}
           />
+          <SideBarContainer open={navOpen} onClose={() => setNavOpen(false)} />
           <HomeTestType
             type="sweet"
             title="sweet."
