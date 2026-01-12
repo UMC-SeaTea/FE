@@ -4,10 +4,11 @@ import HomeTestType from '../components/common/HomeTestType';
 import tea from '../assets/images/teaIcon.png';
 import refresh from '../assets/refresh.svg';
 import PlaceList from '../components/common/PlaceList';
-import FeedbackGoodButton from '../components/common/Feedback/FeedbackGoodButton';
-import FeedbackBadButton from '../components/common/Feedback/FeedbackBadutton';
+import { useState } from 'react';
+import FeedbackButton from '../components/common/Feedback/FeedbackButton';
 
 const SpaceRecommend = () => {
+  const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
   return (
     <>
       <div className="flex flex-col gap-[42px]">
@@ -57,8 +58,18 @@ const SpaceRecommend = () => {
             </div>
             {/* 정확/정확X 버튼 */}
             <div className="flex gap-[8px]">
-              <FeedbackGoodButton label="정확해요" />
-              <FeedbackBadButton label="정확하지 않아요" />
+              <FeedbackButton
+                type="good"
+                label="정확해요"
+                isSelected={feedback === 'good'}
+                onClick={() => setFeedback('good')}
+              />
+              <FeedbackButton
+                type="bad"
+                label="정확하지 않아요"
+                isSelected={feedback === 'bad'}
+                onClick={() => setFeedback('bad')}
+              />
             </div>
           </div>
         </div>
