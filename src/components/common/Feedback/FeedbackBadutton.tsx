@@ -1,4 +1,4 @@
-import bad from "../../assets/bad.svg";
+import bad from '../../../assets/bad.svg';
 
 type Props = {
   label: string;
@@ -15,11 +15,11 @@ const FeedbackBadButton = ({ label, onClick }: Props) => {
         rounded-[100px] border
         border-gray-500
         bg-white
-        flex items-center justify-center gap-[10px]
+        flex items-center justify-center gap-[2px]
       "
     >
       <img src={bad} alt="" className="w-[20px] h-[20px]" />
-      <span className="font-body text-body-4 text-gray-300">
+      <span className="font-body text-body-4 text-gray-300 whitespace-nowrap">
         {label}
       </span>
     </button>
