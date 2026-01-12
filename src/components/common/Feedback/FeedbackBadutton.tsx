@@ -15,7 +15,7 @@ const FeedbackBadButton = ({ label, onClick }: Props) => {
         rounded-[100px] border
         border-gray-500
         bg-white
-        flex items-center justify-center gap-[2px]
+        flex items-center justify-center gap-[2px] cursor-pointer
       "
     >
       <img src={bad} alt="" className="w-[20px] h-[20px]" />

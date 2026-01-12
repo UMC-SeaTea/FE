@@ -76,18 +76,41 @@ const typeConfig: Record<
   },
 };
 
+type Variant = 'home' | 'recommend';
+
 interface HomeTestTypeProps {
   type: string;
   title: string;
   description: string;
+  variant?: Variant;
 }
 
-const HomeTestType = ({ type, title, description }: HomeTestTypeProps) => {
+// variant에 따른 스타일
+const variantStyle: Record<Variant, { wrapper: string; content: string }> = {
+  home: {
+    wrapper: 'h-[446px] pt-[80px]',
+    content: 'gap-[42px]',
+  },
+  recommend: {
+    wrapper: 'h-[222px] pt-[44px]',
+    content: 'gap-[36px]',
+  },
+};
+
+const HomeTestType = ({
+  type,
+  title,
+  description,
+  variant = 'home',
+}: HomeTestTypeProps) => {
   const typeKey = type.toLowerCase();
   const config = typeConfig[typeKey] || typeConfig['floral'];
+  const v = variantStyle[variant];
 
   return (
-    <div className="relative w-[375px] h-[446px] bg-white border-b border-black flex flex-col items-center pt-[50px] overflow-hidden shrink-0">
+    <div
+      className={`relative w-[375px] ${v.wrapper} bg-white border-b border-black flex flex-col items-center overflow-hidden shrink-0`}
+    >
       <img
         src={config.img}
         alt={type}
@@ -101,20 +124,30 @@ const HomeTestType = ({ type, title, description }: HomeTestTypeProps) => {
         }}
       />
 
-      <div className="relative z-10 flex flex-col w-[334px] gap-[42px]">
+      <div className={`relative z-10 flex flex-col w-[334px] ${v.content}`}>
         <div className="flex flex-col w-[334px] gap-[42px] items-start">
           <div className="flex justify-between items-start self-stretch">
             <div className="flex flex-col w-[180.9px] items-start gap-0 ml-1">
-              <p className="self-stretch text-body-5 font-body text-black leading-none">
-                나의 테이스팅 노트
-              </p>
+              {/* 나의 테이스팅 노트 텍스트 */}
+              {variant === 'home' && (
+                <p className="self-stretch text-body-5 font-body text-black leading-none">
+                  나의 테이스팅 노트
+                </p>
+              )}
               <p className="self-stretch text-title-1 font-title text-black leading-none">
                 {title}
               </p>
             </div>
-            <div className="flex w-8 h-8 justify-center items-center mt-1">
-              <img src={moveButton} alt="moveButton" className="w-[10px] h-5" />
-            </div>
+            {/* moveButton */}
+            {variant === 'home' && (
+              <div className="flex w-8 h-8 justify-center items-center mt-1">
+                <img
+                  src={moveButton}
+                  alt="moveButton"
+                  className="w-[10px] h-5"
+                />
+              </div>
+            )}
           </div>
         </div>
 

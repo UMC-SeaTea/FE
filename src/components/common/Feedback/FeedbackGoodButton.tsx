@@ -15,7 +15,7 @@ const FeedbackGoodButton = ({ label, onClick }: Props) => {
         rounded-[100px] border
         border-brand
         bg-light-blue-2
-        flex items-center justify-center gap-[2px]
+        flex items-center justify-center gap-[2px] cursor-pointer
       "
     >
       <img src={good} alt="" className="w-[20px] h-[20px]" />

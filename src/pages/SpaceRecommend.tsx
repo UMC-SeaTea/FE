@@ -11,12 +11,15 @@ const SpaceRecommend = () => {
   return (
     <>
       <div className="flex flex-col gap-[42px]">
-        <NavBar variant="4" text="공간 추천" icon={backIcon} />
-        <HomeTestType
-          type="smoky"
-          title="smoky"
-          description="고요하고 차분한 분위기에서 방해받지 않고, 온전히 혼자만의 시간을 즐겨요"
-        />
+        <div>
+          <NavBar variant="4" text="공간 추천" icon={backIcon} />
+          <HomeTestType
+            type="smoky"
+            title="smoky."
+            description="고요하고 차분한 분위기에서 방해받지 않고, 온전히 혼자만의 시간을 즐겨요"
+            variant="recommend"
+          />
+        </div>
         <div className="flex flex-col gap-[19px] pl-[20px]">
           {/* 텍스트 + refresh아이콘 */}
           <div className="w-[335px] flex items-center justify-between">
