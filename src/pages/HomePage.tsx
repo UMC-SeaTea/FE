@@ -3,6 +3,7 @@ import menu from '../assets/menu_black.svg';
 import HomeTestType from '../components/common/HomeTestType';
 import SpaceCardMini from '../components/common/SpaceCardMini';
 import SideBarTest from '../components/common/SideBarTest';
+import Carousel from '../components/common/Carousel';
 
 const HomePage = () => {
   return (
@@ -26,7 +27,12 @@ const HomePage = () => {
             <p className="text-black font-body text-body-title">
               최근 확인한 공간
             </p>
-            <SpaceCardMini />
+            <Carousel>
+              <SpaceCardMini />
+              <SpaceCardMini />
+              <SpaceCardMini />
+              <SpaceCardMini />
+            </Carousel>
           </div>
           {/* 지금, 어떤 휴식이 필요하신가요? */}
           <SideBarTest />
