@@ -121,7 +121,7 @@
 
 8. **Pull**  
    - merge 완료 후 `develop` 브랜치로 이동하여  
-     `git pull develop`으로 최신 상태를 유짛바니다.
+     `git pull develop`으로 최신 상태를 유지합니다.
    - 이후 `npm install`을 실행하여 최신 라이브러리를 설치합니다.
 
 9. **브랜치 정리**
