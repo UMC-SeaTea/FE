@@ -6,6 +6,8 @@ import SampleImg from '../../assets/images/exampleSpace.png';
 import placeIcon from '../../assets/place_gray.svg';
 import timeIcon from '../../assets/timeIcon.svg';
 import phoneIcon from '../../assets/phoneIcon.svg';
+import shareButton from '../../assets/RoundButton/share_btn.svg';
+// import teaBag from '../../assets/teaBag.svg';
 
 const MapDetailPage = () => {
   //   const { sid } = useParams<{ sid: string }>();
@@ -15,9 +17,15 @@ const MapDetailPage = () => {
       <NavBar variant="3" icon={backIcon} />
       <div className="px-[20px]">
         <div className="flex flex-col gap-[12px] pt-[42px] pb-[23px]">
-          <p className="text-black font-body text-[20px] font-semibold">
-            국립현대미술관 서울
-          </p>
+          <div className="flex items-start justify-between">
+            <p className="text-black font-body text-[20px] font-semibold">
+              국립현대미술관 서울
+            </p>
+            {/* 유저토큰 있는 경우에만 */}
+            {/* (accessToken && (
+            <img src={teaBag} alt="tea bag" className="w-[28px] h-[28px]" />
+            )) */}
+          </div>
           <NoteSearch text="Floral" />
         </div>
         {/* 이미지 */}
@@ -94,6 +102,11 @@ const MapDetailPage = () => {
             </div>
           </div>
         </div>
+        <img
+          src={shareButton}
+          alt="share button"
+          className="fixed bottom-[58px] right-[20px] w-[52px] h-[52px] z-50 cursor-pointer"
+        />
       </div>
     </>
   );
