@@ -11,6 +11,16 @@ import shareButton from '../../assets/RoundButton/share_btn.svg';
 
 const MapDetailPage = () => {
   //   const { sid } = useParams<{ sid: string }>();
+  const handleShare = async () => {
+    try {
+      await navigator.share({
+        title: '국립현대미술관 서울',
+        url: window.location.href,
+      });
+    } catch (error) {
+      console.error('링크 공유 실패', error);
+    }
+  };
 
   return (
     <>
@@ -102,11 +112,12 @@ const MapDetailPage = () => {
             </div>
           </div>
         </div>
-        <img
-          src={shareButton}
-          alt="share button"
+        <button
+          onClick={handleShare}
           className="fixed bottom-[58px] right-[20px] w-[52px] h-[52px] z-50 cursor-pointer"
-        />
+        >
+          <img src={shareButton} alt="share button" className="" />
+        </button>
       </div>
     </>
   );
