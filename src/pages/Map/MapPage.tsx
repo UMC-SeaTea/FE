@@ -8,11 +8,13 @@ const MapPage = () => {
     <>
       <NavBar variant="5" text="지도" icon={menuIcon} />
 
-      <div className="px-[20px] pt-[30px]">
-        <SearchBarDefault />
-      </div>
+      <div className="relative w-full">
+        <div className="absolute top-[20px] left-1/2 -translate-x-1/2 z-10 w-full px-[20px]">
+          <SearchBarDefault />
+        </div>
 
-      <Map />
+        <Map />
+      </div>
     </>
   );
 };

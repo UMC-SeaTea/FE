@@ -3,7 +3,7 @@ import searchIcon from '../../assets/search_searchBar.svg';
 const SearchBarDefault = () => {
   return (
     <>
-      <div className="w-[335px] h-[48px] rounded-full border-1 border-black px-[20px] py-[12px]">
+      <div className="w-[335px] h-[48px] rounded-full border-1 border-black px-[20px] py-[12px] bg-white">
         <div className="flex items-center justify-between">
           <input
             type="text"
