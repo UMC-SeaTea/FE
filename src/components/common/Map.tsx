@@ -65,7 +65,7 @@ const Map = ({ center }: Propse) => {
     markerRef.current.setPosition(nextCenter);
   }, [center]);
 
-  return <div id="map" className="w-[375px] h-[714px]" />;
+  return <div id="map" className="w-[375px] h-[770px]" />;
 };
 
 export default Map;
