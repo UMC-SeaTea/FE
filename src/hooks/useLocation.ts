@@ -32,7 +32,7 @@ const useLocation = () => {
         });
         setLoading(false);
       },
-      (error) => {
+      (_error) => {
         setLocation(DEFAULT_LOCATION);
         setError('위치 정보를 가져오는 데 실패했습니다.');
         setLoading(false);

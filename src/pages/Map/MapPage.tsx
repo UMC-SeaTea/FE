@@ -121,6 +121,7 @@ const MapPage = () => {
           >
             <img src={GPSIcon} alt="GPS icon" className="w-[62px] h-[62px]" />
           </button>
+          {error && <p>{error}</p>}
         </div>
         <Map center={location} />
       </div>
