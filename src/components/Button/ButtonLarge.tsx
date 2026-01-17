@@ -1,4 +1,4 @@
-import type { ButtonProps } from '../../../types/button';
+import type { ButtonProps } from '../../types/button';
 
 const ButtonLarge = ({ text }: ButtonProps) => {
   return (
