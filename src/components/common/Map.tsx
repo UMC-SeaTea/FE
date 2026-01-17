@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { DEFAULT_LOCATION } from '../../hooks/useLocation';
 
 declare global {
@@ -7,20 +7,40 @@ declare global {
   }
 }
 
-const Map = () => {
+type Propse = {
+  center?: {
+    lat: number;
+    lng: number;
+  } | null;
+};
+
+const Map = ({ center }: Propse) => {
+  const mapRef = useRef<any>(null);
+  const markerRef = useRef<any>(null);
+
   useEffect(() => {
     const initMap = () => {
       const mapElement = document.getElementById('map');
+      if (!mapElement) return;
+
+      if (mapRef.current) return;
+
+      const initialCenter = new window.naver.maps.LatLng(
+        DEFAULT_LOCATION.lat,
+        DEFAULT_LOCATION.lng
+      );
 
       const mapOptions = {
-        center: new window.naver.maps.LatLng(
-          DEFAULT_LOCATION.lat,
-          DEFAULT_LOCATION.lng
-        ),
+        center: initialCenter,
         zoom: 14,
       };
 
-      new window.naver.maps.Map(mapElement, mapOptions);
+      mapRef.current = new window.naver.maps.Map(mapElement, mapOptions);
+
+      markerRef.current = new window.naver.maps.Marker({
+        position: initialCenter,
+        map: mapRef.current,
+      });
     };
 
     const mapScript = document.createElement('script');
@@ -36,6 +56,14 @@ const Map = () => {
 
     document.head.appendChild(mapScript);
   }, []);
+
+  useEffect(() => {
+    if (!center || !mapRef.current || !markerRef.current) return;
+
+    const nextCenter = new window.naver.maps.LatLng(center.lat, center.lng);
+    mapRef.current.setCenter(nextCenter);
+    markerRef.current.setPosition(nextCenter);
+  }, [center]);
 
   return <div id="map" className="w-[375px] h-[714px]" />;
 };
