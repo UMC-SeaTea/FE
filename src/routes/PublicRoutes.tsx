@@ -1,6 +1,7 @@
 import MainLayout from '../layouts/MainLayout';
 import ErrorPage from '../pages/ErrorPage';
 import HomePage from '../pages/HomePage';
+import MapDetailPage from '../pages/Map/MapDetailPage';
 import MapPage from '../pages/Map/MapPage';
 
 export const publicRoutes = [
@@ -10,6 +11,7 @@ export const publicRoutes = [
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/map', element: <MapPage /> },
+      { path: '/map/:sid', element: <MapDetailPage /> },
       { path: '/explore', element: <></> },
       { path: '/mypage', element: <></> },
       { path: '/diagnosis', element: <></> },
