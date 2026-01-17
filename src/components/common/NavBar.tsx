@@ -7,6 +7,7 @@ type ButtonProps = {
   text?: string;
   icon: string;
   className?: string;
+  onClick?: () => void;
 };
 
 const VARIANT_STYLE: Record<
@@ -48,7 +49,7 @@ const VARIANT_STYLE: Record<
   },
 };
 
-const NavBar = ({ variant, text, icon, className }: ButtonProps) => {
+const NavBar = ({ variant, text, icon, className, onClick }: ButtonProps) => {
   const styles = VARIANT_STYLE[variant || '1'];
 
   return (
@@ -61,6 +62,7 @@ const NavBar = ({ variant, text, icon, className }: ButtonProps) => {
             src={icon}
             alt={text}
             className={`cursor-pointer ${styles.icon}`}
+            onClick={onClick}
           />
           <p className={`${styles.text}`}>{text}</p>
           {variant === '2' && <div className="w-[171px]" />}
