@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { DEFAULT_LOCATION } from '../../hooks/useLocation';
 
 declare global {
   interface Window {
@@ -12,7 +13,10 @@ const Map = () => {
       const mapElement = document.getElementById('map');
 
       const mapOptions = {
-        center: new window.naver.maps.LatLng(37.5665, 126.978),
+        center: new window.naver.maps.LatLng(
+          DEFAULT_LOCATION.lat,
+          DEFAULT_LOCATION.lng
+        ),
         zoom: 14,
       };
 

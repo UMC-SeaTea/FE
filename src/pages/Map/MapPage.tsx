@@ -4,10 +4,19 @@ import SearchBarDefault from '../../components/SearchBar/SearchBarDefault';
 import Map from '../../components/common/Map';
 import Chip from '../../components/common/Chip';
 import Carousel from '../../components/common/Carousel';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import GPSIcon from '../../assets/RoundButton/gps_btn.svg';
+import useLocation from '../../hooks/useLocation';
 
 const MapPage = () => {
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
+
+  const { location, setCurrentLocation, loading, error } = useLocation();
+
+  useEffect(() => {
+    if (!location) return;
+    console.log('현재 위치:', location.lat, location.lng);
+  }, [location]);
 
   return (
     <>
@@ -103,6 +112,15 @@ const MapPage = () => {
               />
             </Carousel>
           </div>
+          {/* GPS 아이콘 */}
+          <button
+            type="button"
+            onClick={setCurrentLocation}
+            className="absolute top-[584px] bottom-[68px] right-[20px] cursor-pointer"
+            disabled={loading}
+          >
+            <img src={GPSIcon} alt="GPS icon" className="w-[62px] h-[62px]" />
+          </button>
         </div>
         <Map />
       </div>
