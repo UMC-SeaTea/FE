@@ -1,9 +1,20 @@
+import { useNavigate } from 'react-router-dom';
 import exampleImage from '../../assets/images/exampleSpace.png';
+// 추후 props로 변경 필요
+// type SpaceCardMiniProps = {
+//   name: string;
+//   roadAddress: string;
+//   img?: string;
+// };
 
 const SpaceCardMini = () => {
+  const navigate = useNavigate();
   return (
     <>
-      <div className="relative w-[120px] h-[120px] overflow-hidden">
+      <div
+        className="relative w-[120px] h-[120px] overflow-hidden cursor-pointer"
+        onClick={() => navigate('/map/1')}
+      >
         {/* 추후 이미지 API 연동 필요 */}
         <img
           src={exampleImage}

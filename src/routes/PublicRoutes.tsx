@@ -18,9 +18,9 @@ export const publicRoutes = [
       { path: '/explore', element: <></> },
       { path: '/mypage', element: <></> },
       { path: '/diagnosis', element: <></> },
+      { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element : <LoginPage/>},
       { path: '/loginstart', element: <LoginStartPage/>},
-      { path: '/recommend', element: <SpaceRecommend /> },
     ],
   },
 ];
