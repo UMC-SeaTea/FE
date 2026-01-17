@@ -40,7 +40,6 @@ const HomePage = () => {
               <SpaceCardMini />
             </Carousel>
           </div>
-          {/* 지금, 어떤 휴식이 필요하신가요? */}
           <HomeComponent />
           <SideBarTest />
         </div>
