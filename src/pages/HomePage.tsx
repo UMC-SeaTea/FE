@@ -6,6 +6,7 @@ import SideBarTest from '../components/common/SideBarTest';
 import Carousel from '../components/common/Carousel';
 import { useState } from 'react';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
+import HomeComponent from '../components/common/HomeComponent';
 
 const HomePage = () => {
   const [navOpen, setNavOpen] = useState(false);
@@ -40,6 +41,7 @@ const HomePage = () => {
             </Carousel>
           </div>
           {/* 지금, 어떤 휴식이 필요하신가요? */}
+          <HomeComponent />
           <SideBarTest />
         </div>
       </div>
