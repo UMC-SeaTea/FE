@@ -2,6 +2,7 @@ import MainLayout from '../layouts/MainLayout';
 import ErrorPage from '../pages/ErrorPage';
 import HomePage from '../pages/HomePage';
 import MapPage from '../pages/Map/MapPage';
+import DiagnosisStart from '../pages/Diagnosis/DiagnosisStart';
 
 export const publicRoutes = [
   {
@@ -12,7 +13,8 @@ export const publicRoutes = [
       { path: '/map', element: <MapPage /> },
       { path: '/explore', element: <></> },
       { path: '/mypage', element: <></> },
-      { path: '/diagnosis', element: <></> },
+      { path: '/diagnosis', element: <DiagnosisStart /> },
     ],
   },
 ];
+
