@@ -13,8 +13,8 @@ const MapPage = () => {
     <>
       <NavBar variant="5" text="지도" icon={menuIcon} />
 
-      <div className="relative w-full">
-        <div className="absolute top-[20px] left-1/2 -translate-x-1/2 z-10 w-full pl-[20px]">
+      <div className="relative w-[375px]">
+        <div className="absolute top-[30px] left-1/2 -translate-x-1/2 z-10 w-[375px] pl-[20px]">
           <div className="flex flex-col gap-[12px]">
             <SearchBarDefault />
             <Carousel>

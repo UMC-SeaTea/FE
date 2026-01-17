@@ -4,7 +4,7 @@ import useDebounce from '../../hooks/useDebounce';
 
 const SearchBarDefault = () => {
   const [search, setSearch] = useState('');
-  const deBouncedValue = useDebounce(search, 3000);
+  const deBouncedValue = useDebounce(search, 300);
 
   useEffect(() => {
     if (!deBouncedValue.trim()) return;

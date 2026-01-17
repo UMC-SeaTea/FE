@@ -33,7 +33,7 @@ const Map = () => {
     document.head.appendChild(mapScript);
   }, []);
 
-  return <div id="map" className="w-[375px] h-[714px] mt-[16px]" />;
+  return <div id="map" className="w-[375px] h-[714px]" />;
 };
 
 export default Map;
