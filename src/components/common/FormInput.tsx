@@ -1,0 +1,57 @@
+import { useState } from 'react';
+import passwordOnButton from "../../assets/passwordOnButton.svg"; 
+import passwordOffButton from "../../assets/passwordOffButton.svg";
+
+interface FormInputProps {
+  label: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  type?: string; 
+  isPassword?: boolean; 
+}
+
+const FormInput = ({
+  label,
+  value,
+  onChange,
+  placeholder = "",
+  type = "text",
+  isPassword = false,
+}: FormInputProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+  
+
+  const inputType = isPassword ? (showPassword ? "text" : "password") : type;
+
+  return (
+    <div className="items-start self-stretch flex flex-col gap-[8px] w-full">
+      <div className="text-footer font-body text-body-2">{label}</div>
+      <div className="flex items-center w-full h-[50px] gap-2.5 px-[17px] rounded-[25px] border border-gray-200 bg-white shadow-[0_0_9.9px_0_rgba(141,141,141,0.24)]">
+        <input
+          type={inputType}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          className="w-full bg-transparent outline-none font-body text-body-5 text-black-2 placeholder:text-gray-200 tracking-wider"
+        />
+
+        {isPassword && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="w-[30px] h-[30px] flex justify-center items-center shrink-0"
+          >
+            <img
+              src={showPassword ? passwordOnButton : passwordOffButton}
+              alt="toggle visibility"
+              className="w-[24px] h-[42px] object-contain"
+            />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default FormInput;
