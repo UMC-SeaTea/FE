@@ -30,7 +30,7 @@ return (
       
       <div className="items-start self-stretch flex flex-col gap-[8px] w-full">
         <div className="text-footer font-body text-body-2 ">이메일</div>
-        <div className="flex items-center w-full h-[50px] gap-2.5 px-[17px] rounded-[25px] border border-gray-200 bg-white ">
+        <div className="flex items-center w-full h-[50px] gap-2.5 px-[17px] rounded-[25px] border border-gray-200 bg-white shadow-[0_0_9.9px_0_rgba(141,141,141,0.24)]">
           <input type="email" value={emailAdress} onChange={(e) => setEmailAdress(e.target.value)} placeholder="example@gmail.com"
           className="w-full bg-transparent outline-none font-body text-body-5 text-black-2 placeholder:text-gray-200"/>
         </div>
@@ -38,7 +38,7 @@ return (
 
       <div className="items-start self-stretch flex flex-col gap-[8px] w-full">
         <div className="text-footer font-body text-body-2 ">비밀번호</div>
-        <div className="flex items-center w-full h-[50px] gap-2.5 px-[17px] rounded-[25px] border border-gray-200 bg-white ">
+        <div className="flex items-center w-full h-[50px] gap-2.5 px-[17px] rounded-[25px] border border-gray-200 bg-white shadow-[0_0_9.9px_0_rgba(141,141,141,0.24)] ">
           <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder=''
           className="
           w-full bg-transparent outline-none font-body tracking-wider text-body-5 text-black-2"/>
