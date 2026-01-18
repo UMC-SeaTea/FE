@@ -1,6 +1,9 @@
+// src/pages/Diagnosis/DiagnosisLoading.tsx
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { diagnosisWaves, type WaveLayer } from "./diagnosisWaveLayers";
+import LoadingRing from "../../components/Diagnosis/LoadingRing";
+import WaveLayerImg from "../../components/Diagnosis/WaveLayerImg";
+import { diagnosisWaves, type WaveLayer } from "../../components/Diagnosis/DiagnosisWaveLayers";
 
 type PhaseText = {
   subtitle: string;
@@ -26,7 +29,7 @@ const LOADER_COLORS = [
 ];
 
 export default function DiagnosisLoading({
-  durationMs = 5000, 
+  durationMs = 5000,
   nextPath = "/diagnosis/question/1",
   onEnter,
   waves = diagnosisWaves,
@@ -54,8 +57,8 @@ export default function DiagnosisLoading({
   useEffect(() => {
     onEnter?.();
 
-    const TOTAL = durationMs; // 
-    const HALF = Math.floor(TOTAL / 2); 
+    const TOTAL = durationMs;
+    const HALF = Math.floor(TOTAL / 2);
 
     const mid = window.setTimeout(() => setPhase(1), HALF);
     const done = window.setTimeout(() => {
@@ -123,14 +126,14 @@ export default function DiagnosisLoading({
             <LoadingRing sizePx={54} colors={LOADER_COLORS} />
           </div>
 
-          
           <div className="mt-[36px] min-h-[96px] relative w-full flex justify-center">
             <p
               key={`body-${phase}`}
               className="
                 absolute inset-0
-                font-body text-body-5 text-deep-blue leading-[140%] tracking-[-0.02em] whitespace-pre-line text-center mx-auto"
-              
+                font-body text-body-5 text-deep-blue leading-[140%] tracking-[-0.02em]
+                whitespace-pre-line text-center mx-auto
+              "
               style={{
                 maxWidth: 260,
                 animation: "fade-up-in 280ms ease-out both",
@@ -143,7 +146,6 @@ export default function DiagnosisLoading({
 
         <div className="flex-1" />
       </main>
-
 
       <div
         aria-hidden
@@ -160,109 +162,6 @@ export default function DiagnosisLoading({
         {waves.map((w, idx) => (
           <WaveLayerImg key={idx} {...w} />
         ))}
-      </div>
-    </div>
-  );
-}
-
-function LoadingRing({
-  sizePx = 54,
-  colors,
-}: {
-  sizePx?: number;
-  colors: string[];
-}) {
-  const dots = Array.from({ length: 8 });
-
-  return (
-    <div
-      role="status"
-      aria-label="진단을 준비 중입니다"
-      className="relative reduce-motion:no-anim"
-      style={{
-        width: sizePx,
-        height: sizePx,
-        animation: "ring-spin 1.1s linear infinite",
-      }}
-    >
-      {dots.map((_, i) => {
-        const angle = (360 / dots.length) * i;
-        const color = colors[i] ?? "#0C0073";
-
-        return (
-          <span
-            key={i}
-            className="absolute left-1/2 top-1/2 block rounded-full"
-            style={{
-              width: 6,
-              height: 6,
-              marginLeft: -3,
-              marginTop: -3,
-              background: color,
-              transform: `rotate(${angle}deg) translate(18px) rotate(-${angle}deg)`,
-            }}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
-function WaveLayerImg({
-  src,
-  widthPx,
-  heightPx,
-  leftPx,
-  bottomPx,
-  rotationDeg = 0,
-  durationSec = 12,
-  travelPx = 160,
-  floatPx = 16,
-  floatDurationSec = 7,
-  opacity = 1,
-}: WaveLayer) {
-  return (
-    <div
-      className="absolute"
-      style={{
-        left: `${leftPx}px`,
-        bottom: `${bottomPx}px`,
-        width: `${widthPx}px`,
-        height: `${heightPx}px`,
-        opacity,
-      }}
-    >
-      <div
-        className="reduce-motion:no-anim"
-        style={{
-          width: "100%",
-          height: "100%",
-          ["--travelX" as any]: `${travelPx}px`,
-          animation: `wave-x ${durationSec}s ease-in-out infinite alternate`,
-        }}
-      >
-        <div
-          className="reduce-motion:no-anim"
-          style={{
-            width: "100%",
-            height: "100%",
-            ["--floatY" as any]: `${floatPx}px`,
-            animation: `wave-y ${floatDurationSec}s ease-in-out infinite alternate`,
-          }}
-        >
-          <img
-            src={src}
-            alt=""
-            draggable={false}
-            className="block select-none"
-            style={{
-              width: "100%",
-              height: "100%",
-              transform: `rotate(${rotationDeg}deg)`,
-              transformOrigin: "center",
-            }}
-          />
-        </div>
       </div>
     </div>
   );

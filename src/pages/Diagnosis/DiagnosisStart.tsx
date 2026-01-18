@@ -13,14 +13,10 @@ export default function DiagnosisStart() {
   return (
     <main
       className="
-        relative
-        min-h-screen w-full
-        flex flex-col
-        items-center
+        relative min-h-screen w-full
+        flex flex-col items-center
         text-white
-        bg-gradient-to-b
-        from-[#1F1ED6]
-        to-[#7886FF]
+        bg-[linear-gradient(180deg,_#21148C_0.01%,_#2F16FF_54.15%,_#8097FF_108.3%)]
       "
     >
       {/* 상단 영역 */}
