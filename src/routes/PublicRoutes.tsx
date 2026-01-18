@@ -1,6 +1,8 @@
 import MainLayout from '../layouts/MainLayout';
 import ErrorPage from '../pages/ErrorPage';
 import HomePage from '../pages/HomePage';
+import LoginPage from '../pages/Login/LoginPage';
+import LoginStartPage from '../pages/Login/LoginStartPage';
 import MapDetailPage from '../pages/Map/MapDetailPage';
 import MapPage from '../pages/Map/MapPage';
 import SpaceRecommend from '../pages/SpaceRecommend';
@@ -17,6 +19,8 @@ export const publicRoutes = [
       { path: '/mypage', element: <></> },
       { path: '/diagnosis', element: <></> },
       { path: '/recommend', element: <SpaceRecommend /> },
+      { path: '/login', element : <LoginPage/>},
+      { path: '/loginstart', element: <LoginStartPage/>},
     ],
   },
 ];
