@@ -20,7 +20,6 @@ export const publicRoutes = [
       { path: '/diagnosis', element: <DiagnosisStart /> },
       { path: "/diagnosis/loading", element: <DiagnosisLoading /> },
       { path: "/diagnosis/question/1", element: <div>Question 1</div> },
-      { path: '/diagnosis', element: <></> },
       { path: '/recommend', element: <SpaceRecommend /> },
     ],
   },
