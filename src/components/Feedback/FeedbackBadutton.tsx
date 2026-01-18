@@ -19,7 +19,7 @@ const FeedbackBadButton = ({ label, onClick }: Props) => {
       "
     >
       <img src={bad} alt="" className="w-[20px] h-[20px]" />
-      <span className="font-body text-body-4 text-gray-300">
+      <span className="font-body text-body-4 text-gray-200">
         {label}
       </span>
     </button>
