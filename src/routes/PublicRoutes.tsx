@@ -3,6 +3,7 @@ import ErrorPage from '../pages/ErrorPage';
 import HomePage from '../pages/HomePage';
 import MapPage from '../pages/Map/MapPage';
 import DiagnosisStart from '../pages/Diagnosis/DiagnosisStart';
+import DiagnosisLoading from '../pages/Diagnosis/DiagnosisLoading';
 
 export const publicRoutes = [
   {
@@ -14,6 +15,8 @@ export const publicRoutes = [
       { path: '/explore', element: <></> },
       { path: '/mypage', element: <></> },
       { path: '/diagnosis', element: <DiagnosisStart /> },
+      { path: "/diagnosis/loading", element: <DiagnosisLoading /> },
+      { path: "/diagnosis/question/1", element: <div>Question 1</div> },
     ],
   },
 ];

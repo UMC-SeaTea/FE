@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 export default function DiagnosisStart() {
   const [openInfo, setOpenInfo] = useState(false);
+  const navigate = useNavigate();
+
+  const handleStart = () => {
+    navigate("/diagnosis/loading"); // ✅ 로딩 화면 라우트로 이동
+  };
 
   return (
     <main
@@ -114,6 +120,7 @@ export default function DiagnosisStart() {
         <div className="flex flex-col gap-[12px]">
           <button
             type="button"
+            onClick={handleStart} 
             className="
               w-[335px] h-[50px]
               rounded-[25px]
