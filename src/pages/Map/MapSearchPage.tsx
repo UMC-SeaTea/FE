@@ -77,8 +77,8 @@ const MapSearchPage = () => {
             검색 결과
           </p>
           <div className="flex flex-col gap-[8px]">
-            <SearchResult />
-            <SearchResult />
+            <SearchResult type="Floral" name="국립현대미술관" distance="1.2" />
+            <SearchResult type="Smocky" name="국립중앙박물관" distance="3.2" />
           </div>
         </div>
       ) : (

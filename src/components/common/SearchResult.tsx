@@ -1,7 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import NoteSearch from './NoteSearch';
 
-const SearchResult = () => {
+type SearchResultProps = {
+  name: string;
+  type: string;
+  distance: string;
+};
+
+const SearchResult = ({ name, type, distance }: SearchResultProps) => {
   const navigate = useNavigate();
   return (
     <>
@@ -11,14 +17,14 @@ const SearchResult = () => {
         onClick={() => navigate('/map/1')}
       >
         <div className="flex flex-col gap-[12px]">
-          <NoteSearch text="Floral" />
+          <NoteSearch text={type} />
           <div className="flex flex-col gap-[4px]">
-            <p className="font-body text-body-2 text-[#222222]">
-              국립현대미술관 서울
-            </p>
+            <p className="font-body text-body-2 text-[#222222]">{name}</p>
             <div className="flex items-center gap-[4px]">
               <p className="font-body text-body-4 text-gray-100">내 위치에서</p>
-              <p className="font-body text-body-4 text-[#2f16ff]">1.2km</p>
+              <p className="font-body text-body-4 text-[#2f16ff]">
+                {distance}km
+              </p>
             </div>
           </div>
         </div>
