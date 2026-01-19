@@ -9,24 +9,13 @@ const KeywordButton = ({ text, onClick }: Props) => {
       type="button"
       onClick={onClick}
       className="
-        inline-flex items-center justify-center
-        h-[35px]
+        inline-flex items-center justify-center h-[35px]
         px-[12px] py-[8px]
         rounded-[100px]
         bg-gray-500
       "
     >
-      <span
-        className="
-          font-body
-          text-body-4
-          leading-[140%]
-          tracking-[-0.025em]
-          text-gray-100
-        "
-      >
-        {text}
-      </span>
+      <span className="font-body text-body-4 text-gray-100 ">{text}</span>
     </button>
   );
 };

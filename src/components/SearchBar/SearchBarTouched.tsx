@@ -1,4 +1,4 @@
-import backButtonBlack from '../../../assets/backButton_black.svg';
+import backButtonBlack from '../../assets/backButton_black.svg';
 
 const SearchBarTouched = () => {
   return (
@@ -8,7 +8,7 @@ const SearchBarTouched = () => {
           <img
             src={backButtonBlack}
             alt="back button"
-            className="w-[24px] h-[24px]"
+            className="w-[24px] h-[24px] cursor-pointer"
           />
           <input
             type="text"
