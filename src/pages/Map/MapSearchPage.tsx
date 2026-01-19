@@ -5,6 +5,12 @@ import SearchBarTouched from '../../components/SearchBar/SearchBarTouched';
 import { useEffect, useMemo, useState } from 'react';
 import SearchResult from '../../components/common/SearchResult';
 
+type RecentItem = {
+  id: string;
+  name: string;
+  timeText: string;
+};
+
 const MapSearchPage = () => {
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
@@ -12,12 +18,22 @@ const MapSearchPage = () => {
   const q = useMemo(() => (params.get('q') ?? '').trim(), [params]);
   const isResultMode = q.length > 0;
 
+  // inputValue는 입력 중인 값, q는 확정된 검색어
   const [inputValue, setInputValue] = useState(q);
+
+  // 최근 검색어: 하드코딩으로 진행, 추후 연동
+  const [recentItems, setRecentItems] = useState<RecentItem[]>([
+    { id: '1', name: '국립현대미술관', timeText: '1시간전' },
+    { id: '2', name: 'LCDC', timeText: '어제' },
+    { id: '3', name: '덕수궁', timeText: '10.04' },
+    { id: '4', name: '그랑핸드', timeText: '09.21' },
+  ]);
 
   useEffect(() => {
     setInputValue(q);
   }, [q]);
 
+  // 검색어 확정
   const commitQuery = (raw: string) => {
     const next = raw.trim();
     if (!next) {
@@ -35,6 +51,14 @@ const MapSearchPage = () => {
       return;
     }
     navigate(-1);
+  };
+
+  // 최근 검색어 동작
+  const handleClickRecent = (name: string) => {
+    setParams({ q: name }, { replace: true });
+  };
+  const handleRemoveRecent = (id: string) => {
+    setRecentItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
@@ -64,10 +88,15 @@ const MapSearchPage = () => {
             <div className="flex flex-col gap-[4px]">
               <p className="text-body-4 font-body text-gray-100">최근 검색어</p>
               <div>
-                <SearchList />
-                <SearchList />
-                <SearchList />
-                <SearchList />
+                {recentItems.map((item) => (
+                  <SearchList
+                    key={item.id}
+                    name={item.name}
+                    timeText={item.timeText}
+                    onClick={() => handleClickRecent(item.name)}
+                    onRemove={() => handleRemoveRecent(item.id)}
+                  />
+                ))}
               </div>
             </div>
           </div>
