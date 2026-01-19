@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import backButtonBlack from '../../assets/backButton_black.svg';
 
 const SearchBarTouched = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="w-[335px] h-[48px] rounded-full border-1 border-black px-[20px] py-[12px]">
@@ -9,6 +11,7 @@ const SearchBarTouched = () => {
             src={backButtonBlack}
             alt="back button"
             className="w-[24px] h-[24px] cursor-pointer"
+            onClick={() => navigate(-1)}
           />
           <input
             type="text"
