@@ -1,12 +1,17 @@
+import { useNavigate } from 'react-router-dom';
+import NoteSearch from './NoteSearch';
+
 const SearchResult = () => {
+  const navigate = useNavigate();
   return (
     <>
-      <div className="w-[335px] h-[124px] bg-white border-1 border-gray-400 rounded-lg px-[20px] pt-[20px] pb-[24px]">
+      <div
+        className="w-[335px] h-[124px] bg-white border-1 border-gray-400 rounded-lg 
+      px-[20px] pt-[20px] pb-[24px] cursor-pointer"
+        onClick={() => navigate('/map/1')}
+      >
         <div className="flex flex-col gap-[12px]">
-          {/* 컴포넌트 삽입 필요 */}
-          <div className="w-[56px] h-[22px] rounded-sm bg-[#f2f2f2] text-black font-body text-detail-1 px-[12px]">
-            Floral
-          </div>
+          <NoteSearch text="Floral" />
           <div className="flex flex-col gap-[4px]">
             <p className="font-body text-body-2 text-[#222222]">
               국립현대미술관 서울

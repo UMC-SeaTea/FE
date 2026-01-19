@@ -46,6 +46,7 @@ const MapSearchPage = () => {
         onBack={handleBack}
         onClear={() => setParams({}, { replace: true })}
       />
+
       {isResultMode ? (
         <div className="pt-[43px]">
           <p className="pb-[16px] text-body-4 font-body text-gray-100">

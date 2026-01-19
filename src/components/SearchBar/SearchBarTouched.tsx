@@ -13,7 +13,6 @@ const SearchBarTouched = ({
   onChange,
   onSubmit,
   onBack,
-  onClear,
 }: SearchBarTouchedProps) => {
   return (
     <>

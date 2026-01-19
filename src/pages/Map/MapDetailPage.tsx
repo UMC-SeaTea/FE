@@ -7,6 +7,7 @@ import placeIcon from '../../assets/place_gray.svg';
 import timeIcon from '../../assets/timeIcon.svg';
 import phoneIcon from '../../assets/phoneIcon.svg';
 import shareButton from '../../assets/RoundButton/share_btn.svg';
+import { useNavigate } from 'react-router-dom';
 // import teaBag from '../../assets/teaBag.svg';
 
 const MapDetailPage = () => {
@@ -22,9 +23,17 @@ const MapDetailPage = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
     <>
-      <NavBar variant="3" icon={backIcon} />
+      <NavBar
+        variant="3"
+        icon={backIcon}
+        onClick={() => {
+          navigate(-1);
+        }}
+      />
       <div className="px-[20px]">
         <div className="flex flex-col gap-[12px] pt-[42px] pb-[23px]">
           <div className="flex items-start justify-between">
