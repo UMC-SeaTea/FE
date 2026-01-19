@@ -8,6 +8,7 @@ import MapPage from '../pages/Map/MapPage';
 import DiagnosisStart from '../pages/Diagnosis/DiagnosisStart';
 import DiagnosisLoading from '../pages/Diagnosis/DiagnosisLoading';
 import SpaceRecommend from '../pages/SpaceRecommend';
+import DiagnosisDetail from '../pages/Diagnosis/DiagnosisDetail';
 
 export const publicRoutes = [
   {
@@ -21,7 +22,7 @@ export const publicRoutes = [
       { path: '/mypage', element: <></> },
       { path: '/diagnosis', element: <DiagnosisStart /> },
       { path: "/diagnosis/loading", element: <DiagnosisLoading /> },
-      { path: "/diagnosis/question/1", element: <div>Question 1</div> },
+      { path: "/diagnosis/detail", element: <DiagnosisDetail /> },
       { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element : <LoginPage/>},
       { path: '/loginstart', element: <LoginStartPage/>},

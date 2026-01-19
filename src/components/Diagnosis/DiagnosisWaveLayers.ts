@@ -1,4 +1,3 @@
-// src/components/Diagnosis/DiagnosisWaveLayers.ts
 import wave9 from "../../assets/wave9.svg";
 import wave8 from "../../assets/wave8.svg";
 import wave7 from "../../assets/wave7.svg";

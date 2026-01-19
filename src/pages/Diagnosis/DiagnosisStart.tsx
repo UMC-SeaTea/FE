@@ -7,7 +7,7 @@ export default function DiagnosisStart() {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate("/diagnosis/loading"); // ✅ 로딩 화면 라우트로 이동
+    navigate("/diagnosis/loading"); 
   };
 
   return (
