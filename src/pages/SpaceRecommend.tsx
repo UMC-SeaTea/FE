@@ -5,7 +5,7 @@ import tea from '../assets/images/teaIcon.png';
 import refresh from '../assets/refresh.svg';
 import PlaceList from '../components/common/PlaceList';
 import { useState } from 'react';
-import FeedbackButton from '../components/common/Feedback/FeedbackButton';
+import FeedbackButton from '../components/Feedback/FeedbackButton';
 
 const SpaceRecommend = () => {
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
