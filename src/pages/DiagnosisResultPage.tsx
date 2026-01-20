@@ -1,13 +1,12 @@
 import NavBar from '../components/common/NavBar';
 import menuIcon from '../assets/menu_black.svg';
 import HomeTestType from '../components/common/HomeTestType';
-import PlaceTestDetail from '../components/PlaceTest/PlaceTestDetail';
-import PlaceTestSimple from '../components/PlaceTest/PlaceTestSimple';
 import PastResult from '../components/common/PastResult';
 import Footer from '../components/common/Footer';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { useState } from 'react';
 import TastingNote from '../components/common/TastingNote';
+import PlaceTestCard from '../components/PlaceTest/PlaceTestCard';
 
 const DiagnosisResultPage = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
@@ -46,8 +45,20 @@ const DiagnosisResultPage = () => {
             새로 진단하기
           </p>
           <div className="flex flex-col gap-[8px]">
-            <PlaceTestDetail />
-            <PlaceTestSimple />
+            <PlaceTestCard
+              badgeText="정확도 UP"
+              badgeBg="bg-brand"
+              badgeTextColor="text-white"
+              title="휴식 유형 상세 진단"
+              durationText="약 1-2분 소요"
+            />
+            <PlaceTestCard
+              badgeText="지금 바로"
+              badgeBg="bg-[#DADEFF]"
+              badgeTextColor="text-brand"
+              title="휴식 유형 간단 진단"
+              durationText="10초 완성!"
+            />
           </div>
         </div>
         {/* 과거 진단내역 */}
