@@ -1,5 +1,5 @@
-import checkIcon from '../../../assets/checkIcon.svg';
-import moveButton from '../../../assets/placeTestMoveButton.svg';
+import checkIcon from '../../assets/checkIcon.svg';
+import moveButton from '../../assets/placeTestMoveButton.svg';
 
 const PlaceTestSimple = () => {
   return (
