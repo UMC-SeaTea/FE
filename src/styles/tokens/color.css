@@ -28,4 +28,14 @@
   --color-card-pink: #c898ff; /* pink */
   --color-card-blue: #78c2ff; /* blue */
   --color-card-green: #6dedd4; /* green */
+
+  /* 8 Tasting Notes */
+  --color-smocky: #dddddd;
+  --color-oceanic: #78c2ff;
+  --color-fruity: #f198ff;
+  --color-floral: #a89eff;
+  --color-earthy: #6dedd4;
+  --color-sweet: #ffd688;
+  --color-spicy: #ff8c8c;
+  --color-nutty: #d0b8b4;
 }
