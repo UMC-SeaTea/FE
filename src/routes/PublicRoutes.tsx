@@ -8,7 +8,6 @@ import MapPage from '../pages/Map/MapPage';
 import DiagnosisStart from '../pages/Diagnosis/DiagnosisStart';
 import DiagnosisLoading from '../pages/Diagnosis/DiagnosisLoading';
 import SpaceRecommend from '../pages/SpaceRecommend';
-import MapSearchPage from '../pages/Map/MapSearchPage';
 
 export const publicRoutes = [
   {
@@ -18,7 +17,6 @@ export const publicRoutes = [
       { path: '/', element: <HomePage /> },
       { path: '/map', element: <MapPage /> },
       { path: '/map/:sid', element: <MapDetailPage /> },
-      { path: '/map/search', element: <MapSearchPage /> },
       { path: '/explore', element: <></> },
       { path: '/mypage', element: <></> },
       { path: '/diagnosis', element: <DiagnosisStart /> },

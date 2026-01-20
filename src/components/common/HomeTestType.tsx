@@ -145,7 +145,7 @@ const HomeTestType = ({
             {variant === 'home' && (
               <div
                 className="flex w-8 h-8 justify-center items-center mt-1 cursor-pointer"
-                onClick={() => navigate('/recommend')}
+                onClick={() => navigate('/')}
               >
                 <img
                   src={moveButton}
