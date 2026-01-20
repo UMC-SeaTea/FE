@@ -20,12 +20,11 @@ export const publicRoutes = [
       { path: '/explore', element: <></> },
       { path: '/mypage', element: <></> },
       { path: '/diagnosis', element: <DiagnosisStart /> },
-      { path: "/diagnosis/loading", element: <DiagnosisLoading /> },
-      { path: "/diagnosis/question/1", element: <div>Question 1</div> },
+      { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
+      { path: '/diagnosis/question/1', element: <div>Question 1</div> },
       { path: '/recommend', element: <SpaceRecommend /> },
-      { path: '/login', element : <LoginPage/>},
-      { path: '/loginstart', element: <LoginStartPage/>},
+      { path: '/login', element: <LoginPage /> },
+      { path: '/loginstart', element: <LoginStartPage /> },
     ],
   },
 ];
-
