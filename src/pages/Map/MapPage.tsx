@@ -20,6 +20,7 @@ const MapPage = () => {
 
   return (
     <>
+      <div className="h-[44px]" />
       <NavBar variant="5" text="지도" icon={menuIcon} />
 
       <div className="relative w-[375px]">

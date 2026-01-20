@@ -4,6 +4,7 @@ import SearchList from '../../components/common/SearchList';
 import SearchBarTouched from '../../components/SearchBar/SearchBarTouched';
 import { useEffect, useMemo, useState } from 'react';
 import SearchResult from '../../components/common/SearchResult';
+import useDebounce from '../../hooks/useDebounce';
 
 type RecentItem = {
   id: string;
@@ -20,6 +21,15 @@ const MapSearchPage = () => {
 
   // inputValue는 입력 중인 값, q는 확정된 검색어
   const [inputValue, setInputValue] = useState(q);
+
+  const deBouncedValue = useDebounce(inputValue, 300);
+
+  useEffect(() => {
+    const keyword = deBouncedValue.trim();
+    if (!keyword) return;
+
+    console.log('검색 API 요청:', keyword);
+  }, [deBouncedValue]);
 
   // 최근 검색어: 하드코딩으로 진행, 추후 연동
   const [recentItems, setRecentItems] = useState<RecentItem[]>([
