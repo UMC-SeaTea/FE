@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import teatImg from '../../assets/images/tea.png';
 import ButtonMedium from '../Button/ButtonMedium';
 
 const SideBarTest = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="w-[335px] pt-[16px] pb-[12px] px-[12px] bg-[#efe9ff] rounded-md">
@@ -20,7 +23,10 @@ const SideBarTest = () => {
             <img src={teatImg} alt="Tea" className="w-[60px] h-[60px]" />
           </div>
           <div>
-            <ButtonMedium text="새로 진단해보기" />
+            <ButtonMedium
+              text="새로 진단해보기"
+              onClick={() => navigate('/diagnosis')}
+            />
           </div>
         </div>
       </div>
