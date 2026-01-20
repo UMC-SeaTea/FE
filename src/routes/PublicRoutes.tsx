@@ -6,6 +6,7 @@ import LoginStartPage from '../pages/Login/LoginStartPage';
 import MapDetailPage from '../pages/Map/MapDetailPage';
 import MapPage from '../pages/Map/MapPage';
 import SpaceRecommend from '../pages/SpaceRecommend';
+import SignUpPage from '../pages/SignUpPage';
 
 export const publicRoutes = [
   {
@@ -21,6 +22,7 @@ export const publicRoutes = [
       { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element : <LoginPage/>},
       { path: '/loginstart', element: <LoginStartPage/>},
+      { path: '/signup', element: <SignUpPage/>},
     ],
   },
 ];
