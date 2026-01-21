@@ -65,6 +65,6 @@ export const DIAGNOSIS_QUESTIONS: DiagnosisQuestion[] = [
       { id: "partner", label: "누구라도 함께면 좋아요" },
     ],
     min: 1,
-    max: 1, // 피그마는 단일선택처럼 보이면 1로
+    max: 1, 
   },
 ];

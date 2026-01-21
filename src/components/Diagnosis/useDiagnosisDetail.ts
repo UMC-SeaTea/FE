@@ -23,7 +23,6 @@ export function useDiagnosisDetail() {
   const isNextEnabled = useMemo(() => {
     if (!current) return false;
 
-    // 타입별 validation
     if (current.type === "two_choice") return typeof value === "string" && value.length > 0;
     if (current.type === "dial") return typeof value === "number";
     if (current.type === "multi_select") {

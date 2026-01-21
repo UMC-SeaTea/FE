@@ -1,4 +1,3 @@
-// src/components/Diagnosis/questionTypes/TwoChoiceQuestion.tsx
 import DiagnosisOptionCard from "../DiagnosisOptionCard";
 
 type Option = { id: string; label: string };

@@ -21,7 +21,7 @@ export default function DiagnosisOptionCard({ label, selected = false, onClick }
       <span
         className={[
           "font-body text-[16px] leading-[140%] font-[500] tracking-[-0.025em]",
-          selected ? "text-[#2F16FF]" : "text-[var(--color-gray-700)]",
+          selected ? "text-brand" : "text-gray-100",
         ].join(" ")}
       >
         {label}

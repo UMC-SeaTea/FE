@@ -1,12 +1,10 @@
-// src/components/Diagnosis/questionTypes/MultiSelectQuestion.tsx
 type Option = { id: string; label: string };
-
 type Theme = "purple" | "blue" | "mint";
 
 type Props = {
   options: Option[];
   selectedIds: string[];
-  maxSelect?: number;
+  maxSelect?: number; 
   onChange: (nextSelected: string[]) => void;
 
   theme?: Theme;
@@ -37,7 +35,7 @@ const THEME = {
 export default function MultiSelectQuestion({
   options,
   selectedIds,
-  maxSelect = 999,
+  maxSelect = 999,      
   onChange,
   theme = "mint",
   ctaText,
@@ -50,7 +48,9 @@ export default function MultiSelectQuestion({
     const exists = selectedIds.includes(id);
     const next = exists ? selectedIds.filter((x) => x !== id) : [...selectedIds, id];
 
+
     if (!exists && next.length > maxSelect) return;
+
     onChange(next);
   };
 
@@ -66,17 +66,19 @@ export default function MultiSelectQuestion({
               type="button"
               onClick={() => toggle(o.id)}
               className={[
-                "w-full h-[49px] rounded-[25px]", 
+                "w-full h-[49px] rounded-[25px]",
                 "border",
+                "px-[28px]",
                 "flex items-center justify-center",
                 "transition-colors",
-                active ? `${t.activeBorder} ${t.activeBg}` : "border-[var(--color-gray-200)] bg-white",
+                active ? `${t.activeBorder} ${t.activeBg}` : "border-[#DEDEDE] bg-white",
               ].join(" ")}
             >
               <span
                 className={[
-                  "font-body text-body-title font-[600] leading-[140%] tracking-[-0.025em]",
-                  active ? t.activeText : "text-[var(--color-gray-500)]",
+                  "font-body",
+                  "text-[16px] font-[500] leading-[140%] tracking-[-0.025em]",
+                  active ? t.activeText : "text-[#77767E]",
                 ].join(" ")}
               >
                 {o.label}
@@ -93,8 +95,8 @@ export default function MultiSelectQuestion({
             onClick={onCtaClick}
             disabled={ctaDisabled}
             className={[
-              "w-full h-[52px] rounded-[26px]",
-              "font-body text-body-title font-[600]",
+              "w-full h-[52px] rounded-[14px]",
+              "font-body text-[16px] font-[600]",
               ctaDisabled
                 ? "bg-[var(--color-gray-200)] text-[var(--color-gray-500)]"
                 : "bg-[var(--color-brand)] text-white",
