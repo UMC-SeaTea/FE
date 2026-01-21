@@ -8,6 +8,8 @@ import MapPage from '../pages/Map/MapPage';
 import DiagnosisStart from '../pages/Diagnosis/DiagnosisStart';
 import DiagnosisLoading from '../pages/Diagnosis/DiagnosisLoading';
 import SpaceRecommend from '../pages/SpaceRecommend';
+import MyPage from '../pages/MyPage';
+import MyTeabag from '../pages/MyTeabagPage';
 
 export const publicRoutes = [
   {
@@ -18,13 +20,14 @@ export const publicRoutes = [
       { path: '/map', element: <MapPage /> },
       { path: '/map/:sid', element: <MapDetailPage /> },
       { path: '/explore', element: <></> },
-      { path: '/mypage', element: <></> },
+      { path: '/mypage', element: <MyPage/> },
       { path: '/diagnosis', element: <DiagnosisStart /> },
       { path: "/diagnosis/loading", element: <DiagnosisLoading /> },
       { path: "/diagnosis/question/1", element: <div>Question 1</div> },
       { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element : <LoginPage/>},
       { path: '/loginstart', element: <LoginStartPage/>},
+      { path: '/myteabag', element: <MyTeabag/> },
     ],
   },
 ];
