@@ -1,4 +1,6 @@
 import backButton from '../../assets/backButton_white.svg';
+import profileDefault from '../../assets/profile_default.png';
+import NoteSearch from './NoteSearch';
 
 const MyPageProfile = () => {
   return (
@@ -7,8 +9,12 @@ const MyPageProfile = () => {
         <div className="flex w-[303px] items-center justify-between">
           <div className="flex gap-[12px]">
             {/* 프로필 이미지 */}
-            <div className="w-[64px] h-[64px] rounded-full overflow-hidden bg-brand">
-              <img className="w-full h-full object-cover" />
+            <div className="w-[64px] h-[64px] rounded-full overflow-hidden">
+                    <img
+                      src={profileDefault}
+                      alt="profile default img"
+                      className="w-full h-full object-cover"
+            />
             </div>
             <div className="flex flex-col gap-[4px]">
               {/* 이메일 */}
@@ -18,7 +24,7 @@ const MyPageProfile = () => {
               {/* 휴식 유형 */}
               <div className="flex gap-[8px] items-center">
                 <p className="font-body text-body-4 text-gray-400">휴식 유형</p>
-                {/* 컴포넌트 추가 필요 */}
+                <NoteSearch text="Floral" />
               </div>
               {/* 저장한 공간 */}
               <div className="flex gap-[8px] font-body text-body-4">

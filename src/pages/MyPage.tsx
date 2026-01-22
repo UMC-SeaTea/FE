@@ -2,9 +2,9 @@ import NavBar from "../components/common/NavBar";
 import menu from "../assets/menu_white.svg";
 import { useState } from "react";
 import SideBarContainer from "../components/SideBar/SideBarContainer";
-import profileDefault from "../assets/profile_default.png";
 import moveButton from "../assets/moveButton_white.svg";
 import { useNavigate } from "react-router-dom";
+import MyPageProfile from "../components/common/MyPageProfile";
 
 const MyPage = () => {
   const [navOpen, setNavOpen] = useState(false);
@@ -47,51 +47,7 @@ const menuItems = [
             </div>
 
             <div className="flex flex-col items-start gap-4 w-[335px]">
-              <div className="flex items-center w-full justify-between rounded-[8px] px-4 py-6 bg-white/10">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-end gap-[-31px]">
-                    <img
-                      src={profileDefault}
-                      alt="profile default img"
-                      className="w-16 h-16 rounded-[64px] bg-cover bg-center bg-no-repeat"
-                    />
-                  </div>
-                  <div className="flex w-[150px] flex-col items-center gap-1">
-                    <div className="self-stretch text-white font-body text-body-5">
-                      hongdandan@gmail.com
-                    </div>
-
-                    <div className="flex flex-row items-center gap-2 self-stretch">
-                      <div className="text-gray-400 font-body text-body-4">
-                        휴식 유형
-                      </div>
-                      <div className="flex w-[43px] h-[20px] items-center justify-center gap-[10px] px-[9px] py-[2px] bg-white">
-                        <div className="self-stretch text-black font-body text-detail-1">
-                          Floral
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="self-stretch flex flex-row items-center gap-2">
-                      <div className="text-gray-400 text-body-4 font-body">
-                        저장한 공간
-                      </div>
-                      <div className="flex items-center flex-row">
-                        <div className="font-body text-white text-sm font-semibold leading-[140%] tracking-[-0.35px]">
-                          22
-                        </div>
-                        <div className="font-body text-gray-400 text-body-4">
-                          개
-                        </div>
-                      </div>
-                     </div>
-                   </div>
-                </div>
-                <div className="w-6 h-6 shrink-0 flex items-center justify-center">
-                  <img src={moveButton} alt="move button" className="" onClick={() => navigate('')} />
-                </div>
-              </div>
-
+              <MyPageProfile />
               <div className="flex flex-col items-start self-stretch rounded-[12px] py-[10px] bg-white/10">
                 {menuItems.map((item) => (
                   <div
