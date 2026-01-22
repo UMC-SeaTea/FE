@@ -7,6 +7,7 @@ import Fruity from '../../assets/images/tastingNoteTypeImages/fruity.png';
 import Oceanic from '../../assets/images/tastingNoteTypeImages/oceanic.png';
 import Earthy from '../../assets/images/tastingNoteTypeImages/earthy.png';
 import moveButton from '../../assets/homeTestTypeMoveButton.svg';
+import { useNavigate } from 'react-router-dom';
 
 const typeConfig: Record<
   string,
@@ -107,6 +108,8 @@ const HomeTestType = ({
   const config = typeConfig[typeKey] || typeConfig['floral'];
   const v = variantStyle[variant];
 
+  const navigate = useNavigate();
+
   return (
     <div
       className={`relative w-[375px] ${v.wrapper} bg-white border-b border-black flex flex-col items-center overflow-hidden shrink-0`}
@@ -140,7 +143,10 @@ const HomeTestType = ({
             </div>
             {/* moveButton */}
             {variant === 'home' && (
-              <div className="flex w-8 h-8 justify-center items-center mt-1">
+              <div
+                className="flex w-8 h-8 justify-center items-center mt-1 cursor-pointer"
+                onClick={() => navigate('/')}
+              >
                 <img
                   src={moveButton}
                   alt="moveButton"
