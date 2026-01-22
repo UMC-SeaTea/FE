@@ -4,9 +4,13 @@ import img3 from '../../../assets/images/loading/loading3.png';
 import pot from '../../../assets/images/loading/loadingPot.png';
 import './loadingAnimate.css';
 
-const LoadingSpinner = () => {
+type LoadingSpinnerProps = {
+  color?: 'black' | 'white';
+};
+
+const LoadingSpinner = ({ color = 'black' }: LoadingSpinnerProps) => {
   return (
-    <div className="loading-wrapper pt-[248px]">
+    <div className={`loading-wrapper ${color === 'white' ? 'is-white' : ''}`}>
       <div className="frame-container">
         <img className="loading-frame frame1" src={img1} />
         <img className="loading-frame frame2" src={img2} />

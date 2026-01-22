@@ -7,6 +7,8 @@ import MapDetailPage from '../pages/Map/MapDetailPage';
 import MapPage from '../pages/Map/MapPage';
 import DiagnosisStart from '../pages/Diagnosis/DiagnosisStart';
 import DiagnosisLoading from '../pages/Diagnosis/DiagnosisLoading';
+import SimpleDiagnosisIntro from '../pages/Diagnosis/SimpleDiagnosisIntro';
+import SimpleDiagnosisPick from '../pages/Diagnosis/SimpleDiagnosisPick';
 import SpaceRecommend from '../pages/SpaceRecommend';
 import DiagnosisResultPage from '../pages/DiagnosisResultPage';
 import MapSearchPage from '../pages/Map/MapSearchPage';
@@ -26,6 +28,8 @@ export const publicRoutes = [
       { path: '/diagnosis/result', element: <DiagnosisResultPage /> },
       { path: '/diagnosis', element: <DiagnosisStart /> },
       { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
+      { path: '/diagnosis/simple', element: <SimpleDiagnosisIntro /> },
+      { path: '/diagnosis/simple/pick', element: <SimpleDiagnosisPick /> },
       { path: '/diagnosis/question/1', element: <div>Question 1</div> },
       { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element : <LoginPage/>},

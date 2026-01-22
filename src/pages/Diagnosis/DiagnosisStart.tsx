@@ -7,8 +7,13 @@ export default function DiagnosisStart() {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate("/diagnosis/loading"); // ✅ 로딩 화면 라우트로 이동
+    navigate("/diagnosis/loading"); 
   };
+
+  const handleSimpleDiagnosis = () => {
+  navigate("/diagnosis/simple"); 
+};
+
 
   return (
     <main
@@ -129,6 +134,7 @@ export default function DiagnosisStart() {
 
           <button
             type="button"
+            onClick={handleSimpleDiagnosis}
             className="
               w-[335px] h-[50px]
               rounded-[25px]
