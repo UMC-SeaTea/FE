@@ -6,11 +6,13 @@ import SideBarTest from '../components/common/SideBarTest';
 import Carousel from '../components/common/Carousel';
 import { useState } from 'react';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
+import HomeComponent from '../components/common/HomeComponent';
 
 const HomePage = () => {
   const [navOpen, setNavOpen] = useState(false);
   return (
     <>
+      <div className="h-[44px]" />
       <div className="flex flex-col gap-[42px]">
         <div className="flex flex-col gap-2">
           <NavBar
@@ -39,7 +41,7 @@ const HomePage = () => {
               <SpaceCardMini />
             </Carousel>
           </div>
-          {/* 지금, 어떤 휴식이 필요하신가요? */}
+          <HomeComponent />
           <SideBarTest />
         </div>
       </div>
