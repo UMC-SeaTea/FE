@@ -1,4 +1,3 @@
-// src/pages/Diagnosis/DiagnosisLoading.tsx
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingRing from "../../components/Diagnosis/LoadingRing";
@@ -30,7 +29,7 @@ const LOADER_COLORS = [
 
 export default function DiagnosisLoading({
   durationMs = 5000,
-  nextPath = "/diagnosis/question/1",
+  nextPath = "/diagnosis/detail",
   onEnter,
   waves = diagnosisWaves,
 }: DiagnosisLoadingProps) {

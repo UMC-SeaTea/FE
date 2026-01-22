@@ -1,4 +1,3 @@
-// src/components/Diagnosis/LoadingRing.tsx
 type LoadingRingProps = {
   sizePx?: number;
   colors: string[];

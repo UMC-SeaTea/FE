@@ -10,6 +10,7 @@ import DiagnosisLoading from '../pages/Diagnosis/DiagnosisLoading';
 import SpaceRecommend from '../pages/SpaceRecommend';
 import MyPage from '../pages/MyPage';
 import MyTeabag from '../pages/MyTeabagPage';
+import DiagnosisDetail from '../pages/Diagnosis/DiagnosisDetail';
 import DiagnosisResultPage from '../pages/DiagnosisResultPage';
 import MapSearchPage from '../pages/Map/MapSearchPage';
 import SignUpPage from '../pages/SignUpPage';
@@ -27,6 +28,8 @@ export const publicRoutes = [
       { path: '/mypage', element: <MyPage/> },
       { path: '/diagnosis/result', element: <DiagnosisResultPage /> },
       { path: '/diagnosis', element: <DiagnosisStart /> },
+      { path: "/diagnosis/loading", element: <DiagnosisLoading /> },
+      { path: "/diagnosis/detail", element: <DiagnosisDetail /> },
       { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
       { path: '/diagnosis/question/1', element: <div>Question 1</div> },
       { path: '/recommend', element: <SpaceRecommend /> },
