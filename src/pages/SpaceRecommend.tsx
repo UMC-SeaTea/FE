@@ -6,14 +6,21 @@ import refresh from '../assets/refresh.svg';
 import PlaceList from '../components/common/PlaceList';
 import { useState } from 'react';
 import FeedbackButton from '../components/common/Feedback/FeedbackButton';
+import { useNavigate } from 'react-router-dom';
 
 const SpaceRecommend = () => {
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col gap-[42px]">
         <div>
-          <NavBar variant="4" text="공간 추천" icon={backIcon} />
+          <NavBar
+            variant="4"
+            text="공간 추천"
+            icon={backIcon}
+            onClick={() => navigate(-1)}
+          />
           <HomeTestType
             type="smoky"
             title="smoky."

@@ -4,7 +4,6 @@ import ButtonMedium from '../Button/ButtonMedium';
 
 const SideBarTest = () => {
   const navigate = useNavigate();
-
   return (
     <>
       <div className="w-[335px] pt-[16px] pb-[12px] px-[12px] bg-[#efe9ff] rounded-md">

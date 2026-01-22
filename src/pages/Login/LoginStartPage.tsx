@@ -23,6 +23,7 @@ const LoginStartPage = () => {
             </div>
             
             <div 
+                onClick={() => navigate('/signup')}
                 className="flex justify-center items-center w-full h-[50px] pt-[12px] pb-[13px] bg-footer rounded-[25px] cursor-pointer"
             >
                 <div className="text-white font-body text-body-title mt-[4px] text-center">회원가입</div>
