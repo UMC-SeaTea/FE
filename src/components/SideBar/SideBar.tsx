@@ -13,7 +13,7 @@ const SideBar = () => {
 
   return (
     <>
-      <div className="w-[375px] bg-white pt-[42px] px-[20px] h-screen">
+      <div className="w-[375px] bg-white pt-[98px] px-[20px] h-screen">
         {menuList.map((label, path) => (
           <SideBarComponent
             key={path}

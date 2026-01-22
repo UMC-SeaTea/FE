@@ -1,29 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../assets/search_searchBar.svg';
-import useDebounce from '../../hooks/useDebounce';
 
 const SearchBarDefault = () => {
-  const [search, setSearch] = useState('');
-  const deBouncedValue = useDebounce(search, 300);
-
-  useEffect(() => {
-    if (!deBouncedValue.trim()) return;
-
-    console.log('검색 API 요청:', deBouncedValue);
-  }, [deBouncedValue]);
+  const navigate = useNavigate();
 
   return (
     <>
-      <div className="w-[335px] h-[48px] rounded-full border-1 border-black px-[20px] py-[12px] bg-white">
+      <button
+        className="w-[335px] h-[48px] rounded-full border-1 border-black px-[20px] py-[12px] bg-white"
+        onClick={() => navigate('/map/search')}
+      >
         <div className="flex items-center justify-between">
-          <input
-            type="text"
-            placeholder="키워드를 검색해보세요"
-            value={search}
-            className="text-start font-body text-body-2 outline-none
-            placeholder:text-gray-200 focus:placeholder:text-transparent"
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <p className="text-start font-body text-body-2 outline-none text-gray-200">
+            키워드를 검색해보세요
+          </p>
           <div className="w-[24px] h-[24px] flex items-center justify-center">
             <img
               src={searchIcon}
@@ -32,7 +22,7 @@ const SearchBarDefault = () => {
             />
           </div>
         </div>
-      </div>
+      </button>
     </>
   );
 };
