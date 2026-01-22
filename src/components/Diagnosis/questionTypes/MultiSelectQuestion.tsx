@@ -16,21 +16,31 @@ type Props = {
 
 const THEME = {
   purple: {
-    activeBorder: "border-[var(--color-brand)]",
+    activeBorder: "border-brand",
     activeBg: "bg-[rgba(47,22,255,0.06)]",
-    activeText: "text-[var(--color-brand)]",
+    activeText: "text-brand",
+    hoverBorder: "hover:border-brand",
+    hoverBg: "hover:bg-[rgba(47,22,255,0.06)]",
+    hoverText: "group-hover:text-brand",
   },
   blue: {
     activeBorder: "border-[#0087F6]",
     activeBg: "bg-[rgba(0,135,246,0.08)]",
     activeText: "text-[#0087F6]",
+    hoverBorder: "hover:border-[#0087F6]",
+    hoverBg: "hover:bg-[rgba(0,135,246,0.08)]",
+    hoverText: "group-hover:text-[#0087F6]",
   },
   mint: {
     activeBorder: "border-[#16AB8E]",
     activeBg: "bg-[#F2FFFC]",
     activeText: "text-[#16AB8E]",
+    hoverBorder: "hover:border-[#16AB8E]",
+    hoverBg: "hover:bg-[#F2FFFC]",
+    hoverText: "group-hover:text-[#16AB8E]",
   },
 } as const;
+
 
 export default function MultiSelectQuestion({
   options,
@@ -57,35 +67,45 @@ export default function MultiSelectQuestion({
   return (
     <div className="mx-auto w-[335px]">
       <div className="flex flex-col gap-[10px]">
-        {options.map((o) => {
-          const active = selectedIds.includes(o.id);
+      {options.map((o) => {
+        const active = selectedIds.includes(o.id);
 
-          return (
-            <button
-              key={o.id}
-              type="button"
-              onClick={() => toggle(o.id)}
+        return (
+          <button
+            key={o.id}
+            type="button"
+            onClick={() => toggle(o.id)}
+            className={[
+              "group",
+              "w-full h-[49px] rounded-[25px]",
+              "border px-[28px]",
+              "flex items-center justify-center",
+              "transition-colors duration-200",
+
+              active
+                ? `${t.activeBorder} ${t.activeBg}`
+                : [
+                    "border-[#DEDEDE] bg-white",
+                    t.hoverBorder,
+                    t.hoverBg,
+                  ].join(" "),
+            ].join(" ")}
+          >
+            <span
               className={[
-                "w-full h-[49px] rounded-[25px]",
-                "border",
-                "px-[28px]",
-                "flex items-center justify-center",
-                "transition-colors",
-                active ? `${t.activeBorder} ${t.activeBg}` : "border-[#DEDEDE] bg-white",
+                "font-body text-body-2 leading-[140%] tracking-[-0.025em]",
+                "transition-colors duration-200",
+
+                active
+                  ? t.activeText
+                  : ["text-[#77767E]", t.hoverText].join(" "),
               ].join(" ")}
             >
-              <span
-                className={[
-                  "font-body",
-                  "text-[16px] font-[500] leading-[140%] tracking-[-0.025em]",
-                  active ? t.activeText : "text-[#77767E]",
-                ].join(" ")}
-              >
-                {o.label}
-              </span>
-            </button>
-          );
-        })}
+              {o.label}
+            </span>
+          </button>
+        );
+      })}
       </div>
 
       {ctaText && onCtaClick && (
@@ -98,8 +118,8 @@ export default function MultiSelectQuestion({
               "w-full h-[52px] rounded-[14px]",
               "font-body text-[16px] font-[600]",
               ctaDisabled
-                ? "bg-[var(--color-gray-200)] text-[var(--color-gray-500)]"
-                : "bg-[var(--color-brand)] text-white",
+                ? "bg-gray-200 text-gray-500"
+                : "bg--brand text-white",
             ].join(" ")}
           >
             {ctaText}

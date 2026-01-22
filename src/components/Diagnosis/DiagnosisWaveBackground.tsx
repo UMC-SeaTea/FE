@@ -1,10 +1,10 @@
-import wave6 from "../../assets/backgroundwave 6.svg";
-import wave6_1 from "../../assets/backgroundwave 6-1.svg";
-import wave7 from "../../assets/backgroundwave 7.svg";
-import wave7_1 from "../../assets/backgroundwave 7-1.svg";
-import wave8 from "../../assets/backgroundwave 8.svg";
-import wave9 from "../../assets/backgroundwave 9.svg";
-import wave9_1 from "../../assets/backgroundwave 9-1.svg";
+import wave6 from "../../assets/Waves/backgroundwave 6.svg";
+import wave6_1 from "../../assets/Waves/backgroundwave 6-1.svg";
+import wave7 from "../../assets/Waves/backgroundwave 7.svg";
+import wave7_1 from "../../assets/Waves/backgroundwave 7-1.svg";
+import wave8 from "../../assets/Waves/backgroundwave 8.svg";
+import wave9 from "../../assets/Waves/backgroundwave 9.svg";
+import wave9_1 from "../../assets/Waves/backgroundwave 9-1.svg";
 
 type Props = {
   stepIndex: number;

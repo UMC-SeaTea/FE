@@ -1,7 +1,7 @@
-import wave9 from "../../assets/wave9.svg";
-import wave8 from "../../assets/wave8.svg";
-import wave7 from "../../assets/wave7.svg";
-import wave6 from "../../assets/wave6.svg";
+import wave9 from "../../assets/wave9.png";
+import wave8 from "../../assets/wave8.png";
+import wave7 from "../../assets/wave7.png";
+import wave6 from "../../assets/wave6.png";
 
 export type WaveLayer = {
   src: string;
