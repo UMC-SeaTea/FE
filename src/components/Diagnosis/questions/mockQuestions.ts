@@ -1,4 +1,3 @@
-// src/components/Diagnosis/questions/mockQuestions.ts
 import type { DiagnosisQuestion } from "./types";
 
 export const MOCK_DIAGNOSIS_QUESTIONS: DiagnosisQuestion[] = [
