@@ -26,7 +26,7 @@ export default function WaveLayerImg({
         opacity,
       }}
     >
-      {/* X */}
+
       <div
         className="reduce-motion:no-anim"
         style={{
@@ -36,7 +36,7 @@ export default function WaveLayerImg({
           animation: `wave-x ${durationSec}s ease-in-out infinite alternate`,
         }}
       >
-        {/* Y */}
+
         <div
           className="reduce-motion:no-anim"
           style={{
