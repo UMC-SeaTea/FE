@@ -28,12 +28,7 @@ const DiagnosisResultPage = () => {
         </div>
         <div>
           <div className="border-t text-black" />
-          <HomeTestType
-            variant="recommend"
-            type="smoky"
-            title="smoky"
-            description="고요하고 차분한 분위기에서 방해받지 않고, 온전히 혼자만의 시간을 즐겨요"
-          />
+          <HomeTestType variant="recommend" type="smoky" />
         </div>
       </div>
 
