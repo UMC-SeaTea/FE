@@ -7,7 +7,6 @@ import Carousel from '../components/common/Carousel';
 import { useState } from 'react';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
-import SpaceRecommendation from '../components/common/SpaceRecommendation';
 
 const HomePage = () => {
   const [navOpen, setNavOpen] = useState(false);
