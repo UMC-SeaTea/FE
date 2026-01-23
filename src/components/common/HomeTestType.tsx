@@ -63,7 +63,7 @@ const HomeTestType = ({ type, variant = 'home' }: HomeTestTypeProps) => {
                 </p>
               )}
               <p className="self-stretch text-title-1 font-title text-black leading-none">
-                {type}
+                {type}.
               </p>
             </div>
             {/* moveButton */}
