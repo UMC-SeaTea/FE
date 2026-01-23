@@ -60,7 +60,7 @@ const MyTeabagPage = () => {
         grid-rows-[repeat(4,fit-content(100%))] grid-cols-[repeat(2,fit-content(100%))] ">
           {currentItems.map((item) => (
           <div key={item.id} className="w-[162px] h-[162px]">
-            <SpaceCardMini className="w-full h-full rounded-[5.467px]" />
+            <SpaceCardMini className="w-full h-full rounded-sm" />
           </div>
           ))}
         </div>
