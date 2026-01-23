@@ -8,7 +8,7 @@ import { useState } from 'react';
 import TastingNote from '../components/common/TastingNote';
 import PlaceTestCard from '../components/PlaceTest/PlaceTestCard';
 
-const DiagnosisResultPage = () => {
+const MyTastingPage = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
   return (
     <>
@@ -70,4 +70,4 @@ const DiagnosisResultPage = () => {
   );
 };
 
-export default DiagnosisResultPage;
+export default MyTastingPage;

@@ -1,6 +1,6 @@
 import backButton from '../../assets/backButton_white.svg';
 import profileDefault from '../../assets/profile_default.png';
-import NoteSearch from './NoteSearch';
+import NoteSearch from '../common/NoteSearch';
 
 const MyPageProfile = () => {
   return (
@@ -10,11 +10,11 @@ const MyPageProfile = () => {
           <div className="flex gap-[12px]">
             {/* 프로필 이미지 */}
             <div className="w-[64px] h-[64px] rounded-full overflow-hidden">
-                    <img
-                      src={profileDefault}
-                      alt="profile default img"
-                      className="w-full h-full object-cover"
-            />
+              <img
+                src={profileDefault}
+                alt="profile default img"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="flex flex-col gap-[4px]">
               {/* 이메일 */}

@@ -1,13 +1,6 @@
-type ChipTextColor =
-  | 'smocky'
-  | 'oceanic'
-  | 'fruity'
-  | 'floral'
-  | 'earthy'
-  | 'sweet'
-  | 'spices'
-  | 'nutty'
-  | 'white';
+import type { TastingKey } from '../../types/tastingType/tastingType';
+
+type ChipTextColor = TastingKey | 'white';
 
 type Props = {
   label: string;
@@ -18,7 +11,7 @@ type Props = {
 };
 
 const TEXT_COLOR_CLASS: Record<ChipTextColor, string> = {
-  smocky: 'text-smocky',
+  smoky: 'text-smoky',
   oceanic: 'text-oceanic',
   fruity: 'text-fruity',
   floral: 'text-floral',
