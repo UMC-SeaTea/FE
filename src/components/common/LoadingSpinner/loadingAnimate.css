@@ -5,6 +5,10 @@
   gap: 13px;
 }
 
+.loading-wrapper.is-white img {
+  filter: brightness(0) invert(1);
+}
+
 .frame-container {
   position: relative;
   width: 47px;

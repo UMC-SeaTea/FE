@@ -10,6 +10,11 @@ export default function DiagnosisStart() {
     navigate("/diagnosis/loading"); 
   };
 
+  const handleSimpleDiagnosis = () => {
+  navigate("/diagnosis/simple"); 
+};
+
+
   return (
     <main
       className="
@@ -129,6 +134,7 @@ export default function DiagnosisStart() {
 
           <button
             type="button"
+            onClick={handleSimpleDiagnosis}
             className="
               w-[335px] h-[50px]
               rounded-[25px]
