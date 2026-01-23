@@ -24,6 +24,10 @@ const MyTeabagPage = () => {
   const totalPages = Math.ceil(TOTAL_DATA.length / itemsPerPage);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsFooterInView(entry.isIntersecting);
@@ -78,7 +82,7 @@ const MyTeabagPage = () => {
       <div ref={footerRef} className="w-full">
         <Footer />
       </div>
-      
+
       <img
         onClick={handleScrollTop}
         src={MoveupButton}
