@@ -1,18 +1,26 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import DiagnosisProgressBar from "../../components/Diagnosis/DiagnosisProgressBar";
-import DiagnosisTopBar from "../../components/Diagnosis/DiagnosisTopBar";
-import DiagnosisWaveBackground from "../../components/Diagnosis/DiagnosisWaveBackground";
-import { useDiagnosisDetail } from "../../components/Diagnosis/useDiagnosisDetail";
-import QuestionRenderer from "../../components/Diagnosis/QuestionRenderer";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import DiagnosisProgressBar from '../../components/Diagnosis/DiagnosisProgressBar';
+import DiagnosisTopBar from '../../components/Diagnosis/DiagnosisTopBar';
+import DiagnosisWaveBackground from '../../components/Diagnosis/DiagnosisWaveBackground';
+import { useDiagnosisDetail } from '../../components/Diagnosis/useDiagnosisDetail';
+import QuestionRenderer from '../../components/Diagnosis/QuestionRenderer';
 
 export default function DiagnosisDetail() {
   const navigate = useNavigate();
 
-  const { stepIndex, total, current, value, isNextEnabled, setAnswer, goNext, goBack } =
-    useDiagnosisDetail();
+  const {
+    stepIndex,
+    total,
+    current,
+    value,
+    isNextEnabled,
+    setAnswer,
+    goNext,
+    goBack,
+  } = useDiagnosisDetail();
 
-  const [picked, setPicked] = useState(false);
+  const [, setPicked] = useState(false);
 
   useEffect(() => {
     setPicked(false);
@@ -21,13 +29,13 @@ export default function DiagnosisDetail() {
   if (!current) return null;
 
   const isLastStep = stepIndex === total - 1;
-  const isMulti = current.type === "multi_select";
+  const isMulti = current.type === 'multi_select';
 
   const selectedIds =
-    current.type === "multi_select"
+    current.type === 'multi_select'
       ? Array.isArray(value)
         ? (value as string[])
-        : typeof value === "string"
+        : typeof value === 'string'
           ? [value]
           : []
       : [];
@@ -38,7 +46,7 @@ export default function DiagnosisDetail() {
   };
 
   const onResult = () => {
-    navigate("/diagnosis/result");
+    navigate('/diagnosis/result');
   };
 
   const triggerPickedThenNext = (delayMs: number) => {
@@ -52,11 +60,15 @@ export default function DiagnosisDetail() {
   return (
     <div className="relative min-h-dvh bg-white overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <DiagnosisWaveBackground stepIndex={stepIndex}  />
+        <DiagnosisWaveBackground stepIndex={stepIndex} />
       </div>
 
       <div className="relative z-10 pt-[80px] pb-[120px]">
-        <DiagnosisProgressBar stepIndex={stepIndex} totalSteps={total} theme={current.theme} />
+        <DiagnosisProgressBar
+          stepIndex={stepIndex}
+          totalSteps={total}
+          theme={current.theme}
+        />
 
         <div className="mt-[28px]">
           <DiagnosisTopBar title={current.title} onBack={onBack} />
@@ -70,12 +82,12 @@ export default function DiagnosisDetail() {
               onChange={(v) => {
                 setAnswer(v);
 
-                if (current.type === "two_choice") {
+                if (current.type === 'two_choice') {
                   triggerPickedThenNext(120);
                 }
               }}
               onCommit={() => {
-                if (current.type === "dial") {
+                if (current.type === 'dial') {
                   triggerPickedThenNext(420);
                 }
               }}
@@ -83,7 +95,7 @@ export default function DiagnosisDetail() {
           </div>
         </div>
 
-        {!isLastStep && current.type === "multi_select" && (
+        {!isLastStep && current.type === 'multi_select' && (
           <div className="mt-[28px] px-[20px]">
             <div className="mx-auto w-[335px]">
               <button
@@ -91,12 +103,12 @@ export default function DiagnosisDetail() {
                 onClick={() => triggerPickedThenNext(140)}
                 disabled={!isNextEnabled}
                 className={[
-                  "w-full h-[52px] rounded-[14px]",
-                  "font-body text-body-title leading-[140%] tracking-[-0.025em] transition-opacity",
+                  'w-full h-[52px] rounded-[14px]',
+                  'font-body text-body-title leading-[140%] tracking-[-0.025em] transition-opacity',
                   isNextEnabled
-                    ? "bg-brand text-white"
-                    : "bg-gray-200 text-gray-500",
-                ].join(" ")}
+                    ? 'bg-brand text-white'
+                    : 'bg-gray-200 text-gray-500',
+                ].join(' ')}
               >
                 다음
               </button>
@@ -113,11 +125,13 @@ export default function DiagnosisDetail() {
               onClick={onResult}
               disabled={selectedIds.length === 0}
               className={[
-                "w-full h-[50px] rounded-[25px] px-[14px]",
-                "flex items-center justify-center",
-                "font-body text-body-title leading-[140%] tracking-[-0.025em]",
-                selectedIds.length === 0 ? "bg-gray-400 text-gray-100" : "bg-brand text-white",
-              ].join(" ")}
+                'w-full h-[50px] rounded-[25px] px-[14px]',
+                'flex items-center justify-center',
+                'font-body text-body-title leading-[140%] tracking-[-0.025em]',
+                selectedIds.length === 0
+                  ? 'bg-gray-400 text-gray-100'
+                  : 'bg-brand text-white',
+              ].join(' ')}
             >
               결과 확인하기
             </button>
