@@ -4,6 +4,7 @@ import SortButton from '../components/common/SortButton';
 import EditButton from '../components/common/EditButton';
 import MoveupButton from "../assets/RoundButton/moveup_btn.svg";
 import MyTeabagPagination from '../components/MyTeabag/MyTeabagPagination'; 
+import Footer from '../components/common/Footer';
 
 const TOTAL_DATA = Array.from({ length: 60 }).map((_, i) => ({
   id: i,
@@ -74,20 +75,10 @@ const MyTeabagPage = () => {
       </div> 
 
 
-      <div 
-        ref={footerRef} 
-        className="w-full h-[152px] bg-footer flex "
-      >
-        <div className="flex w-[183px] flex-col items-start gap-1 ml-5 mt-[70px]">
-          <div className="self-stretch text-white font-title text-base font-bold leading-normal ">
-            SeaTea
-          </div>
-          <div className="self-stretch font-body text-gray-500 text-[10px] not-italic font-normal leading-[120%] tracking-[-0.25px]">
-            Copyright 2025. SeaTea All rights reserved.
-          </div>
-        </div>
+      <div ref={footerRef} className="w-full">
+        <Footer />
       </div>
-
+      
       <img
         onClick={handleScrollTop}
         src={MoveupButton}
