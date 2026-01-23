@@ -7,13 +7,15 @@ import MapDetailPage from '../pages/Map/MapDetailPage';
 import MapPage from '../pages/Map/MapPage';
 import DiagnosisStart from '../pages/Diagnosis/DiagnosisStart';
 import DiagnosisLoading from '../pages/Diagnosis/DiagnosisLoading';
-import SpaceRecommend from '../pages/SpaceRecommendPage';
+import SimpleDiagnosisIntro from '../pages/Diagnosis/SimpleDiagnosisIntro';
+import SimpleDiagnosisPick from '../pages/Diagnosis/SimpleDiagnosisPick';
 import MyPage from '../pages/MyPage';
 import MyTeabag from '../pages/MyTeabagPage';
 import DiagnosisDetail from '../pages/Diagnosis/DiagnosisDetail';
 import MapSearchPage from '../pages/Map/MapSearchPage';
 import SignUpPage from '../pages/SignUpPage';
 import MyTastingPage from '../pages/MyTastingPage';
+import SpaceRecommend from '../pages/SpaceRecommendPage';
 
 export const publicRoutes = [
   {
@@ -31,6 +33,8 @@ export const publicRoutes = [
       { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
       { path: '/diagnosis/detail', element: <DiagnosisDetail /> },
       { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
+      { path: '/diagnosis/simple', element: <SimpleDiagnosisIntro /> },
+      { path: '/diagnosis/simple/pick', element: <SimpleDiagnosisPick /> },
       { path: '/diagnosis/question/1', element: <div>Question 1</div> },
       { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element: <LoginPage /> },
