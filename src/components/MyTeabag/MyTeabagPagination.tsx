@@ -16,8 +16,8 @@ const MyTeabagPagination = ({ page, totalPages, setPage }: PaginationProps) => {
         onClick={() => setPage(prev => Math.max(prev - 1, 1))}
         
         disabled={page === 1}
-        className={`flex inline-flex items-center gap-[4px] transition-opacity
-          ${page === 1 ? 'opacity-30 cursor-not-allowed' : 'opacity-100 hover:opacity-70'}
+        className={`flex items-center gap-[4px] transition-opacity 
+          ${page === 1 ? 'opacity-30 cursor-not-allowed' : 'opacity-100 hover:opacity-70 cursor-pointer'}
         `}
       >
         <div className="w-[20px] h-[20px] aspect-square">
@@ -34,8 +34,8 @@ const MyTeabagPagination = ({ page, totalPages, setPage }: PaginationProps) => {
         onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
         disabled={page === totalPages}
         
-        className={`flex inline-flex items-center gap-[4px] transition-opacity
-          ${page === totalPages ? 'opacity-30 cursor-not-allowed' : 'opacity-100 hover:opacity-70'}
+        className={`flex items-center gap-[4px] transition-opacity 
+          ${page === totalPages ? 'opacity-30 cursor-not-allowed' : 'opacity-100 hover:opacity-70 cursor-pointer'}
         `}
       >
         <div className="text-[#000] text-base font-body font-normal leading-[140%] tracking-[-0.4px] 
