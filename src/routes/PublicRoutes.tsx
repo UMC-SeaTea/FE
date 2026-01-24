@@ -9,6 +9,8 @@ import DiagnosisStart from '../pages/Diagnosis/DiagnosisStart';
 import DiagnosisLoading from '../pages/Diagnosis/DiagnosisLoading';
 import SimpleDiagnosisIntro from '../pages/Diagnosis/SimpleDiagnosisIntro';
 import SimpleDiagnosisPick from '../pages/Diagnosis/SimpleDiagnosisPick';
+import DiagnosisResultLoading from '../pages/Diagnosis/DiagnosisResultLoading';
+import DiagnosisCompletePage from '../pages/Diagnosis/DiagnosisCompletePage';
 import SpaceRecommend from '../pages/SpaceRecommend';
 import MyPage from '../pages/MyPage';
 import MyTeabag from '../pages/MyTeabagPage';
@@ -35,6 +37,8 @@ export const publicRoutes = [
       { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
       { path: '/diagnosis/simple', element: <SimpleDiagnosisIntro /> },
       { path: '/diagnosis/simple/pick', element: <SimpleDiagnosisPick /> },
+      { path: "/diagnosis/result/loading", element: <DiagnosisResultLoading /> },
+      { path: '/diagnosiscomplete', element: <DiagnosisCompletePage /> },
       { path: '/diagnosis/question/1', element: <div>Question 1</div> },
       { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element : <LoginPage/>},
