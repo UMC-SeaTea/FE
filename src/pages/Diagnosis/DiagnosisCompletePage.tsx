@@ -18,7 +18,7 @@ export default function DiagnosisCompletePage() {
     <main className="min-h-dvh bg-[#F6F7FB] flex justify-center">
       <div className="w-full max-w-[375px] min-h-dvh bg-white flex flex-col">
         <header className="h-[56px] w-full border-b border-[#0A0A0A] flex items-center px-[20px] shrink-0">
-          <span className="font-title text-[18px] leading-none text-black">SeaTea</span>
+          <span className="font-title text-[18px] font-weight-medium leading-none text-[#0A0A0A] mt-[10px]">SeaTea</span>
         </header>
 
 
@@ -41,7 +41,7 @@ export default function DiagnosisCompletePage() {
           <div className="pb-[28px] flex flex-col gap-[12px] items-center">
             <button
               type="button"
-              onClick={() => navigate("/recommend", { state: { resultType } })}
+              onClick={() => navigate("/diagnosis/recommend", { state: { resultType } })}
               className="w-[334px] h-[50px] rounded-[25px] bg-brand text-white font-body font-weight-regular text-18px"
             >
               공간 추천받기
