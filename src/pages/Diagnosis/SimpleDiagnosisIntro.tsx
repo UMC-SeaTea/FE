@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import LoadingSpinner from "../../components/common/LoadingSpinner/LoadingSpinner";
-import waveBack from "../../assets/images/simplediagnosis/waveBack.png";
-import waveFront from "../../assets/images/simplediagnosis/waveFront.png";
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import waveBack from '../../assets/images/simplediagnosis/waveBack.png';
+import waveFront from '../../assets/images/simplediagnosis/waveFront.png';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 export default function SimpleDiagnosisIntro() {
   const navigate = useNavigate();
@@ -10,7 +10,10 @@ export default function SimpleDiagnosisIntro() {
 
   useEffect(() => {
     const t1 = window.setTimeout(() => setLeaving(true), 4000);
-    const t2 = window.setTimeout(() => navigate("/diagnosis/simple/pick"), 4300);
+    const t2 = window.setTimeout(
+      () => navigate('/diagnosis/simple/pick'),
+      4300
+    );
 
     return () => {
       clearTimeout(t1);
@@ -27,7 +30,6 @@ export default function SimpleDiagnosisIntro() {
         bg-[linear-gradient(180deg,_#1E1569_0%,_#2418C6_54%,_#8097FF_100%)]
       "
     >
-
       <style>{`
 
         @keyframes wave-float-back {
@@ -42,17 +44,14 @@ export default function SimpleDiagnosisIntro() {
         }
       `}</style>
 
-
       <div
         className={[
-          "absolute inset-0",
-          "transition-opacity duration-300 ease-out",
-          leaving ? "opacity-0" : "opacity-100",
-        ].join(" ")}
+          'absolute inset-0',
+          'transition-opacity duration-300 ease-out',
+          leaving ? 'opacity-0' : 'opacity-100',
+        ].join(' ')}
       >
-
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-
           <img
             src={waveBack}
             alt=""
@@ -63,7 +62,6 @@ export default function SimpleDiagnosisIntro() {
               animate-[wave-float-back_6s_ease-in-out_infinite]
             "
           />
-
 
           <img
             src={waveFront}
@@ -77,10 +75,11 @@ export default function SimpleDiagnosisIntro() {
           />
         </div>
 
-
         <div className="relative z-10 w-full h-full flex items-center justify-center">
           <div className="w-full flex flex-col items-center text-center -translate-y-[28px]">
-            <h1 className="font-title text-title-4 leading-[28px]">Quick Taste</h1>
+            <h1 className="font-title text-title-4 leading-[28px]">
+              Quick Taste
+            </h1>
 
             <p className="mt-[8px] font-title text-body-title leading-[25px]">
               나에게 꼭 맞는 휴식을 찾아보세요
@@ -91,7 +90,8 @@ export default function SimpleDiagnosisIntro() {
             </div>
 
             <p className="mt-[60px] text-body-2 font-body leading-[22px]">
-              지금 당신의 마음에 가장 가까운<br />
+              지금 당신의 마음에 가장 가까운
+              <br />
               키워드 3개를 선택해주세요
             </p>
           </div>

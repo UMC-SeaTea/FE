@@ -1,7 +1,7 @@
-import good from '../../assets/good.svg';
-import emptyGood from '../../assets/emptyGood.svg';
-import bad from '../../assets/bad.svg';
-import emptyBad from '../../assets/emptyBad.svg';
+import good from '../../assets/GoodBadIcon/good.svg';
+import emptyGood from '../../assets/GoodBadIcon/emptyGood.svg';
+import bad from '../../assets/GoodBadIcon/bad.svg';
+import emptyBad from '../../assets/GoodBadIcon/emptyBad.svg';
 
 type Props = {
   type: 'good' | 'bad';

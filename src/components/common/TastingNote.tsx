@@ -20,7 +20,7 @@ const TastingNote = () => {
             </p>
           </div>
           {/* 테이스팅 노트 결정 */}
-          <div className="w-[291px] h-[83px] bg-gray-500 rounded-lg px-[12px] py-[20px] w-full">
+          <div className="w-[291px] h-[83px] bg-gray-500 rounded-lg px-[12px] py-[20px]">
             <div className="flex flex-col gap-[4px]">
               <div className="h-[21px] flex items-center gap-[4px]">
                 <p className="font-body text-body-3 text-brand">Q.</p>

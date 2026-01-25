@@ -1,88 +1,13 @@
-import Floral from '../../assets/images/tastingNoteTypeImages/floral.png';
-import Nutty from '../../assets/images/tastingNoteTypeImages/nutty.png';
-import Sweet from '../../assets/images/tastingNoteTypeImages/sweet.png';
-import Spices from '../../assets/images/tastingNoteTypeImages/spices.png';
-import Smoky from '../../assets/images/tastingNoteTypeImages/smoky.png';
-import Fruity from '../../assets/images/tastingNoteTypeImages/fruity.png';
-import Oceanic from '../../assets/images/tastingNoteTypeImages/oceanic.png';
-import Earthy from '../../assets/images/tastingNoteTypeImages/earthy.png';
 import moveButton from '../../assets/homeTestTypeMoveButton.svg';
 import { useNavigate } from 'react-router-dom';
-
-const typeConfig: Record<
-  string,
-  {
-    img: string;
-    width: string;
-    rotate: string;
-    bottom: string;
-    right: string;
-  }
-> = {
-  floral: {
-    img: Floral,
-    width: '600px',
-    rotate: '20.61deg',
-    bottom: '-580px',
-    right: '-290px',
-  },
-  nutty: {
-    img: Nutty,
-    width: '450px',
-    rotate: '0deg',
-    bottom: '-70px',
-    right: '-150px',
-  },
-  sweet: {
-    img: Sweet,
-    width: '350px',
-    rotate: '0deg',
-    bottom: '0px',
-    right: '0px',
-  },
-  spices: {
-    img: Spices,
-    width: '600px',
-    rotate: '0deg',
-    bottom: '-280px',
-    right: '-280px',
-  },
-  smoky: {
-    img: Smoky,
-    width: '413px',
-    rotate: '45deg',
-    bottom: '-200px',
-    right: '-150px',
-  },
-  fruity: {
-    img: Fruity,
-    width: '1000px',
-    rotate: '-30deg',
-    bottom: '-255px',
-    right: '-430px',
-  },
-  oceanic: {
-    img: Oceanic,
-    width: '210px',
-    rotate: '0deg',
-    bottom: '0px',
-    right: '0px',
-  },
-  earthy: {
-    img: Earthy,
-    width: '730px',
-    rotate: '-23deg',
-    bottom: '-270px',
-    right: '-300px',
-  },
-};
+import { type TastingKey } from '../../types/tastingType/tastingType';
+import { typeConfig } from '../../constants/tastingType/tastingImg';
+import { tastingTypeMap } from '../../constants/tastingType/tastingType';
 
 type Variant = 'home' | 'recommend';
 
 interface HomeTestTypeProps {
-  type: string;
-  title: string;
-  description: string;
+  type: TastingKey;
   variant?: Variant;
 }
 
@@ -98,17 +23,15 @@ const variantStyle: Record<Variant, { wrapper: string; content: string }> = {
   },
 };
 
-const HomeTestType = ({
-  type,
-  title,
-  description,
-  variant = 'home',
-}: HomeTestTypeProps) => {
-  const typeKey = type.toLowerCase();
-  const config = typeConfig[typeKey] || typeConfig['floral'];
-  const v = variantStyle[variant];
-
+const HomeTestType = ({ type, variant = 'home' }: HomeTestTypeProps) => {
   const navigate = useNavigate();
+  // 이미지
+  const config = typeConfig[type];
+  // 설명
+  const info = tastingTypeMap[type];
+  const description = info.description;
+
+  const v = variantStyle[variant];
 
   return (
     <div
@@ -130,7 +53,7 @@ const HomeTestType = ({
       <div className={`relative z-10 flex flex-col w-[334px] ${v.content}`}>
         <div className="flex flex-col w-[334px] gap-[42px] items-start">
           <div className="flex justify-between items-start self-stretch">
-            <div className="flex flex-col w-[180.9px] items-start gap-0 ml-1">
+            <div className="flex flex-col w-[180.9px] items-start gap-[4px] ml-1">
               {/* 나의 테이스팅 노트 텍스트 */}
               {variant === 'home' && (
                 <p className="self-stretch text-body-5 font-body text-black leading-none">
@@ -138,14 +61,14 @@ const HomeTestType = ({
                 </p>
               )}
               <p className="self-stretch text-title-1 font-title text-black leading-none">
-                {title}
+                {type}.
               </p>
             </div>
             {/* moveButton */}
             {variant === 'home' && (
               <div
                 className="flex w-8 h-8 justify-center items-center mt-1 cursor-pointer"
-                onClick={() => navigate('/diagnosis/result')}
+                onClick={() => navigate('/mytasting')}
               >
                 <img
                   src={moveButton}

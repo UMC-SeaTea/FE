@@ -1,27 +1,26 @@
-import NavBar from "../components/common/NavBar";
-import menu from "../assets/menu_white.svg";
-import { useState } from "react";
-import SideBarContainer from "../components/SideBar/SideBarContainer";
-import moveButton from "../assets/moveButton_white.svg";
-import { useNavigate } from "react-router-dom";
-import MyPageProfile from "../components/common/MyPageProfile";
+import NavBar from '../components/common/NavBar';
+import menu from '../assets/menu_white.svg';
+import { useState } from 'react';
+import SideBarContainer from '../components/SideBar/SideBarContainer';
+import moveButton from '../assets/moveButton_white.svg';
+import { useNavigate } from 'react-router-dom';
+import MyPageProfile from '../components/MyPage/MyPageProfile';
 
 const MyPage = () => {
   const [navOpen, setNavOpen] = useState(false);
   const navigate = useNavigate();
 
-const menuItems = [
-  { id: 1, title: "나의 티백", path: "/myteabag" },      
-  { id: 2, title: "알림 설정", path: "" },      
-  { id: 3, title: "고객센터", path: "" },       
-  { id: 4, title: "로그아웃 · 탈퇴", path: "" },    
-];
+  const menuItems = [
+    { id: 1, title: '나의 티백', path: '/myteabag' },
+    { id: 2, title: '알림 설정', path: '' },
+    { id: 3, title: '고객센터', path: '' },
+    { id: 4, title: '로그아웃 · 탈퇴', path: '' },
+  ];
 
   return (
     <>
       <div className="w-full min-h-screen bg-[#0A0A0A]">
         <div className="flex flex-col items-center w-full">
-          
           <div className="flex w-full">
             <NavBar
               variant="6"
@@ -30,11 +29,13 @@ const menuItems = [
               className="border-b border-[#000] relative z-[60] !bg-[#0A0A0A] !w-full"
               onClick={() => setNavOpen((prev) => !prev)}
             />
-            <SideBarContainer open={navOpen} onClose={() => setNavOpen(false)} />
+            <SideBarContainer
+              open={navOpen}
+              onClose={() => setNavOpen(false)}
+            />
           </div>
 
           <div className="flex flex-col items-center gap-3 self-stretch">
-            
             <div className="flex items-center self-stretch pt-8 pr-[127px] pb-3 pl-7">
               <div className="flex flex-col justify-center items-start ">
                 <div className="font-body text-white text-[15px] font-light leading-[140%] tracking-[-0.15px]">
@@ -65,15 +66,15 @@ const menuItems = [
                     </div>
                   </div>
                 ))}
-              </div> 
-            </div> 
-          </div> 
+              </div>
+            </div>
+          </div>
 
           <div className="w-[183px] font-regular font-body text-gray-200 text-[10px] leading-[120%] tracking-[-0.25px] mt-[123px] ml-5 mr-[172px] mb-[122px]">
             Copyright 2025. SeaTea All rights reserved.
           </div>
-        </div> 
-      </div> 
+        </div>
+      </div>
     </>
   );
 };

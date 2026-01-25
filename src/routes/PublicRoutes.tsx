@@ -11,14 +11,14 @@ import SimpleDiagnosisIntro from '../pages/Diagnosis/SimpleDiagnosisIntro';
 import SimpleDiagnosisPick from '../pages/Diagnosis/SimpleDiagnosisPick';
 import DiagnosisResultLoading from '../pages/Diagnosis/DiagnosisResultLoading';
 import DiagnosisCompletePage from '../pages/Diagnosis/DiagnosisCompletePage';
-import DiagnosisSpaceRecommendPage from "../pages/Diagnosis/DiagnosisSpaceRecommendPage";
-import SpaceRecommend from '../pages/SpaceRecommend';
+import DiagnosisSpaceRecommendPage from '../pages/Diagnosis/DiagnosisSpaceRecommendPage';
 import MyPage from '../pages/MyPage';
 import MyTeabag from '../pages/MyTeabagPage';
 import DiagnosisDetail from '../pages/Diagnosis/DiagnosisDetail';
-import DiagnosisResultPage from '../pages/DiagnosisResultPage';
 import MapSearchPage from '../pages/Map/MapSearchPage';
 import SignUpPage from '../pages/SignUpPage';
+import MyTastingPage from '../pages/MyTastingPage';
+import SpaceRecommend from '../pages/SpaceRecommendPage';
 
 export const publicRoutes = [
   {
@@ -29,23 +29,28 @@ export const publicRoutes = [
       { path: '/map', element: <MapPage /> },
       { path: '/map/search', element: <MapSearchPage /> },
       { path: '/map/:sid', element: <MapDetailPage /> },
-      { path: '/explore', element: <></> },
-      { path: '/mypage', element: <MyPage/> },
-      { path: '/diagnosis/result', element: <DiagnosisResultPage /> },
+      { path: '/mypage', element: <MyPage /> },
+      { path: '/mytasting', element: <MyTastingPage /> },
       { path: '/diagnosis', element: <DiagnosisStart /> },
-      { path: "/diagnosis/loading", element: <DiagnosisLoading /> },
-      { path: "/diagnosis/detail", element: <DiagnosisDetail /> },
+      { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
+      { path: '/diagnosis/detail', element: <DiagnosisDetail /> },
       { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
       { path: '/diagnosis/simple', element: <SimpleDiagnosisIntro /> },
       { path: '/diagnosis/simple/pick', element: <SimpleDiagnosisPick /> },
-      { path: "/diagnosis/result/loading", element: <DiagnosisResultLoading /> },
-      { path: '/diagnosiscomplete', element: <DiagnosisCompletePage /> },
-      { path: "/diagnosis/recommend", element: <DiagnosisSpaceRecommendPage /> },
+      {
+        path: '/diagnosis/result/loading',
+        element: <DiagnosisResultLoading />,
+      },
+      { path: '/diagnosis/complete', element: <DiagnosisCompletePage /> },
+      {
+        path: '/diagnosis/recommend',
+        element: <DiagnosisSpaceRecommendPage />,
+      },
       { path: '/recommend', element: <SpaceRecommend /> },
-      { path: '/login', element : <LoginPage/>},
-      { path: '/loginstart', element: <LoginStartPage/>},
-      { path: '/myteabag', element: <MyTeabag/> },
-      { path: '/signup', element: <SignUpPage/>},
+      { path: '/login', element: <LoginPage /> },
+      { path: '/login/start', element: <LoginStartPage /> },
+      { path: '/myteabag', element: <MyTeabag /> },
+      { path: '/signup', element: <SignUpPage /> },
     ],
   },
 ];
