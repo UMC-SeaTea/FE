@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import NoteSearch from './NoteSearch';
+import NoteSearch from '../common/NoteSearch';
 
 type SearchResultProps = {
   name: string;

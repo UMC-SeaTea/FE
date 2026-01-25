@@ -1,9 +1,9 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import KeywordButton from '../../components/common/KeywordButton';
-import SearchList from '../../components/common/SearchList';
+import SearchList from '../../components/Search/SearchList';
 import SearchBarTouched from '../../components/SearchBar/SearchBarTouched';
 import { useEffect, useMemo, useState } from 'react';
-import SearchResult from '../../components/common/SearchResult';
+import SearchResult from '../../components/Search/SearchResult';
 import useDebounce from '../../hooks/useDebounce';
 
 type RecentItem = {

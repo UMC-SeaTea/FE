@@ -51,13 +51,11 @@ const MapPage = () => {
               />
 
               <Chip
-                label="Smocky"
-                textColor="smocky"
-                active={selectedChip === 'Smocky'}
+                label="Smoky"
+                textColor="smoky"
+                active={selectedChip === 'Smoky'}
                 onClick={() =>
-                  setSelectedChip((prev) =>
-                    prev === 'Smocky' ? null : 'Smocky'
-                  )
+                  setSelectedChip((prev) => (prev === 'Smoky' ? null : 'Smoky'))
                 }
               />
 

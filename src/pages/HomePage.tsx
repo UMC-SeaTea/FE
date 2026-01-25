@@ -23,11 +23,7 @@ const HomePage = () => {
             onClick={() => setNavOpen((prev) => !prev)}
           />
           <SideBarContainer open={navOpen} onClose={() => setNavOpen(false)} />
-          <HomeTestType
-            type="sweet"
-            title="sweet."
-            description="소소한 디저트나 쇼핑 등 자신에게 작은 보상을 주며 스트레스를 풀어요"
-          />
+          <HomeTestType type="oceanic" />
         </div>
         <div className="flex flex-col pl-[20px] gap-[29px]">
           <div className="flex flex-col gap-[10px]">
