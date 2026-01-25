@@ -15,7 +15,7 @@ const SortButton = ({ onClick }: Props) => {
         rounded-[100px] border
         border-gray-400
         bg-white
-        inline-flex items-center justify-center gap-[10px]
+        inline-flex items-center justify-center gap-[4px]
       "
     >
       <img src={sortIcon} alt="정렬" className="w-[16px] h-[16px]" />

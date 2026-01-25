@@ -46,7 +46,11 @@ export default function DiagnosisDetail() {
   };
 
   const onResult = () => {
-    navigate('/diagnosis/result');
+    navigate('/diagnosis/result/loading', {
+      state: {
+        source: 'detail',
+      },
+    });
   };
 
   const triggerPickedThenNext = (delayMs: number) => {

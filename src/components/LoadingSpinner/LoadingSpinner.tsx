@@ -1,7 +1,7 @@
-import img1 from '../../../assets/images/loading/loading1.png';
-import img2 from '../../../assets/images/loading/loading2.png';
-import img3 from '../../../assets/images/loading/loading3.png';
-import pot from '../../../assets/images/loading/loadingPot.png';
+import img1 from '../../assets/images/loading/loading1.png';
+import img2 from '../../assets/images/loading/loading2.png';
+import img3 from '../../assets/images/loading/loading3.png';
+import pot from '../../assets/images/loading/loadingPot.png';
 import './loadingAnimate.css';
 
 type LoadingSpinnerProps = {

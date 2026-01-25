@@ -12,8 +12,8 @@ function shuffle<T>(arr: T[]) {
 
 type KeywordItem = { id: string; label: string };
 
-const BRAND = "#2F16FF";      
-const SELECT_BG = "#F2F1FF";  
+const BRAND = "#2F16FF";
+const SELECT_BG = "#F2F1FF";
 
 export default function SimpleDiagnosisPick() {
   const navigate = useNavigate();
@@ -90,7 +90,9 @@ export default function SimpleDiagnosisPick() {
       .map((id) => flat.find((x) => x.id === id)?.label)
       .filter(Boolean) as string[];
 
-    navigate("/diagnosis/result", { state: { simpleKeywords: selectedLabels } });
+    navigate("/diagnosis/result/loading", {
+      state: { simpleKeywords: selectedLabels, source: "simple" },
+    });
   };
 
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -132,7 +134,8 @@ export default function SimpleDiagnosisPick() {
                 rowRefs.current[rowIdx] = el;
               }}
               className="
-                w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
+              "
             >
               <div className="min-w-full flex justify-center">
                 <div className="w-max inline-flex gap-x-[10px] px-[20px]">
@@ -175,9 +178,7 @@ export default function SimpleDiagnosisPick() {
           지금 당신의 마음에 가장 가까운
           <br />
           키워드{" "}
-          <span className="font-body text-body-3 text-gray-100">
-            3개
-          </span>
+          <span className="font-body text-body-3 text-gray-100">3개</span>
           를 선택해주세요.
         </p>
 

@@ -6,4 +6,3 @@ export const router = createBrowserRouter([
   ...publicRoutes,
   ...protectedRoutes,
 ]);
-export default router;

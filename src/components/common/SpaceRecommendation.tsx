@@ -6,10 +6,8 @@ import Smoky from '../../assets/images/tastingNoteTypeImages/smoky.png';
 import Fruity from '../../assets/images/tastingNoteTypeImages/fruity.png';
 import Oceanic from '../../assets/images/tastingNoteTypeImages/oceanic.png';
 import Earthy from '../../assets/images/tastingNoteTypeImages/earthy.png';
-import {
-  tastingTypeMap,
-  type TastingKey,
-} from '../../types/tastingType/tastingType';
+import { type TastingKey } from '../../types/tastingType/tastingType';
+import { tastingTypeMap } from '../../constants/tastingType/tastingType';
 
 const typeConfig: Record<
   string,

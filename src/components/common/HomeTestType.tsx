@@ -1,10 +1,8 @@
 import moveButton from '../../assets/homeTestTypeMoveButton.svg';
 import { useNavigate } from 'react-router-dom';
-import {
-  tastingTypeMap,
-  type TastingKey,
-} from '../../types/tastingType/tastingType';
-import { typeConfig } from '../../types/tastingType/tastingImg';
+import { type TastingKey } from '../../types/tastingType/tastingType';
+import { typeConfig } from '../../constants/tastingType/tastingImg';
+import { tastingTypeMap } from '../../constants/tastingType/tastingType';
 
 type Variant = 'home' | 'recommend';
 

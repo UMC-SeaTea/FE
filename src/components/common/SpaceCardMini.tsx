@@ -7,12 +7,12 @@ import exampleImage from '../../assets/images/exampleSpace.png';
 //   img?: string;
 // };
 
-const SpaceCardMini = () => {
+const SpaceCardMini = ({ className = "w-[120px] h-[120px]" }: { className?: string }) => {
   const navigate = useNavigate();
   return (
     <>
       <div
-        className="relative w-[120px] h-[120px] overflow-hidden cursor-pointer"
+        className={`relative overflow-hidden cursor-pointer  ${className}`}
         onClick={() => navigate('/map/1')}
       >
         {/* 추후 이미지 API 연동 필요 */}
