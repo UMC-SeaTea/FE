@@ -29,7 +29,6 @@ export const publicRoutes = [
       { path: '/map', element: <MapPage /> },
       { path: '/map/search', element: <MapSearchPage /> },
       { path: '/map/:sid', element: <MapDetailPage /> },
-      { path: '/explore', element: <></> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/mytasting', element: <MyTastingPage /> },
       { path: '/diagnosis', element: <DiagnosisStart /> },
@@ -42,7 +41,7 @@ export const publicRoutes = [
         path: '/diagnosis/result/loading',
         element: <DiagnosisResultLoading />,
       },
-      { path: '/diagnosiscomplete', element: <DiagnosisCompletePage /> },
+      { path: '/diagnosis/complete', element: <DiagnosisCompletePage /> },
       {
         path: '/diagnosis/recommend',
         element: <DiagnosisSpaceRecommendPage />,

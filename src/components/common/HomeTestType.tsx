@@ -68,7 +68,7 @@ const HomeTestType = ({ type, variant = 'home' }: HomeTestTypeProps) => {
             {variant === 'home' && (
               <div
                 className="flex w-8 h-8 justify-center items-center mt-1 cursor-pointer"
-                onClick={() => navigate('/diagnosis/result')}
+                onClick={() => navigate('/mytasting')}
               >
                 <img
                   src={moveButton}
