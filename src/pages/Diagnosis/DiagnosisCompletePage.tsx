@@ -24,7 +24,7 @@ export default function DiagnosisCompletePage() {
         <HomeTestType type={resultType} variant="home" />
 
         <section className="px-[20px] pt-[18px] flex flex-col flex-1">
-          <p className="w-[335px] font-body text-body-5 text-footer leading-[150%] tracking-[-0.02em]">
+          <p className="whitespace-pre-line w-[335px] font-body text-body-5 text-footer leading-[150%] tracking-[-0.02em]">
             {config.copyPhrase}
           </p>
 

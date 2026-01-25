@@ -53,7 +53,7 @@ const HomeTestType = ({ type, variant = 'home' }: HomeTestTypeProps) => {
       <div className={`relative z-10 flex flex-col w-[334px] ${v.content}`}>
         <div className="flex flex-col w-[334px] gap-[42px] items-start">
           <div className="flex justify-between items-start self-stretch">
-            <div className="flex flex-col w-[180.9px] items-start gap-0 ml-1">
+            <div className="flex flex-col w-[180.9px] items-start gap-[4px] ml-1">
               {/* 나의 테이스팅 노트 텍스트 */}
               {variant === 'home' && (
                 <p className="self-stretch text-body-5 font-body text-black leading-none">
