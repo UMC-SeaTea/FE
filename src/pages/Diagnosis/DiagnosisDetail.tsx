@@ -1,3 +1,4 @@
+// DiagnosisDetail.tsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DiagnosisProgressBar from "../../components/Diagnosis/DiagnosisProgressBar";
@@ -38,7 +39,12 @@ export default function DiagnosisDetail() {
   };
 
   const onResult = () => {
-    navigate("/diagnosis/result");
+    navigate("/diagnosis/result/loading", {
+      state: {
+        source: "detail",
+
+      },
+    });
   };
 
   const triggerPickedThenNext = (delayMs: number) => {
@@ -52,7 +58,7 @@ export default function DiagnosisDetail() {
   return (
     <div className="relative min-h-dvh bg-white overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <DiagnosisWaveBackground stepIndex={stepIndex}  />
+        <DiagnosisWaveBackground stepIndex={stepIndex} />
       </div>
 
       <div className="relative z-10 pt-[80px] pb-[120px]">
@@ -93,9 +99,7 @@ export default function DiagnosisDetail() {
                 className={[
                   "w-full h-[52px] rounded-[14px]",
                   "font-body text-body-title leading-[140%] tracking-[-0.025em] transition-opacity",
-                  isNextEnabled
-                    ? "bg-brand text-white"
-                    : "bg-gray-200 text-gray-500",
+                  isNextEnabled ? "bg-brand text-white" : "bg-gray-200 text-gray-500",
                 ].join(" ")}
               >
                 다음
