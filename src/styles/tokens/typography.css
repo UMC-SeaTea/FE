@@ -1,0 +1,105 @@
+@theme {
+  /* =========================
+     Font Family
+  ========================= */
+  --font-title: 'Samsung Sharp Sans', 'Inter', system-ui, sans-serif;
+  --font-body:
+    'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* =========================
+     Font Weight
+  ========================= */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* =========================
+     Samsung Sharp Sans (Title)
+  ========================= */
+  --text-title-1: 42px;
+  --text-title-1--font-weight: var(--font-weight-bold);
+  --text-title-1--line-height: 1.2;
+
+  --text-logo-title: 40px;
+  --text-logo-title--font-weight: var(--font-weight-medium);
+  --text-logo-title--line-height: normal;
+
+  --text-title-2: 28px;
+  --text-title-2--font-weight: var(--font-weight-medium);
+  --text-title-2--line-height: normal;
+
+  --text-title-3: 24px;
+  --text-title-3--font-weight: var(--font-weight-medium);
+  --text-title-3--line-height: normal;
+
+  --text-title-4: 22px;
+  --text-title-4--font-weight: var(--font-weight-regular);
+  --text-title-4--line-height: 28px;
+
+  /* =========================
+     Pretendard (Body)
+  ========================= */
+  --text-body-title: 18px;
+  --text-body-title--font-weight: var(--font-weight-semibold);
+  --text-body-title--line-height: 1.4;
+  --text-body-title--letter-spacing: -0.45px;
+
+  --text-body-1: 16px;
+  --text-body-1--font-weight: var(--font-weight-semibold);
+  --text-body-1--line-height: 1.4;
+  --text-body-1--letter-spacing: -0.4px;
+
+  --text-body-2: 16px;
+  --text-body-2--font-weight: var(--font-weight-medium);
+  --text-body-2--line-height: 1.4;
+  --text-body-2--letter-spacing: -0.4px;
+
+  --text-body-3: 14px;
+  --text-body-3--font-weight: var(--font-weight-semibold);
+  --text-body-3--line-height: 1.5;
+  --text-body-3--letter-spacing: -0.28px;
+
+  --text-body-4: 14px;
+  --text-body-4--font-weight: var(--font-weight-medium);
+  --text-body-4--line-height: 1.4;
+  --text-body-4--letter-spacing: -0.35px;
+
+  --text-body-5: 14px;
+  --text-body-5--font-weight: var(--font-weight-regular);
+  --text-body-5--line-height: 1.4;
+  --text-body-5--letter-spacing: -0.28px;
+
+  /* =========================
+     Detail
+  ========================= */
+  --text-detail-1: 13px;
+  --text-detail-1--font-weight: var(--font-weight-medium);
+  --text-detail-1--line-height: 1.4;
+  --text-detail-1--letter-spacing: -0.26px;
+
+  --text-detail-2: 13px;
+  --text-detail-2--font-weight: var(--font-weight-regular);
+  --text-detail-2--line-height: 1.4;
+  --text-detail-2--letter-spacing: -0.325px;
+
+  --text-detail-3: 12px;
+  --text-detail-3--font-weight: var(--font-weight-medium);
+  --text-detail-3--line-height: 1.4;
+  --text-detail-3--letter-spacing: -0.3px;
+
+  --text-detail-4: 12px;
+  --text-detail-4--font-weight: var(--font-weight-regular);
+  --text-detail-4--line-height: 1.2;
+  --text-detail-4--letter-spacing: -0.3px;
+}
+
+@layer utilities {
+  .font-title {
+    font-family: var(--font-title);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+}
