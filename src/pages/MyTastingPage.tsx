@@ -7,13 +7,22 @@ import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { useState } from 'react';
 import TastingNote from '../components/common/TastingNote';
 import PlaceTestCard from '../components/PlaceTest/PlaceTestCard';
+import SideBarContainer from '../components/SideBar/SideBarContainer';
 
 const MyTastingPage = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   return (
     <>
       <div className="h-[44px]" />
-      <NavBar variant="5" text="휴식 유형" icon={menuIcon} />
+      <NavBar
+        variant="5"
+        text="휴식 유형"
+        icon={menuIcon}
+        className="relative z-[60]"
+        onClick={() => setNavOpen((prev) => !prev)}
+      />
+      <SideBarContainer open={navOpen} onClose={() => setNavOpen(false)} />
       <div className="pt-[50px] flex flex-col gap-[12px]">
         <div className="flex items-center gap-[4px]">
           <p className="pl-[20px] font-body text-body-title text-black">
