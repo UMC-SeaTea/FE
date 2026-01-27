@@ -1,6 +1,5 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SideBar from './SideBar';
-import { useEffect } from 'react';
 
 interface SideBarContainerProps {
   open: boolean;
@@ -9,25 +8,6 @@ interface SideBarContainerProps {
 
 const SideBarContainer = ({ open, onClose }: SideBarContainerProps) => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  // esc 닫기
-  useEffect(() => {
-    if (!open) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => {
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [open, onClose]);
-
-  // 경로 변경 시 닫기
-  useEffect(() => {
-    if (!open) return;
-    onClose();
-  }, [pathname]);
 
   return (
     <div
