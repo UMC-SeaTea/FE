@@ -4,12 +4,15 @@ import HomeTestType from '../components/common/HomeTestType';
 import SpaceCardMini from '../components/common/SpaceCardMini';
 import SideBarTest from '../components/common/SideBarTest';
 import Carousel from '../components/common/Carousel';
-import { useState } from 'react';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
+import useSideBar from '../hooks/useSideBar';
 
 const HomePage = () => {
-  const [navOpen, setNavOpen] = useState(false);
+  const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
+    closeOnEsc: true,
+  });
+
   return (
     <>
       <div className="h-[44px]" />
@@ -20,9 +23,9 @@ const HomePage = () => {
             text="SeaTea"
             icon={menu}
             className="border-b border-[#000] relative z-[60]"
-            onClick={() => setNavOpen((prev) => !prev)}
+            onClick={toggleSideBar}
           />
-          <SideBarContainer open={navOpen} onClose={() => setNavOpen(false)} />
+          <SideBarContainer open={open} onClose={closeSideBar} />
           <HomeTestType type="oceanic" />
         </div>
         <div className="flex flex-col pl-[20px] gap-[29px]">

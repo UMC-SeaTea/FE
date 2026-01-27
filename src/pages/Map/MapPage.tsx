@@ -7,9 +7,14 @@ import Carousel from '../../components/common/Carousel';
 import { useEffect, useState } from 'react';
 import GPSIcon from '../../assets/RoundButton/gps_btn.svg';
 import useLocation from '../../hooks/useLocation';
+import SideBarContainer from '../../components/SideBar/SideBarContainer';
+import useSideBar from '../../hooks/useSideBar';
 
 const MapPage = () => {
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
+  const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
+    closeOnEsc: true,
+  });
 
   const { location, setCurrentLocation, loading, error } = useLocation();
 
@@ -21,7 +26,14 @@ const MapPage = () => {
   return (
     <>
       <div className="h-[44px]" />
-      <NavBar variant="5" text="지도" icon={menuIcon} />
+      <NavBar
+        variant="5"
+        text="지도"
+        icon={menuIcon}
+        className="relative z-[60]"
+        onClick={toggleSideBar}
+      />
+      <SideBarContainer open={open} onClose={closeSideBar} />
 
       <div className="relative w-[375px]">
         <div className="absolute top-[30px] left-1/2 -translate-x-1/2 z-10 w-[375px] pl-[20px]">

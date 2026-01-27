@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react'; 
-import SpaceCardMini from '../components/common/SpaceCardMini'; 
+import { useState, useEffect, useRef } from 'react';
+import SpaceCardMini from '../components/common/SpaceCardMini';
 import SortButton from '../components/common/SortButton';
 import EditButton from '../components/common/EditButton';
-import MoveupButton from "../assets/RoundButton/moveup_btn.svg";
-import MyTeabagPagination from '../components/MyTeabag/MyTeabagPagination'; 
+import MoveupButton from '../assets/RoundButton/moveup_btn.svg';
+import MyTeabagPagination from '../components/MyTeabag/MyTeabagPagination';
 import Footer from '../components/common/Footer';
 
 const TOTAL_DATA = Array.from({ length: 60 }).map((_, i) => ({
@@ -14,10 +14,10 @@ const TOTAL_DATA = Array.from({ length: 60 }).map((_, i) => ({
 const MyTeabagPage = () => {
   const [page, setPage] = useState(1);
   const [isFooterInView, setIsFooterInView] = useState(false);
-  
+
   const footerRef = useRef<HTMLDivElement>(null);
 
-  const itemsPerPage = 20; 
+  const itemsPerPage = 20;
   const indexOfLastItem = page * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = TOTAL_DATA.slice(indexOfFirstItem, indexOfLastItem);
@@ -33,7 +33,7 @@ const MyTeabagPage = () => {
         setIsFooterInView(entry.isIntersecting);
       },
       {
-        threshold: 0 
+        threshold: 0,
       }
     );
 
@@ -42,7 +42,7 @@ const MyTeabagPage = () => {
     }
 
     return () => observer.disconnect();
-  }, []); 
+  }, []);
 
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -56,28 +56,28 @@ const MyTeabagPage = () => {
             UMC 님의 티백
           </div>
           <div className="flex items-center gap-[4px] ">
-              <SortButton />
-              <EditButton />
+            <SortButton />
+            <EditButton />
           </div>
         </div>
 
-        <div className="mx-auto inline-grid gap-y-6 gap-x-[11px] self-stretch
-        grid-rows-[repeat(4,fit-content(100%))] grid-cols-[repeat(2,fit-content(100%))] ">
+        <div
+          className="mx-auto inline-grid gap-y-6 gap-x-[11px] self-stretch
+        grid-rows-[repeat(4,fit-content(100%))] grid-cols-[repeat(2,fit-content(100%))] "
+        >
           {currentItems.map((item) => (
-          <div key={item.id} className="w-[162px] h-[162px]">
-            <SpaceCardMini className="w-full h-full rounded-sm" />
-          </div>
+            <div key={item.id} className="w-[162px] h-[162px]">
+              <SpaceCardMini className="w-full h-full rounded-sm" />
+            </div>
           ))}
         </div>
 
-        <MyTeabagPagination 
-          page={page} 
-          totalPages={totalPages} 
-          setPage={setPage} 
+        <MyTeabagPagination
+          page={page}
+          totalPages={totalPages}
+          setPage={setPage}
         />
-        
-      </div> 
-
+      </div>
 
       <div ref={footerRef} className="w-full">
         <Footer />
@@ -89,9 +89,9 @@ const MyTeabagPage = () => {
         alt="Moveup Button"
         className={`
           ml-[303px] z-50 cursor-pointer transition-all duration-200
-          ${isFooterInView 
-            ? 'absolute bottom-[172px]' 
-            : 'fixed bottom-[64.5px]'} 
+          ${
+            isFooterInView ? 'absolute bottom-[172px]' : 'fixed bottom-[64.5px]'
+          } 
         `}
       />
     </div>
