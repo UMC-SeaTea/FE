@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import clsx from 'clsx';
+import { useState } from 'react';
+import { AiOutlineQuestionCircle } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
 export default function DiagnosisStart() {
   const [openInfo, setOpenInfo] = useState(false);
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate("/diagnosis/loading"); 
+    navigate('/diagnosis/loading');
   };
 
   const handleSimpleDiagnosis = () => {
-  navigate("/diagnosis/simple"); 
-};
-
+    navigate('/diagnosis/simple');
+  };
 
   return (
     <main
@@ -31,28 +31,26 @@ export default function DiagnosisStart() {
         </p>
 
         <div className="mt-[6px] w-full flex justify-center">
-        <div className="relative inline-flex items-center">
+          <div className="relative inline-flex items-center">
             <h1 className="text-title-2 font-title leading-[28px] text-center">
-            8 Tasting Notes
+              8 Tasting Notes
             </h1>
 
             <button
-            type="button"
-            onClick={() => setOpenInfo((v) => !v)}
-            aria-label="테이스팅 노트 설명"
-            className="absolute left-full ml-[8px] -translate-y-[12px]"
+              type="button"
+              onClick={() => setOpenInfo((v) => !v)}
+              aria-label="테이스팅 노트 설명"
+              className="absolute left-full ml-[8px] -translate-y-[12px]"
             >
-            <AiOutlineQuestionCircle
-                className={`
-                w-[16px] h-[16px]
-                transition-all duration-150
-                ${openInfo ? "text-white/40" : "text-white"}
-                `}
-            />
+              <AiOutlineQuestionCircle
+                className={clsx(
+                  'w-[16px] h-[16px] transition-all duration-150',
+                  openInfo ? 'text-white/40' : 'text-white'
+                )}
+              />
             </button>
+          </div>
         </div>
-        </div>
-
 
         {openInfo && (
           <div
@@ -68,7 +66,7 @@ export default function DiagnosisStart() {
               className="w-full h-full backdrop-blur-[10px]"
               style={{
                 background:
-                  "linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 100%)",
+                  'linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 100%)',
               }}
             >
               <div className="px-[20px] pt-[37px] relative -translate-y-[12px]">
@@ -100,34 +98,22 @@ export default function DiagnosisStart() {
       {/* 하단 영역 */}
       <section className="w-full mt-auto pb-[34px] flex flex-col items-center">
         <p
-          className="
-            w-[316px]
-            text-body-3 leading-[21px]
-            font-body
-            tracking-[-0.02em]
-            text-center
-            mb-[16px]
-            opacity-90
-          "
+          className="w-[316px] text-body-3 leading-[21px] font-body tracking-[-0.02em]
+            text-center mb-[16px] opacity-90 "
         >
           ⚠ ️잠깐! 시작하기 전에
           <br />
           <span className="font-body text-body-5 tracking-[-0.02em]">
-            SeaTea의 휴식 진단은 전문적인 정신의학적 진단이 아니며,
-            더 즐거운 휴식 경험을 돕기 위한 가벼운 가이드입니다.
+            SeaTea의 휴식 진단은 전문적인 정신의학적 진단이 아니며, 더 즐거운
+            휴식 경험을 돕기 위한 가벼운 가이드입니다.
           </span>
         </p>
 
         <div className="flex flex-col gap-[12px]">
           <button
             type="button"
-            onClick={handleStart} 
-            className="
-              w-[335px] h-[50px]
-              rounded-[25px]
-              border border-white
-              text-body-title font-body
-            "
+            onClick={handleStart}
+            className="w-[335px] h-[50px] rounded-[25px] border border-white text-body-title font-body"
           >
             시작하기
           </button>

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import waveBack from '../../assets/images/simplediagnosis/waveBack.png';
 import waveFront from '../../assets/images/simplediagnosis/waveFront.png';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import clsx from 'clsx';
 
 export default function SimpleDiagnosisIntro() {
   const navigate = useNavigate();
@@ -45,11 +46,10 @@ export default function SimpleDiagnosisIntro() {
       `}</style>
 
       <div
-        className={[
-          'absolute inset-0',
-          'transition-opacity duration-300 ease-out',
-          leaving ? 'opacity-0' : 'opacity-100',
-        ].join(' ')}
+        className={clsx(
+          'absolute inset-0 transition-opacity duration-300 ease-out',
+          leaving ? 'opacity-0' : 'opacity-100'
+        )}
       >
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <img
