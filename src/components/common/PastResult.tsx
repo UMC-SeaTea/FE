@@ -1,4 +1,3 @@
-
 import bgFloral from '../../assets/images/pastResultBgImages/bgFloral.jpg';
 import bgNutty from '../../assets/images/pastResultBgImages/bgNutty.jpg';
 import bgSweet from '../../assets/images/pastResultBgImages/bgSweet.jpg';
@@ -20,15 +19,15 @@ const bgImageMap: Record<string, string> = {
 };
 
 interface PastResultProps {
-  type: string; 
-  date: string;  
+  type: string;
+  date: string;
 }
 
 const PastResult = ({ type, date }: PastResultProps) => {
   const bgImage = bgImageMap[type] || bgFloral;
 
   return (
-    <div 
+    <div
       className="flex w-[335px] h-[91px] px-[19px] py-[31px] flex-col justify-center items-start gap-2.5"
       style={{
         backgroundImage: `
@@ -38,7 +37,7 @@ const PastResult = ({ type, date }: PastResultProps) => {
         `,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
       }}
     >
       <div className="flex w-[290px] justify-between items-center">
@@ -50,7 +49,6 @@ const PastResult = ({ type, date }: PastResultProps) => {
         <span className="font-body text-base font-light text-gray-200">
           {date}
         </span>
-
       </div>
     </div>
   );
