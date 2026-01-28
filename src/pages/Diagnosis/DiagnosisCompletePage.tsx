@@ -15,16 +15,16 @@ export default function DiagnosisCompletePage() {
   return (
     <main className="min-h-dvh bg-[#F6F7FB] flex justify-center">
       <div className="w-full max-w-[375px] min-h-dvh bg-white flex flex-col">
-        <header className="h-[56px] w-full border-b border-[#0A0A0A] flex items-center px-[20px] shrink-0">
-          <span className="font-title text-[18px] font-weight-medium leading-none text-[#0A0A0A] mt-[10px]">
+        <header className="h-[56px] w-full border-b border-footer flex items-center px-[20px] shrink-0">
+          <span className="font-title text-[18px] font-weight-medium leading-none mt-[10px] text-footer">
             SeaTea
           </span>
         </header>
 
         <HomeTestType type={resultType} variant="home" />
 
-        <section className="px-[20px] pt-[18px] flex flex-col flex-1">
-          <p className="whitespace-pre-line w-[335px] font-body text-body-5 text-footer leading-[150%] tracking-[-0.02em]">
+        <section className="px-[20px] flex flex-col flex-1">
+          <p className="whitespace-pre-line w-[335px] font-body text-body-5 text-footer leading-[150%] tracking-[-0.02em] pt-[89px] pb-[61px]">
             {config.copyPhrase}
           </p>
 
@@ -36,7 +36,7 @@ export default function DiagnosisCompletePage() {
               onClick={() =>
                 navigate('/diagnosis/recommend', { state: { resultType } })
               }
-              className="w-[334px] h-[50px] rounded-[25px] bg-brand text-white font-body font-weight-regular text-18px"
+              className="w-[334px] h-[50px] rounded-[25px] bg-brand text-white font-body font-weight-regular text-[18px] cursor-pointer"
             >
               공간 추천받기
             </button>
@@ -44,7 +44,7 @@ export default function DiagnosisCompletePage() {
             <button
               type="button"
               onClick={() => navigate('/')}
-              className="w-[334px] h-[50px] rounded-[25px] bg-white border border-brand text-brand font-body font-weight-regular text-18px"
+              className="w-[334px] h-[50px] rounded-[25px] bg-white border border-brand text-brand font-body font-weight-regular text-[18px] cursor-pointer"
             >
               홈으로 이동
             </button>

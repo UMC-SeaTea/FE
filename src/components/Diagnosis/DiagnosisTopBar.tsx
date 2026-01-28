@@ -1,4 +1,4 @@
-import backIcon from "../../assets/backButton_black.svg";
+import backIcon from '../../assets/backButton_black.svg';
 
 type Props = {
   title: string;
@@ -17,11 +17,10 @@ export default function DiagnosisTopBar({ title, onBack }: Props) {
         <img src={backIcon} alt="" className="w-[24px] h-[24px]" />
       </button>
 
-
       <div className="flex justify-center">
         <h1
           className="
-            w-full px-[56px] text-center text-title-4 font-title text-#0A0A0 whitespace-normal break-keep leading-[140%]"
+            w-full px-[56px] text-center text-title-4 font-title text-footer whitespace-normal break-keep leading-[140%]"
         >
           {title}
         </h1>

@@ -10,7 +10,7 @@ const EditButton = ({ onClick }: Props) => {
       type="button"
       onClick={onClick}
       className="h-[32px] px-[12px] py-[6px]
-        rounded-[100px] borderborder-gray-400 bg-white
+        rounded-[100px] border border-gray-400 bg-white
         inline-flex items-center justify-center gap-[4px]
       "
     >

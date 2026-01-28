@@ -113,7 +113,7 @@ export default function DiagnosisStart() {
           <button
             type="button"
             onClick={handleStart}
-            className="w-[335px] h-[50px] rounded-[25px] border border-white text-body-title font-body"
+            className="w-[335px] h-[50px] rounded-[25px] border border-white text-body-title font-body cursor-pointer"
           >
             시작하기
           </button>
@@ -121,11 +121,7 @@ export default function DiagnosisStart() {
           <button
             type="button"
             onClick={handleSimpleDiagnosis}
-            className="
-              w-[335px] h-[50px]
-              rounded-[25px]
-              border border-white
-              text-body-2 font-body
+            className="w-[335px] h-[50px] rounded-[25px] border border-white text-body-2 font-body cursor-pointer
             "
           >
             10초만에 휴식 추천받기

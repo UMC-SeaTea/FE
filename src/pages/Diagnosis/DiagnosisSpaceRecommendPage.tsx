@@ -35,20 +35,18 @@ export default function DiagnosisSpaceRecommendPage() {
             <div className="px-[20px] py-[12px] mt-[15px] flex items-center justify-between shrink-0">
               <p className="font-body text-body-title text-footer">공간 추천</p>
 
-              <button
-                type="button"
-                onClick={handleRefresh}
-                className="flex items-center gap-[8px]"
-              >
-                <span className="font-body text-body-4 leading-[140%] text-gray-100">
+              <div className="flex items-center gap-[8px]">
+                <span className="font-body text-body-4 text-gray-100">
                   공간 다시 우리기
                 </span>
-                <img
-                  src={refreshIcon}
-                  alt="refresh"
-                  className="w-[28px] h-[28px]"
-                />
-              </button>
+                <button
+                  type="button"
+                  onClick={handleRefresh}
+                  className="w-[28px] h-[28px] cursor-pointer"
+                >
+                  <img src={refreshIcon} alt="refresh" />
+                </button>
+              </div>
             </div>
 
             <div className="px-[16px] pt-[12px] flex-1 overflow-y-auto">
@@ -64,7 +62,7 @@ export default function DiagnosisSpaceRecommendPage() {
                 <div className="flex gap-[8px]">
                   <FeedbackButton
                     type="good"
-                    label="정확해요"
+                    label="추천이 정확해요"
                     isSelected={feedback === 'good'}
                     onClick={() => setFeedback('good')}
                   />
@@ -81,7 +79,7 @@ export default function DiagnosisSpaceRecommendPage() {
                 <button
                   type="button"
                   onClick={() => navigate('/')}
-                  className="font-body text-body-5 leading-[140%] text-gray-100"
+                  className="font-body text-body-5 leading-[140%] text-gray-100 cursor-pointer"
                 >
                   홈으로 이동
                 </button>
