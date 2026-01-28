@@ -129,13 +129,13 @@ export default function DiagnosisDetail() {
               type="button"
               onClick={onResult}
               disabled={selectedIds.length === 0}
-              className={[
+              className={clsx(
                 'w-full h-[50px] rounded-[25px] p-[14px] text-center',
                 'font-body text-body-title',
                 selectedIds.length === 0
                   ? 'bg-white text-light-blue border border-light-blue cursor-not-allowed'
-                  : 'bg-brand text-white cursor-pointer',
-              ].join(' ')}
+                  : 'bg-brand text-white cursor-pointer'
+              )}
             >
               결과 확인하기
             </button>

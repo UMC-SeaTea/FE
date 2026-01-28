@@ -44,7 +44,11 @@ export default function DiagnosisSpaceRecommendPage() {
                   onClick={handleRefresh}
                   className="w-[28px] h-[28px] cursor-pointer"
                 >
-                  <img src={refreshIcon} alt="refresh" />
+                  <img
+                    src={refreshIcon}
+                    alt="refresh"
+                    className="w-full h-full"
+                  />
                 </button>
               </div>
             </div>
