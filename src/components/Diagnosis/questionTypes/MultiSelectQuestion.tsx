@@ -113,7 +113,7 @@ export default function MultiSelectQuestion({
             className={clsx(
               'w-full h-[52px] rounded-[14px]',
               'font-body text-[16px] font-[600]',
-              ctaDisabled ? 'bg-gray-200 text-gray-500' : 'bg--brand text-white'
+              ctaDisabled ? 'bg-gray-200 text-gray-500' : 'bg-brand text-white'
             )}
           >
             {ctaText}
