@@ -32,7 +32,6 @@ export default function SimpleDiagnosisIntro() {
       "
     >
       <style>{`
-
         @keyframes wave-float-back {
           0%   { transform: translateX(-50%) translateY(0) scaleY(1); }
           50%  { transform: translateX(-50%) translateY(-8px) scaleY(1.02); }
@@ -55,8 +54,7 @@ export default function SimpleDiagnosisIntro() {
           <img
             src={waveBack}
             alt=""
-            className="
-              absolute left-1/2 bottom-[-45px]
+            className="absolute left-1/2 bottom-[-45px]
               w-[120%] max-w-none
               [transform-origin:50%_100%]
               animate-[wave-float-back_6s_ease-in-out_infinite]
@@ -66,8 +64,7 @@ export default function SimpleDiagnosisIntro() {
           <img
             src={waveFront}
             alt=""
-            className="
-              absolute left-1/2 bottom-[-50px]
+            className="absolute left-1/2 bottom-[-50px]
               w-[128%] max-w-none
               [transform-origin:50%_100%]
               animate-[wave-float-front_4.6s_ease-in-out_infinite]

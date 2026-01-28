@@ -159,7 +159,7 @@ export default function SimpleDiagnosisPick() {
                           border border-solid
                           backdrop-blur-[4px]
                           shadow-[0_0_8px_rgba(251,251,255,0.5)]
-                          transition-all duration-150
+                          transition-all duration-150 cursor-pointer
                         "
                         aria-pressed={isOn}
                       >
@@ -191,8 +191,8 @@ export default function SimpleDiagnosisPick() {
             'w-[350px] h-[53px] rounded-[25px]',
             'font-body text-body-title transition-all duration-150',
             canSubmit
-              ? 'bg-[#2F16FF] text-white border border-transparent'
-              : 'bg-transparent text-light-blue border border-light-blue'
+              ? 'bg-[#2F16FF] text-white border border-transparent cursor-pointer'
+              : 'bg-transparent text-light-blue border border-light-blue cursor-not-allowed'
           )}
         >
           결과 확인하기
