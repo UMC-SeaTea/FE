@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import SideBar from './SideBar';
 
 interface SideBarContainerProps {
@@ -5,7 +6,9 @@ interface SideBarContainerProps {
   onClose: () => void;
 }
 
-const SideBarContainer = ({ open }: SideBarContainerProps) => {
+const SideBarContainer = ({ open, onClose }: SideBarContainerProps) => {
+  const navigate = useNavigate();
+
   return (
     <div
       className={[
@@ -13,7 +16,12 @@ const SideBarContainer = ({ open }: SideBarContainerProps) => {
         open ? 'translate-x-0' : '-translate-x-full',
       ].join(' ')}
     >
-      <SideBar />
+      <SideBar
+        onSelect={(path) => {
+          navigate(path);
+          onClose();
+        }}
+      />
     </div>
   );
 };
