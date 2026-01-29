@@ -20,14 +20,18 @@ export const useSignUp = () => {
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
+  const [emailError, setEmailError] = useState('');
+
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isPwValid =
-    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+|~={}\[\]:;<>?,./]).{8,}$/.test(
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+|~={}\[\]:;<>?,./]).{8,20}$/.test(
       password
     );
   const isPwMatch = password === confirmPassword && confirmPassword.length > 0;
   const isStep1Complete =
     isEmailValid && isEmailChecked && isPwValid && isPwMatch;
+
+  const isNicknameValid = /^[a-zA-Z0-9가-힣]{4,}$/.test(nickname);
 
   const getTitle = () => {
     if (step === 1) return '회원가입';
@@ -45,14 +49,27 @@ export const useSignUp = () => {
   };
 
   const handleCheckEmail = () => {
-    if (!isEmailValid) return alert('이메일 형식을 확인해주세요.');
-    alert('사용 가능한 이메일입니다.');
-    setIsEmailChecked(true);
+    if (!isEmailValid) {
+      setEmailError('이메일 주소를 정확히 입력해주세요.');
+      return;
+    }
+
+    const isDuplicate = false;
+
+    if (isDuplicate) {
+      setEmailError('이미 등록된 이메일입니다.');
+      setIsEmailChecked(false);
+    } else {
+      setEmailError('');
+      setIsEmailChecked(true);
+      alert('사용 가능한 이메일입니다.');
+    }
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     setIsEmailChecked(false);
+    setEmailError('');
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +80,12 @@ export const useSignUp = () => {
       setShowImgOption(false);
       setStep(3);
     }
+  };
+
+  const handleSkipImage = () => {
+    setProfileImage(null);
+    setPreviewUrl(null);
+    setStep(3);
   };
 
   const handleSubmit = () => {
@@ -82,6 +105,7 @@ export const useSignUp = () => {
       showImgOption,
       profileImage,
       previewUrl,
+      emailError,
     },
     refs: {
       fileInputRef,
@@ -92,7 +116,20 @@ export const useSignUp = () => {
       isPwValid,
       isPwMatch,
       isStep1Complete,
+      isNicknameValid,
       title: getTitle(),
+      passwordError:
+        password.length > 0 && !isPwValid
+          ? '영문, 숫자, 특수문자를 조합하여 입력해주세요. (8-20자)'
+          : '',
+      confirmPasswordError:
+        confirmPassword.length > 0 && password !== confirmPassword
+          ? '비밀번호가 일치하지 않습니다.'
+          : '',
+      nicknameError:
+        nickname.length > 0 && !isNicknameValid
+          ? '한글, 영문, 숫자를 조합하여 4자 이상 입력해주세요.(공백 제외)'
+          : '',
     },
     actions: {
       setStep,
@@ -105,6 +142,7 @@ export const useSignUp = () => {
       handleCheckEmail,
       handleEmailChange,
       handleImageUpload,
+      handleSkipImage,
       handleSubmit,
     },
   };

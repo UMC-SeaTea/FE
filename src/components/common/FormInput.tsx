@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import passwordOnButton from "../../assets/passwordOnButton.svg"; 
-import passwordOffButton from "../../assets/passwordOffButton.svg";
+import passwordOnButton from '../../assets/passwordOnButton.svg';
+import passwordOffButton from '../../assets/passwordOffButton.svg';
 
 interface FormInputProps {
   label: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  type?: string; 
-  isPassword?: boolean; 
+  type?: string;
+  isPassword?: boolean;
   rightSection?: React.ReactNode;
 }
 
@@ -16,21 +16,22 @@ const FormInput = ({
   label,
   value,
   onChange,
-  placeholder = "",
-  type = "text",
+  placeholder = '',
+  type = 'text',
   isPassword = false,
   rightSection,
 }: FormInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
-  
 
-  const inputType = isPassword ? (showPassword ? "text" : "password") : type;
+  const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
 
   return (
     <div className="items-start self-stretch flex flex-col gap-[8px] w-full">
       <div className="text-footer font-body text-body-2">{label}</div>
-      <div className="flex items-center w-full h-[50px] gap-2.5 px-[17px] rounded-[25px] 
-      border border-gray-200 bg-white shadow-[0_0_9.9px_0_rgba(141,141,141,0.24)]">
+      <div
+        className="flex items-center w-full h-[50px] gap-2.5 px-[17px] rounded-[25px] 
+      border border-gray-200 bg-white shadow-[0_0_9.9px_0_rgba(141,141,141,0.24)]"
+      >
         <input
           type={inputType}
           value={value}
