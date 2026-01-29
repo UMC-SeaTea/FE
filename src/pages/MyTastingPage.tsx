@@ -12,7 +12,6 @@ const MyTastingPage = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
   return (
     <>
-      <div className="h-[44px]" />
       <NavBar variant="5" text="휴식 유형" icon={menuIcon} />
       <div className="pt-[50px] flex flex-col gap-[12px]">
         <div className="flex items-center gap-[4px]">
