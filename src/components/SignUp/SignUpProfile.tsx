@@ -41,10 +41,17 @@ const SignUpProfile = ({ state, actions, refs }: Props) => {
         capture="user"
       />
 
-      <div className="fixed bottom-[15px] w-[335px] left-0 right-0 mx-auto z-50 flex flex-col gap-[12px]">
-        <div className="relative w-[335px] mt-[215px] flex flex-col items-center">
+      <div className="fixed bottom-[15px] w-[335px] left-0 right-0 mx-auto z-50 flex flex-col items-center">
+        <button
+          onClick={() => actions.handleSkipImage()}
+          className="mb-[14px] text-gray-100 font-body text-[14px] font-normal leading-[140%] text-center"
+        >
+          사진 없이 계속하기
+        </button>
+
+        <div className="relative w-full">
           {state.showImgOption && (
-            <div className="absolute bottom-full left-0 z-10 animate-fade-in">
+            <div className="absolute bottom-[9px] left-0 z-10 animate-fade-in ml-1">
               <div
                 className="flex flex-col w-[252px] h-[75px] justify-center items-center rounded-[13px] 
                   bg-[rgba(249,249,249,0.80)] backdrop-blur-[2px] shadow-[0_0_12.6px_0_rgba(0,0,0,0.25)] overflow-hidden"
@@ -93,13 +100,7 @@ const SignUpProfile = ({ state, actions, refs }: Props) => {
             e?.stopPropagation();
             actions.setShowImgOption(!state.showImgOption);
           }}
-          className="mt-[23px] h-[53px]"
-        />
-
-        <SignUpPageBottomButton
-          text="사진 없이 계속하기"
-          onClick={() => actions.handleSkipImage()}
-          className="h-[53px]"
+          className="h-[53px] w-full"
         />
       </div>
     </div>

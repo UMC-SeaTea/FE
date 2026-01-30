@@ -10,6 +10,7 @@ interface FormInputProps {
   type?: string;
   isPassword?: boolean;
   rightSection?: React.ReactNode;
+  isError?: boolean;
 }
 
 const FormInput = ({
@@ -20,17 +21,19 @@ const FormInput = ({
   type = 'text',
   isPassword = false,
   rightSection,
+  isError = false,
 }: FormInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
-
   const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
 
   return (
     <div className="items-start self-stretch flex flex-col gap-[8px] w-full">
       <div className="text-footer font-body text-body-2">{label}</div>
       <div
-        className="flex items-center w-full h-[50px] gap-2.5 px-[17px] rounded-[25px] 
-      border border-gray-200 bg-white shadow-[0_0_9.9px_0_rgba(141,141,141,0.24)]"
+        className={`flex items-center w-full h-[50px] gap-2.5 px-[17px] rounded-[25px] transition-all bg-white
+        shadow-[0_0_9.9px_0_rgba(141,141,141,0.24)] border
+        ${isError ? 'border-[#F00] border-[0.7px]' : 'border-gray-200'} 
+        `}
       >
         <input
           type={inputType}
@@ -38,9 +41,8 @@ const FormInput = ({
           onChange={onChange}
           placeholder={placeholder}
           className="w-full bg-transparent outline-none font-body text-body-5
-           text-black-2 placeholder:text-gray-200 tracking-wider"
+           text-black-2 placeholder:text-gray-200 "
         />
-
         {isPassword ? (
           <button
             type="button"

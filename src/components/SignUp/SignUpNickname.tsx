@@ -10,7 +10,7 @@ interface Props {
 
 const SignUpNickname = ({ state, actions, computed }: Props) => {
   const errorTextStyle =
-    'text-[#FF0000] font-body text-body-5 mt-[5px] ml-[17px]';
+    'text-[#FF0000] font-body text-body-5 mt-[4px] ml-[20px] absolute top-full left-0 whitespace-nowrap';
 
   return (
     <>
@@ -34,7 +34,7 @@ const SignUpNickname = ({ state, actions, computed }: Props) => {
           )}
         </div>
 
-        <div className="w-full">
+        <div className="w-full relative">
           <FormInput
             label=""
             value={state.nickname}
