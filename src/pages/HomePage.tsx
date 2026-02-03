@@ -7,6 +7,7 @@ import Carousel from '../components/common/Carousel';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
 import useSideBar from '../hooks/useSideBar';
+import Footer from '../components/common/Footer';
 
 const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
@@ -43,6 +44,9 @@ const HomePage = () => {
           <HomeComponent />
           <SideBarTest />
         </div>
+      </div>
+      <div className="pt-[52px]">
+        <Footer />
       </div>
     </>
   );
