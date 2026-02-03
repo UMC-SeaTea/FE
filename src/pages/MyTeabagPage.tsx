@@ -5,6 +5,7 @@ import EditButton from '../components/common/EditButton';
 import MoveupButton from '../assets/RoundButton/moveup_btn.svg';
 import MyTeabagPagination from '../components/MyTeabag/MyTeabagPagination';
 import Footer from '../components/common/Footer';
+import clsx from 'clsx';
 
 const TOTAL_DATA = Array.from({ length: 60 }).map((_, i) => ({
   id: i,
@@ -87,12 +88,10 @@ const MyTeabagPage = () => {
         onClick={handleScrollTop}
         src={MoveupButton}
         alt="Moveup Button"
-        className={`
-          ml-[303px] z-50 cursor-pointer transition-all duration-200
-          ${
-            isFooterInView ? 'absolute bottom-[172px]' : 'fixed bottom-[64.5px]'
-          } 
-        `}
+        className={clsx(
+          'ml-[303px] z-50 cursor-pointer transition-all duration-200',
+          isFooterInView ? 'absolute bottom-[172px]' : 'fixed bottom-[64.5px]'
+        )}
       />
     </div>
   );

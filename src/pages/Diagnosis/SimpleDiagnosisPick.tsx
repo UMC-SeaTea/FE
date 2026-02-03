@@ -1,5 +1,6 @@
-import { useMemo, useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import clsx from 'clsx';
+import { useMemo, useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function shuffle<T>(arr: T[]) {
   const a = [...arr];
@@ -12,32 +13,32 @@ function shuffle<T>(arr: T[]) {
 
 type KeywordItem = { id: string; label: string };
 
-const BRAND = "#2F16FF";
-const SELECT_BG = "#F2F1FF";
+const BRAND = '#2F16FF';
+const SELECT_BG = '#F2F1FF';
 
 export default function SimpleDiagnosisPick() {
   const navigate = useNavigate();
 
   const KEYWORDS = useMemo(
     () => [
-      "고요한",
-      "활기찬",
-      "새로운",
-      "영감을 주는",
-      "성취감 있는",
-      "아늑한",
-      "새로운",
-      "탁 트인",
-      "아름다운",
-      "건강한",
-      "시원한",
-      "신선한",
-      "자유로운",
-      "함께 하는",
-      "위로가 되는",
-      "다채로운",
-      "감각적인",
-      "자연 속",
+      '고요한',
+      '활기찬',
+      '새로운',
+      '영감을 주는',
+      '성취감 있는',
+      '아늑한',
+      '새로운',
+      '탁 트인',
+      '아름다운',
+      '건강한',
+      '시원한',
+      '신선한',
+      '자유로운',
+      '함께 하는',
+      '위로가 되는',
+      '다채로운',
+      '감각적인',
+      '자연 속',
     ],
     []
   );
@@ -90,8 +91,8 @@ export default function SimpleDiagnosisPick() {
       .map((id) => flat.find((x) => x.id === id)?.label)
       .filter(Boolean) as string[];
 
-    navigate("/diagnosis/result/loading", {
-      state: { simpleKeywords: selectedLabels, source: "simple" },
+    navigate('/diagnosis/result/loading', {
+      state: { simpleKeywords: selectedLabels, source: 'simple' },
     });
   };
 
@@ -148,17 +149,17 @@ export default function SimpleDiagnosisPick() {
                         type="button"
                         onClick={() => toggleKeyword(item.id)}
                         style={{
-                          backgroundColor: isOn ? SELECT_BG : "#FFFFFF",
-                          borderColor: isOn ? BRAND : "transparent",
-                          color: isOn ? BRAND : "#77767E",
+                          backgroundColor: isOn ? SELECT_BG : '#FFFFFF',
+                          borderColor: isOn ? BRAND : 'transparent',
+                          color: isOn ? BRAND : '#77767E',
                         }}
                         className="
                           h-[46px] px-[20px] rounded-[100px]
                           font-body text-body-2 text-gray-200 leading-[20px] whitespace-nowrap
-                          border border-solid border-[1px]
+                          border border-solid
                           backdrop-blur-[4px]
                           shadow-[0_0_8px_rgba(251,251,255,0.5)]
-                          transition-all duration-150
+                          transition-all duration-150 cursor-pointer
                         "
                         aria-pressed={isOn}
                       >
@@ -177,22 +178,22 @@ export default function SimpleDiagnosisPick() {
         <p className="mb-[14px] text-center font-body text-[14px] leading-[140%] tracking-[-0.02em] text-gray-100">
           지금 당신의 마음에 가장 가까운
           <br />
-          키워드{" "}
-          <span className="font-body text-body-3 text-gray-100">3개</span>
-          를 선택해주세요.
+          키워드{' '}
+          <span className="font-body text-body-3 text-gray-100">3개</span>를
+          선택해주세요.
         </p>
 
         <button
           type="button"
           onClick={handleSubmit}
           disabled={!canSubmit}
-          className={[
-            "w-[350px] h-[53px] rounded-[25px]",
-            "font-body text-body-title transition-all duration-150",
+          className={clsx(
+            'w-[350px] h-[53px] rounded-[25px]',
+            'font-body text-body-title transition-all duration-150',
             canSubmit
-              ? "bg-[#2F16FF] text-white border border-transparent"
-              : "bg-transparent text-light-blue border border-light-blue",
-          ].join(" ")}
+              ? 'bg-[#2F16FF] text-white border border-transparent cursor-pointer'
+              : 'bg-transparent text-light-blue border border-light-blue cursor-not-allowed'
+          )}
         >
           결과 확인하기
         </button>

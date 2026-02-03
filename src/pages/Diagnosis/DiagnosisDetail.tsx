@@ -5,6 +5,7 @@ import DiagnosisTopBar from '../../components/Diagnosis/DiagnosisTopBar';
 import DiagnosisWaveBackground from '../../components/Diagnosis/DiagnosisWaveBackground';
 import { useDiagnosisDetail } from '../../components/Diagnosis/useDiagnosisDetail';
 import QuestionRenderer from '../../components/Diagnosis/QuestionRenderer';
+import clsx from 'clsx';
 
 export default function DiagnosisDetail() {
   const navigate = useNavigate();
@@ -106,13 +107,13 @@ export default function DiagnosisDetail() {
                 type="button"
                 onClick={() => triggerPickedThenNext(140)}
                 disabled={!isNextEnabled}
-                className={[
+                className={clsx(
                   'w-full h-[52px] rounded-[14px]',
                   'font-body text-body-title leading-[140%] tracking-[-0.025em] transition-opacity',
                   isNextEnabled
                     ? 'bg-brand text-white'
-                    : 'bg-gray-200 text-gray-500',
-                ].join(' ')}
+                    : 'bg-gray-200 text-gray-500'
+                )}
               >
                 다음
               </button>
@@ -128,14 +129,13 @@ export default function DiagnosisDetail() {
               type="button"
               onClick={onResult}
               disabled={selectedIds.length === 0}
-              className={[
-                'w-full h-[50px] rounded-[25px] px-[14px]',
-                'flex items-center justify-center',
-                'font-body text-body-title leading-[140%] tracking-[-0.025em]',
+              className={clsx(
+                'w-full h-[50px] rounded-[25px] p-[14px] text-center',
+                'font-body text-body-title',
                 selectedIds.length === 0
-                  ? 'bg-gray-400 text-gray-100'
-                  : 'bg-brand text-white',
-              ].join(' ')}
+                  ? 'bg-white text-light-blue border border-light-blue cursor-not-allowed'
+                  : 'bg-brand text-white cursor-pointer'
+              )}
             >
               결과 확인하기
             </button>

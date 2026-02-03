@@ -1,4 +1,4 @@
-import sortIcon from "../../assets/list.svg"; 
+import sortIcon from '../../assets/list.svg';
 
 type Props = {
   onClick?: () => void;
@@ -9,12 +9,8 @@ const SortButton = ({ onClick }: Props) => {
     <button
       type="button"
       onClick={onClick}
-      className="
-        h-[32px]
-        px-[12px] py-[6px]
-        rounded-[100px] border
-        border-gray-400
-        bg-white
+      className="h-[32px] px-[12px] py-[6px]
+        rounded-[100px] border border-gray-400 bg-white
         inline-flex items-center justify-center gap-[4px]
       "
     >

@@ -18,7 +18,6 @@ const MyTastingPage = () => {
 
   return (
     <>
-      <div className="h-[44px]" />
       <NavBar
         variant="5"
         text="휴식 유형"

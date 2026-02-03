@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import searchIcon from '../../assets/search.svg';
 
 type Variant = '1' | '2' | '3' | '4' | '5' | '6';
@@ -55,22 +56,26 @@ const NavBar = ({ variant, text, icon, className, onClick }: ButtonProps) => {
   return (
     <>
       <div
-        className={`w-[375px] h-[56px] px-[20px] ${styles.container} ${className}`}
+        className={clsx(
+          'w-[375px] h-[56px] px-[20px]',
+          styles.container,
+          className
+        )}
       >
         <div className="flex items-center gap-[8px]">
           <img
             src={icon}
             alt={text}
-            className={`cursor-pointer ${styles.icon}`}
+            className={clsx('cursor-pointer', styles.icon)}
             onClick={onClick}
           />
-          <p className={`${styles.text}`}>{text}</p>
+          <p className={clsx(styles.text)}>{text}</p>
           {variant === '2' && <div className="w-[171px]" />}
           {variant === '2' && (
             <img
               src={searchIcon}
               alt="search"
-              className={`cursor-pointer w-[42px] h-[42px]`}
+              className={clsx('cursor-pointer', 'w-[42px]', 'h-[42px]')}
             />
           )}
         </div>

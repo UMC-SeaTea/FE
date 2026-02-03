@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { type TastingKey } from '../../types/tastingType/tastingType';
 import { typeConfig } from '../../constants/tastingType/tastingImg';
 import { tastingTypeMap } from '../../constants/tastingType/tastingType';
+import clsx from 'clsx';
 
 type Variant = 'home' | 'recommend';
 
@@ -35,7 +36,11 @@ const HomeTestType = ({ type, variant = 'home' }: HomeTestTypeProps) => {
 
   return (
     <div
-      className={`relative w-[375px] ${v.wrapper} bg-white border-b border-black flex flex-col items-center overflow-hidden shrink-0`}
+      className={clsx(
+        'relative w-[375px]',
+        v.wrapper,
+        'bg-white border-b border-black flex flex-col items-center overflow-hidden shrink-0'
+      )}
     >
       <img
         src={config.img}
