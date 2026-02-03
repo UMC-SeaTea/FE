@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 type Props = {
   label: string;
   selected?: boolean;
@@ -14,30 +16,28 @@ export default function DiagnosisOptionCard({
       type="button"
       onClick={onClick}
       aria-pressed={selected}
-      className={[
-        "w-[162px] h-[169px] rounded-[12px]",
-        "inline-flex items-center justify-center",
-        "text-center whitespace-pre-line",
-        "transition-colors duration-200",
-        "shadow-[0_0_8px_rgba(191,191,191,0.5),0_0_8.4px_rgba(170,169,176,0.4)]",
+      className={clsx(
+        'w-[162px] h-[169px] rounded-lg',
+        'inline-flex items-center justify-center',
+        'text-center whitespace-pre-line cursor-pointer',
+        'transition-colors duration-200',
+        'shadow-[0_0_8px_rgba(191,191,191,0.5),0_0_8.4px_rgba(170,169,176,0.4)]',
 
         selected
-          ? "bg-[#F7F6FF] border border-[#7464FF]"
+          ? 'bg-[#F7F6FF] border border-[#7464FF]'
           : [
-              "bg-white border border-transparent",
-              "hover:bg-[#F7F6FF]",
-              "hover:border-[#7464FF]",
-            ].join(" "),
-      ].join(" ")}
+              'bg-white border border-transparent',
+              'hover:bg-[#F7F6FF]',
+              'hover:border-[#7464FF]',
+            ]
+      )}
     >
       <span
-        className={[
-          "font-body text-[16px] leading-[140%] font-[500] tracking-[-0.025em]",
-          "transition-colors duration-200",
-          selected
-            ? "text-brand"
-            : "text-gray-100 hover:text-brand",
-        ].join(" ")}
+        className={clsx(
+          'font-body text-[16px] leading-[140%] font-[500] tracking-[-0.025em]',
+          'transition-colors duration-200',
+          selected ? 'text-brand' : 'text-gray-100 hover:text-brand'
+        )}
       >
         {label}
       </span>

@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { TastingKey } from '../../types/tastingType/tastingType';
 
 type ChipTextColor = TastingKey | 'white';
@@ -40,9 +41,9 @@ const Chip = ({
     <button
       type="button"
       onClick={onClick}
-      className={`${base} ${container} ${className}`}
+      className={clsx(base, container, className)}
     >
-      <span className={`font-body text-detail-1 ${textColorClass}`}>
+      <span className={clsx('font-body text-detail-1', textColorClass)}>
         {label}
       </span>
     </button>

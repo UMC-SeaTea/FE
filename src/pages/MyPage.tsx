@@ -60,7 +60,11 @@ const MyPage = () => {
                         {item.title}
                       </div>
                       <div className="w-6 h-6 flex items-center justify-center">
-                        <img src={moveButton} alt="move button" className="" />
+                        <img
+                          src={moveButton}
+                          alt="move button"
+                          className="cursor-pointer"
+                        />
                       </div>
                     </div>
                   </div>

@@ -7,7 +7,7 @@ const SearchBarDefault = () => {
   return (
     <>
       <button
-        className="w-[335px] h-[48px] rounded-full border-1 border-black px-[20px] py-[12px] bg-white"
+        className="w-[335px] h-[48px] rounded-full border-1 border-black px-[20px] py-[12px] bg-white cursor-pointer"
         onClick={() => navigate('/map/search')}
       >
         <div className="flex items-center justify-between">

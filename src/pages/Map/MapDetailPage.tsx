@@ -27,7 +27,6 @@ const MapDetailPage = () => {
 
   return (
     <>
-      <div className="h-[44px]" />
       <NavBar
         variant="3"
         icon={backIcon}
