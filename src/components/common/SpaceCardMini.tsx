@@ -1,28 +1,33 @@
 import { useNavigate } from 'react-router-dom';
 import exampleImage from '../../assets/images/exampleSpace.png';
 import clsx from 'clsx';
-// 추후 props로 변경 필요
-// type SpaceCardMiniProps = {
-//   name: string;
-//   roadAddress: string;
-//   img?: string;
-// };
+
+type SpaceCardMiniProps = {
+  className?: string;
+  name: string;
+  roadAddress: string;
+  thumbnailImageUrl: string;
+};
 
 const SpaceCardMini = ({
-  className = 'w-[120px] h-[120px]',
-}: {
-  className?: string;
-}) => {
+  className,
+  name,
+  roadAddress,
+  thumbnailImageUrl,
+}: SpaceCardMiniProps) => {
   const navigate = useNavigate();
   return (
     <>
       <div
-        className={clsx('relative overflow-hidden cursor-pointer', className)}
+        className={clsx(
+          'relative overflow-hidden cursor-pointer w-[120px] h-[120px]',
+          className
+        )}
         onClick={() => navigate('/map/1')}
       >
         {/* 추후 이미지 API 연동 필요 */}
         <img
-          src={exampleImage}
+          src={thumbnailImageUrl}
           alt="Example Space"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -30,8 +35,8 @@ const SpaceCardMini = ({
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_55.8%,#000_92.93%)]" />
         {/* 추후 장소 API 연동 필요 */}
         <div className="absolute bottom-0 left-0 flex flex-col w-full px-[10px] pb-[11px] text-white">
-          <p className="font-body text-body-4">국립현대미술관</p>
-          <p className="font-body text-detail-4">서울</p>
+          <p className="font-body text-body-4">{name}</p>
+          <p className="font-body text-detail-4">{roadAddress}</p>
         </div>
       </div>
     </>

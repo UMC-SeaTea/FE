@@ -1,9 +1,9 @@
 import NavBar from '../components/common/NavBar';
 import menu from '../assets/menu_black.svg';
 import HomeTestType from '../components/common/HomeTestType';
-import SpaceCardMini from '../components/common/SpaceCardMini';
+// import SpaceCardMini from '../components/common/SpaceCardMini';
 import SideBarTest from '../components/common/SideBarTest';
-import Carousel from '../components/common/Carousel';
+// import Carousel from '../components/common/Carousel';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
 import useSideBar from '../hooks/useSideBar';
@@ -12,6 +12,7 @@ const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
     closeOnEsc: true,
   });
+  // const { data, isLoading } = useSpaceDetail();
 
   return (
     <>
@@ -32,12 +33,11 @@ const HomePage = () => {
             <p className="text-black font-body text-body-title">
               최근 확인한 공간
             </p>
-            <Carousel>
-              <SpaceCardMini />
-              <SpaceCardMini />
-              <SpaceCardMini />
-              <SpaceCardMini />
-            </Carousel>
+            {/* <Carousel>
+              <SpaceCardMini name={data.name} roadAddress={data.roadAddress} thumbnailImageUrl={data.thumbnailImageUrl} />
+              <SpaceCardMini name={data.name} roadAddress={data.roadAddress} thumbnailImageUrl={data.thumbnailImageUrl} />
+              <SpaceCardMini name={data.name} roadAddress={data.roadAddress} thumbnailImageUrl={data.thumbnailImageUrl} />
+            </Carousel> */}
           </div>
           <HomeComponent />
           <SideBarTest />
