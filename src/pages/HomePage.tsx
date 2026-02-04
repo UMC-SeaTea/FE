@@ -28,7 +28,7 @@ const HomePage = () => {
           <SideBarContainer open={open} onClose={closeSideBar} />
           <HomeTestType type="oceanic" />
         </div>
-        <div className="flex flex-col pl-[20px] gap-[29px] pb-[121px]">
+        <div className="flex flex-col pl-[20px] gap-[29px]">
           <div className="flex flex-col gap-[10px]">
             <p className="text-black font-body text-body-title">
               최근 확인한 공간
