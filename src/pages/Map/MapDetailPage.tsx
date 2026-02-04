@@ -11,11 +11,12 @@ import { useNavigate } from 'react-router-dom';
 // import teaBag from '../../assets/teaBag.svg';
 
 const MapDetailPage = () => {
-  //   const { sid } = useParams<{ sid: string }>();
+  // const { data, isLoading } = useSpaceDetail();
+
   const handleShare = async () => {
     try {
       await navigator.share({
-        title: '국립현대미술관 서울',
+        // title: data.name,
         url: window.location.href,
       });
     } catch (error) {
@@ -38,19 +39,19 @@ const MapDetailPage = () => {
         <div className="flex flex-col gap-[12px] pt-[42px] pb-[23px]">
           <div className="flex items-start justify-between">
             <p className="text-black font-body text-[20px] font-semibold">
-              국립현대미술관 서울
+              {/* {data.name} */}
             </p>
             {/* 유저토큰 있는 경우에만 */}
             {/* (accessToken && (
             <img src={teaBag} alt="tea bag" className="w-[28px] h-[28px]" />
             )) */}
           </div>
-          <NoteSearch text="Floral" />
+          {/* <NoteSearch text={`${data.tastingTypeName}`} /> */}
         </div>
         {/* 이미지 */}
         <div className="relative w-[335px] h-[335px] overflow-hidden">
           <img
-            src={SampleImg}
+            // src={data.thumbnailImageUrl}
             alt="Example Space"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -62,13 +63,13 @@ const MapDetailPage = () => {
               <div className="flex text-[#FBFBFB] font-regular">
                 <div className="flex gap-[4px]">
                   <p>총</p>
-                  <p className="text-white">42명</p>
+                  {/* <p className="text-white">{data.savedCount}명</p> */}
                 </div>
                 <p>의 SeaTea 사용자가 저장했어요.</p>
               </div>
               <div className="flex gap-[4px] font-medium">
                 <p>나와 동일한 유형</p>
-                <p className=" text-[#B4ABFF] font-bold">18명</p>
+                {/* <p className=" text-[#B4ABFF] font-bold">{data.sameTypeSavedCount}</p> */}
               </div>
               {/* 유저토큰 X의 경우 */}
               {/* (accessToken &&{' '}
@@ -94,10 +95,10 @@ const MapDetailPage = () => {
                 className="w-[20px] h-[20px]"
               />
               <div className="flex flex-col gap-[4px]">
-                <p className="text-body-4">서울특별시 종로구 삼청로 30</p>
+                {/* <p className="text-body-4">{data.roadAddress}</p> */}
                 <div className="flex gap-[4px]">
                   <p className="text-gray-100">내 위치에서</p>
-                  <p className="text-brand">1.2km</p>
+                  {/* <p className="text-brand">{data.distanceMeters}km</p> */}
                 </div>
               </div>
             </div>
@@ -108,7 +109,7 @@ const MapDetailPage = () => {
                 alt="time icon"
                 className="w-[20px] h-[20px]"
               />
-              <p className="">오전 10:00 ~ 오후 6:00</p>
+              {/* <p className="">{data.openingHours}</p> */}
             </div>
             {/* 전화 번호 */}
             <div className="flex items-center gap-[4px]">
@@ -117,7 +118,7 @@ const MapDetailPage = () => {
                 alt="phone icon"
                 className="w-[20px] h-[20px]"
               />
-              <p>02-3701-9500</p>
+              {/* <p>{data.phone}</p> */}
             </div>
           </div>
         </div>
