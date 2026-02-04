@@ -1,8 +1,8 @@
 // import { useParams } from 'react-router-dom';
 import NavBar from '../../components/common/NavBar';
 import backIcon from '../../assets/backButton_black.svg';
-import NoteSearch from '../../components/common/NoteSearch';
-import SampleImg from '../../assets/images/exampleSpace.png';
+// import NoteSearch from '../../components/common/NoteSearch';
+// import SampleImg from '../../assets/images/exampleSpace.png';
 import placeIcon from '../../assets/place_gray.svg';
 import timeIcon from '../../assets/timeIcon.svg';
 import phoneIcon from '../../assets/phoneIcon.svg';

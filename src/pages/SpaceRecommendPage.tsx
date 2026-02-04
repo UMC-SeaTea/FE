@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import FeedbackButton from '../components/Feedback/FeedbackButton';
 
 const SpaceRecommend = () => {
+  // const { data, isLoading } = useSpaceDetail();
+
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
   const navigate = useNavigate();
   return (
@@ -39,9 +41,9 @@ const SpaceRecommend = () => {
             />
           </div>
           <div className="flex flex-col gap-2 pb-[32px]">
-            <PlaceList />
-            <PlaceList />
-            <PlaceList />
+            {/* <PlaceList name={data.name} roadAddress={data.roadAddress} description={data.description} />
+            <PlaceList name={data.name} roadAddress={data.roadAddress} description={data.description} />
+            <PlaceList name={data.name} roadAddress={data.roadAddress} description={data.description} /> */}
           </div>
         </div>
         <div
