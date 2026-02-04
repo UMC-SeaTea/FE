@@ -59,7 +59,7 @@ const ToastHost = () => {
       <Toast
         text={text}
         className={clsx(
-          `transition-all duration-[${FADE_MS}ms]`,
+          'transition-all duration-[250ms]',
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
         )}
       />
