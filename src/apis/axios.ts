@@ -34,6 +34,7 @@ axiosInstance.interceptors.request.use(
 );
 
 // Response Interceptor
+// axiosInstance의 response를 가로채어 401 에러 발생 시 refresh 토큰으로 accessToken을 재발급.
 axiosInstance.interceptors.response.use(
   (response) => response, // 성공 시 응답 반환
   async (error) => {
@@ -62,9 +63,9 @@ axiosInstance.interceptors.response.use(
         const { data } =
           await refreshInstance(refreshToken).post('/api/auth/reissue');
 
-        // 새 토큰 변환
-        const newAccessToken = data?.result.accessToken;
-        const newRefreshToken = data?.result.refreshToken;
+        // 새 토큰 반환
+        const newAccessToken = data?.result?.accessToken;
+        const newRefreshToken = data?.result?.refreshToken;
 
         if (!newAccessToken || !newRefreshToken)
           throw new Error('토큰 재발급 실패');
