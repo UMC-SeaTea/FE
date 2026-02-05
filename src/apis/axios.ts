@@ -90,7 +90,7 @@ axiosInstance.interceptors.response.use(
     }
 
     // 403 에러, 접근 권한이 없는 경우
-    if (status === 403 && !originalRequest._retry) {
+    if (status === 403) {
       alert('접근 권한이 없습니다. 관리자에게 문의하세요.');
       window.location.href = '/';
       return Promise.reject(error);
