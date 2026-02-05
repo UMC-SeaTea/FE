@@ -41,7 +41,10 @@ axiosInstance.interceptors.response.use(
     const status = error.response?.status;
     const originalRequest: CustomInternalAxiosRequestConfig = error.config;
 
-    if (!status) return (console.log(error), Promise.reject(error));
+    if (!status) {
+      console.error('Request failed without a status', error);
+      return Promise.reject(error);
+    }
 
     // 401 에러면서, 아직 재시도 하지 않은 요청 경우 처리
     if (status === 401 && !originalRequest._retry) {
