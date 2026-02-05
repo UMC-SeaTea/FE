@@ -18,6 +18,14 @@ export const refreshInstance = (refresh: string): AxiosInstance =>
     },
   });
 
+// 토큰 오류시 토큰 제거 후 로그인 페이지로 리다이렉트 로직
+const handleTokenError = (error: any) => {
+  localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
+  localStorage.removeItem(LOCAL_STORAGE_KEYS.refreshToken);
+  window.location.href = '/login/start';
+  return Promise.reject(error);
+};
+
 // Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -55,10 +63,7 @@ axiosInstance.interceptors.response.use(
 
       // refreshToken이 없으면 로그인 페이지로 이동
       if (!refreshToken) {
-        localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
-        localStorage.removeItem(LOCAL_STORAGE_KEYS.refreshToken);
-        window.location.href = '/login/start';
-        return Promise.reject(error);
+        return handleTokenError(error);
       }
 
       // refreshToken으로 새 accessToken 발급
@@ -80,10 +85,7 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (error) {
         // 에러 발생 시 로그인 페이지로 이동
-        localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
-        localStorage.removeItem(LOCAL_STORAGE_KEYS.refreshToken);
-        window.location.href = '/login/start';
-        return Promise.reject(error);
+        return handleTokenError(error);
       }
     }
 
