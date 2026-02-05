@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoadingRing from "../../components/Diagnosis/LoadingRing";
-import WaveLayerImg from "../../components/Diagnosis/WaveLayerImg";
-import { diagnosisWaves, type WaveLayer } from "../../components/Diagnosis/DiagnosisWaveLayers";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import waveBack from "../../assets/Waves/diagnosis_result/wave_back.png";
+import waveMiddle from "../../assets/Waves/diagnosis_result/wave_middle.png";
+import waveFront from "../../assets/Waves/diagnosis_result/wave_front.png";
 
 type PhaseText = {
   subtitle: string;
@@ -13,25 +14,12 @@ type DiagnosisLoadingProps = {
   durationMs?: number;
   nextPath?: string;
   onEnter?: () => void;
-  waves?: readonly WaveLayer[];
 };
-
-const LOADER_COLORS = [
-  "#D1D6FF",
-  "#C5CCFF",
-  "#A4ADFF",
-  "#8692FF",
-  "#5B6BFF",
-  "#2F16FF",
-  "#1600C9",
-  "#0C0073",
-];
 
 export default function DiagnosisLoading({
   durationMs = 5000,
   nextPath = "/diagnosis/detail",
   onEnter,
-  waves = diagnosisWaves,
 }: DiagnosisLoadingProps) {
   const navigate = useNavigate();
   const [phase, setPhase] = useState<0 | 1>(0);
@@ -71,36 +59,61 @@ export default function DiagnosisLoading({
   }, [durationMs, navigate, nextPath, onEnter]);
 
   return (
-    <div className="relative min-h-dvh w-full bg-white overflow-hidden">
+    <div className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-[#0A0A0A]">
       <style>{`
-        @keyframes ring-spin { to { transform: rotate(360deg); } }
-
-        @keyframes wave-x {
-          0%   { transform: translateX(0px); }
-          100% { transform: translateX(var(--travelX, 160px)); }
+        @keyframes floatSlow {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
         }
-
-        @keyframes wave-y {
-          0%   { transform: translateY(0px); }
-          40%  { transform: translateY(calc(var(--floatY, 16px) * -1)); }
-          100% { transform: translateY(calc(var(--floatY, 16px) * 0.55)); }
+        @keyframes floatMid {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-16px); }
+        }
+        @keyframes floatFast {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-22px); }
         }
 
         @keyframes fade-up-in {
           from { opacity: 0; transform: translateY(8px); }
           to   { opacity: 1; transform: translateY(0px); }
         }
-
-        @media (prefers-reduced-motion: reduce) {
-          .reduce-motion\\:no-anim { animation: none !important; }
-        }
       `}</style>
 
-      <main className="relative z-10 min-h-dvh flex flex-col items-center text-center px-[20px]">
+
+      <div className="pointer-events-none absolute left-1/2 bottom-0 -translate-x-1/2 z-10 w-[110vw] max-w-none">
+        <img
+          src={waveBack}
+          alt=""
+          className="block w-full h-auto opacity-90"
+          style={{ animation: "floatSlow 10s ease-in-out infinite" }}
+        />
+      </div>
+
+      <div className="pointer-events-none absolute left-1/2 bottom-[-18px] -translate-x-1/2 z-20 w-[110vw] max-w-none">
+        <img
+          src={waveMiddle}
+          alt=""
+          className="block w-full h-auto opacity-95"
+          style={{ animation: "floatMid 8s ease-in-out infinite" }}
+        />
+      </div>
+
+      <div className="pointer-events-none absolute left-1/2 bottom-[-34px] -translate-x-1/2 z-30 w-[110vw] max-w-none">
+        <img
+          src={waveFront}
+          alt=""
+          className="block w-full h-auto"
+          style={{ animation: "floatFast 6.5s ease-in-out infinite" }}
+        />
+      </div>
+
+
+      <main className="relative z-40 min-h-[100dvh] flex flex-col items-center text-center px-[20px]">
         <div className="flex-1" />
 
         <div className="translate-y-[-12px] w-full flex flex-col items-center">
-          <h1 className="font-title text-title-4 leading-[28px] tracking-[0px] text-deep-blue">
+          <h1 className="font-title text-title-4 leading-[28px] tracking-[0px] text-white">
             Taste your Rest
           </h1>
 
@@ -110,7 +123,7 @@ export default function DiagnosisLoading({
               className="
                 absolute inset-0
                 font-body text-body-title
-                text-deep-blue
+                text-white
                 tracking-[-0.025em] leading-[140%]
                 text-center
                 whitespace-nowrap
@@ -121,8 +134,9 @@ export default function DiagnosisLoading({
             </p>
           </div>
 
+
           <div className="mt-[32px] flex items-center justify-center">
-            <LoadingRing sizePx={54} colors={LOADER_COLORS} />
+            <LoadingSpinner color="white" />
           </div>
 
           <div className="mt-[36px] min-h-[96px] relative w-full flex justify-center">
@@ -130,7 +144,7 @@ export default function DiagnosisLoading({
               key={`body-${phase}`}
               className="
                 absolute inset-0
-                font-body text-body-5 text-deep-blue leading-[140%] tracking-[-0.02em]
+                font-body text-body-5 text-white leading-[140%] tracking-[-0.02em]
                 whitespace-pre-line text-center mx-auto
               "
               style={{
@@ -145,23 +159,6 @@ export default function DiagnosisLoading({
 
         <div className="flex-1" />
       </main>
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-0 right-0 bottom-0 z-0"
-        style={{
-          height: 520,
-          overflow: "hidden",
-          WebkitMaskImage:
-            "linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)",
-          maskImage:
-            "linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)",
-        }}
-      >
-        {waves.map((w, idx) => (
-          <WaveLayerImg key={idx} {...w} />
-        ))}
-      </div>
     </div>
   );
 }
