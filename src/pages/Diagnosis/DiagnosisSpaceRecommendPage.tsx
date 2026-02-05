@@ -5,10 +5,21 @@ import PlaceList from '../../components/common/PlaceList';
 import FeedbackButton from '../../components/Feedback/FeedbackButton';
 import refreshIcon from '../../assets/refresh.svg';
 import { type TastingKey } from '../../types/tastingType/tastingType';
+import { showToast } from '../../components/Toast/ToastHost';
 
 export default function DiagnosisSpaceRecommendPage() {
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const onSubmit = (value: 'good' | 'bad') => {
+    if (submitted) return;
+
+    setFeedback(value);
+    setSubmitted(true);
+
+    showToast({ text: '피드백이 성공적으로 제출되었습니다.', duration: 2000 });
+  };
 
   const resultType: TastingKey = 'floral';
 
@@ -35,20 +46,22 @@ export default function DiagnosisSpaceRecommendPage() {
             <div className="px-[20px] py-[12px] mt-[15px] flex items-center justify-between shrink-0">
               <p className="font-body text-body-title text-footer">공간 추천</p>
 
-              <button
-                type="button"
-                onClick={handleRefresh}
-                className="flex items-center gap-[8px]"
-              >
-                <span className="font-body text-body-4 leading-[140%] text-gray-100">
+              <div className="flex items-center gap-[8px]">
+                <span className="font-body text-body-4 text-gray-100">
                   공간 다시 우리기
                 </span>
-                <img
-                  src={refreshIcon}
-                  alt="refresh"
-                  className="w-[28px] h-[28px]"
-                />
-              </button>
+                <button
+                  type="button"
+                  onClick={handleRefresh}
+                  className="w-[28px] h-[28px] cursor-pointer"
+                >
+                  <img
+                    src={refreshIcon}
+                    alt="refresh"
+                    className="w-full h-full"
+                  />
+                </button>
+              </div>
             </div>
 
             <div className="px-[16px] pt-[12px] flex-1 overflow-y-auto">
@@ -60,28 +73,30 @@ export default function DiagnosisSpaceRecommendPage() {
             </div>
 
             <div className="px-[20px] pt-[10px] pb-[18px] shrink-0">
-              <div className="flex justify-center -mt-[6px]">
-                <div className="flex gap-[8px]">
-                  <FeedbackButton
-                    type="good"
-                    label="정확해요"
-                    isSelected={feedback === 'good'}
-                    onClick={() => setFeedback('good')}
-                  />
-                  <FeedbackButton
-                    type="bad"
-                    label="정확하지 않아요"
-                    isSelected={feedback === 'bad'}
-                    onClick={() => setFeedback('bad')}
-                  />
+              {submitted ? null : (
+                <div className="flex justify-center -mt-[6px]">
+                  <div className="flex gap-[8px]">
+                    <FeedbackButton
+                      type="good"
+                      label="추천이 정확해요"
+                      isSelected={feedback === 'good'}
+                      onClick={() => onSubmit('good')}
+                    />
+                    <FeedbackButton
+                      type="bad"
+                      label="정확하지 않아요"
+                      isSelected={feedback === 'bad'}
+                      onClick={() => onSubmit('bad')}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="mt-[12px] flex justify-center">
                 <button
                   type="button"
                   onClick={() => navigate('/')}
-                  className="font-body text-body-5 leading-[140%] text-gray-100"
+                  className="font-body text-body-5 leading-[140%] text-gray-100 cursor-pointer"
                 >
                   홈으로 이동
                 </button>
