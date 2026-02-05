@@ -5,10 +5,21 @@ import PlaceList from '../../components/common/PlaceList';
 import FeedbackButton from '../../components/Feedback/FeedbackButton';
 import refreshIcon from '../../assets/refresh.svg';
 import { type TastingKey } from '../../types/tastingType/tastingType';
+import { showToast } from '../../components/Toast/ToastHost';
 
 export default function DiagnosisSpaceRecommendPage() {
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const onSubmit = (value: 'good' | 'bad') => {
+    if (submitted) return;
+
+    setFeedback(value);
+    setSubmitted(true);
+
+    showToast({ text: '피드백이 성공적으로 제출되었습니다.', duration: 2000 });
+  };
 
   const resultType: TastingKey = 'floral';
 
@@ -62,22 +73,24 @@ export default function DiagnosisSpaceRecommendPage() {
             </div>
 
             <div className="px-[20px] pt-[10px] pb-[18px] shrink-0">
-              <div className="flex justify-center -mt-[6px]">
-                <div className="flex gap-[8px]">
-                  <FeedbackButton
-                    type="good"
-                    label="추천이 정확해요"
-                    isSelected={feedback === 'good'}
-                    onClick={() => setFeedback('good')}
-                  />
-                  <FeedbackButton
-                    type="bad"
-                    label="정확하지 않아요"
-                    isSelected={feedback === 'bad'}
-                    onClick={() => setFeedback('bad')}
-                  />
+              {submitted ? null : (
+                <div className="flex justify-center -mt-[6px]">
+                  <div className="flex gap-[8px]">
+                    <FeedbackButton
+                      type="good"
+                      label="추천이 정확해요"
+                      isSelected={feedback === 'good'}
+                      onClick={() => onSubmit('good')}
+                    />
+                    <FeedbackButton
+                      type="bad"
+                      label="정확하지 않아요"
+                      isSelected={feedback === 'bad'}
+                      onClick={() => onSubmit('bad')}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="mt-[12px] flex justify-center">
                 <button
