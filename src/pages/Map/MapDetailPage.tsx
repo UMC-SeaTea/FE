@@ -8,10 +8,7 @@ import timeIcon from '../../assets/timeIcon.svg';
 import phoneIcon from '../../assets/phoneIcon.svg';
 import shareButton from '../../assets/RoundButton/share_btn.svg';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-=======
 import { showToast } from '../../components/Toast/ToastHost';
->>>>>>> cde5186a929ca3ddb32f825775293dcde8c55cae
 // import teaBag from '../../assets/teaBag.svg';
 
 const MapDetailPage = () => {
@@ -22,10 +19,7 @@ const MapDetailPage = () => {
         title: '국립현대미술관 서울',
         url: window.location.href,
       });
-<<<<<<< HEAD
-=======
       showToast({ text: '공유 링크가 복사되었습니다.', duration: 2000 });
->>>>>>> cde5186a929ca3ddb32f825775293dcde8c55cae
     } catch (error) {
       console.error('링크 공유 실패', error);
     }
@@ -35,10 +29,6 @@ const MapDetailPage = () => {
 
   return (
     <>
-<<<<<<< HEAD
-      <div className="h-[44px]" />
-=======
->>>>>>> cde5186a929ca3ddb32f825775293dcde8c55cae
       <NavBar
         variant="3"
         icon={backIcon}
