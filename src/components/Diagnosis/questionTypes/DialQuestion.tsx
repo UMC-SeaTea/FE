@@ -64,11 +64,11 @@ export default function DialQuestion({
   const INNER = 232;
 
   const TICKS_SIZE = 230;
-  const HANDLE_SIZE = 30;
-
+  const HANDLE_HIT_SIZE = 48;
+  const HANDLE_VISUAL_SIZE = STROKE; // 30
+  const HANDLE_ICON_SIZE = 20;
   const cx = SIZE / 2;
   const cy = SIZE / 2;
-
   const COLOR_LIGHT = "#78C2FF";
   const COLOR_DARK = "#0087F6";
 
@@ -93,13 +93,14 @@ export default function DialQuestion({
   const message = useMemo(() => MESSAGE_BY_PERCENT[snappedPercent] ?? "", [snappedPercent]);
   const percentText = `${snappedPercent}${unit}`;
 
+
   const angle = useMemo(() => {
     if (ratio <= 0) return 0.001;
     return Math.min(359.999, ratio * 360);
   }, [ratio]);
 
-  const HANDLE_OUTSET = 8;
-  const handleRadius = SIZE / 2 - STROKE / 2 - 6 + HANDLE_OUTSET;
+
+  const handleRadius = SIZE / 2 - STROKE / 2;
 
   const handlePos = useMemo(() => {
     const degForTrig = angle - 90;
@@ -179,6 +180,7 @@ export default function DialQuestion({
 
   useEffect(() => () => clearCommitTimer(), []);
 
+
   const donutMask = useMemo(() => {
     return `radial-gradient(
       farthest-side,
@@ -225,7 +227,7 @@ export default function DialQuestion({
   const SLIVER = Math.max(24, Math.round(INNER * 0.12));
   const downAtZero = Math.max(0, waveH - SLIVER);
 
-  const TOP_EMPTY_RATIO = 0.26; 
+  const TOP_EMPTY_RATIO = 0.26;
   const contentShiftUp = Math.round(waveH * TOP_EMPTY_RATIO);
 
   const minY = -(waveH - INNER);
@@ -235,6 +237,15 @@ export default function DialQuestion({
     return clamp(raw, minY, downAtZero);
   }, [ratio, downAtZero, contentShiftUp, minY]);
 
+
+  const handleBlueAlpha = 1;
+
+
+  const iconBackSize = Math.min(
+    HANDLE_VISUAL_SIZE - 4,
+    Math.max(22, Math.round(HANDLE_ICON_SIZE * 1.15))
+  );
+
   return (
     <div
       ref={wrapRef}
@@ -243,11 +254,13 @@ export default function DialQuestion({
       onPointerMove={onPointerMove}
       aria-label={label}
     >
+      {/* 링 */}
       <div className="absolute inset-0" style={{ WebkitMask: donutMask, mask: donutMask }}>
         <div className="absolute inset-0 bg-white rounded-full" />
         <div className="absolute inset-0" style={progressStyle} />
       </div>
 
+      {/* 눈금 */}
       <img
         src={dialTicksSvg}
         alt=""
@@ -262,16 +275,18 @@ export default function DialQuestion({
         }}
       />
 
+      {/* 핸들 */}
       <div
-        className="absolute rounded-full"
+        className="absolute"
         style={{
-          width: HANDLE_SIZE + 18,
-          height: HANDLE_SIZE + 18,
+          width: HANDLE_HIT_SIZE,
+          height: HANDLE_HIT_SIZE,
           left: handlePos.x,
           top: handlePos.y,
           transform: "translate(-50%, -50%)",
           cursor: dragging ? "grabbing" : "grab",
           touchAction: "none",
+          zIndex: 30,
         }}
         onPointerDown={onHandlePointerDown}
         onPointerUp={(e) => {
@@ -280,19 +295,52 @@ export default function DialQuestion({
           endDrag();
         }}
       >
+
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            width: HANDLE_VISUAL_SIZE,
+            height: HANDLE_VISUAL_SIZE,
+            borderRadius: 999,
+            background: COLOR_DARK,
+            transform: "translate(-50%, -50%)",
+            opacity: handleBlueAlpha,
+            pointerEvents: "none",
+          }}
+        />
+
+
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            width: iconBackSize,
+            height: iconBackSize,
+            borderRadius: 999,
+            background: "#fff",
+            transform: "translate(-50%, -50%)",
+            pointerEvents: "none",
+          }}
+        />
+
         <img
           src={dialHandleSvg}
           alt=""
           draggable={false}
           style={{
-            width: HANDLE_SIZE,
-            height: HANDLE_SIZE,
+            width: HANDLE_ICON_SIZE,
+            height: HANDLE_ICON_SIZE,
             position: "absolute",
             left: "50%",
             top: "50%",
             transform: "translate(-50%, -50%)",
-            filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.12))",
             pointerEvents: "none",
+            userSelect: "none",
           }}
         />
       </div>
@@ -318,23 +366,20 @@ export default function DialQuestion({
             position: "absolute",
             left: "50%",
             bottom: 0,
-
             width: waveW,
             height: waveH,
-
             objectFit: "contain",
             objectPosition: "center bottom",
             display: "block",
-
             transform: `translate(-50%, ${waveY}px)`,
             transition: dragging ? "none" : "transform 160ms ease-out",
             willChange: "transform",
-
             pointerEvents: "none",
             userSelect: "none",
           }}
         />
       </div>
+
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="text-center" style={{ transform: "translateY(6px)" }}>
