@@ -21,7 +21,19 @@ const MapSearchPage = () => {
   const q = useMemo(() => (params.get('q') ?? '').trim(), [params]);
   const isResultMode = q.length > 0;
 
-  const { data, isLoading } = useSpaceList({ q });
+  const { data, isLoading, isError } = useSpaceList({ q });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+  if (isError) {
+    console.log('위치 정보(lat,lng)가 올바르지 않습니다.');
+  }
+
+  const items = data?.result?.items ?? [];
+  if (items.length == 0) {
+    return <div>검색 결과가 없습니다.</div>;
+  }
 
   // inputValue는 입력 중인 값, q는 확정된 검색어
   const [inputValue, setInputValue] = useState(q);
@@ -91,13 +103,16 @@ const MapSearchPage = () => {
             검색 결과
           </p>
           <div className="flex flex-col gap-[8px]">
-            {isLoading && <LoadingSpinner />}
-            {data?.result?.items?.map((item) => (
+            {items.map((item) => (
               <SearchResult
                 key={item.spaceId}
                 type={item.tastingTypeCode}
                 name={item.name}
-                distance={String(item.distanceMeters ?? '')}
+                distance={
+                  item.distanceMeters != null
+                    ? (item.distanceMeters / 1000).toFixed(1)
+                    : ''
+                }
               />
             ))}
           </div>
