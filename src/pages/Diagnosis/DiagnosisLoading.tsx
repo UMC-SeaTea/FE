@@ -78,6 +78,12 @@ export default function DiagnosisLoading({
           from { opacity: 0; transform: translateY(8px); }
           to   { opacity: 1; transform: translateY(0px); }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+          .motion-safe-animation {
+            animation: none !important;
+          }
+        }
       `}</style>
 
 
