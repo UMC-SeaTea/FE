@@ -59,7 +59,7 @@ export default function DiagnosisLoading({
   }, [durationMs, navigate, nextPath, onEnter]);
 
   return (
-    <div className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-[#0A0A0A]">
+    <div className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-footer">
       <style>{`
         @keyframes floatSlow {
           0%, 100% { transform: translateY(0px); }

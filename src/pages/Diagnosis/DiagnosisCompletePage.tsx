@@ -16,7 +16,7 @@ export default function DiagnosisCompletePage() {
     <main className="min-h-dvh bg-[#F6F7FB] flex justify-center">
       <div className="w-full max-w-[375px] min-h-dvh bg-white flex flex-col">
         <header className="h-[56px] w-full border-b border-footer flex items-center px-[20px] shrink-0">
-          <span className="font-title text-[18px] font-weight-medium leading-none mt-[10px] text-footer">
+          <span className="font-title text-title-3 leading-none mt-[10px] text-footer">
             SeaTea
           </span>
         </header>
