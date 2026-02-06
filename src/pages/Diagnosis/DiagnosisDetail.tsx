@@ -148,7 +148,7 @@ export default function DiagnosisDetail() {
             <button
               type="button"
               onClick={goResultLoading}
-              disabled={selectedIds.length === 0}
+              disabled={!isNextEnabled}
               className={clsx(
                 "w-full h-[50px] rounded-[25px] p-[14px] text-center",
                 "font-body text-body-title",

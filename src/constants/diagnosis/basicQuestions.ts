@@ -122,7 +122,7 @@ export const BASIC_DIAGNOSIS_QUESTIONS: DiagnosisQuestion[] = [
     title: "지금 나는 누구와 함께\n휴식하길 원하나요?",
     theme: "mint",
     minSelect: 1,
-    maxSelect: 2,
+    maxSelect: 4,
     ctaText: "결과 확인하기",
     options: [
       {

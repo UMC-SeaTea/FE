@@ -1,9 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import LoadingRing from "../../components/Diagnosis/LoadingRing";
-
 import waveBack from "../../assets/Waves/diagnosis_result/wave_back.png";
 import waveMiddle from "../../assets/Waves/diagnosis_result/wave_middle.png";
 import waveFront from "../../assets/Waves/diagnosis_result/wave_front.png";

@@ -27,7 +27,7 @@ export default function QuestionRenderer({
   if (q.type === "two_choice") {
     return (
       <TwoChoiceQuestion
-        options={q.options.map((o) => ({ id: o.id, label: o.label })) as any}
+        options={q.options.map((o) => ({ id: o.id, label: o.label })) as [{ id: string; label: string }, { id: string; label: string }]}
         value={value as string | undefined}
         stepIndex={stepIndex}
         onChange={(id: string) => {
@@ -64,13 +64,13 @@ export default function QuestionRenderer({
 
     return (
       <MultiSelectQuestion
-        options={q.options.map((o) => ({ id: o.id, label: o.label })) as any}
+        options={q.options.map((o) => ({ id: o.id, label: o.label }))}
         selectedIds={selected}
-        maxSelect={q.maxSelect ?? q.maxSelect ?? 999} 
+        maxSelect={q.maxSelect ?? 999}
         onChange={(nextSelected: string[]) => onChange(nextSelected)}
         theme={q.theme ?? "mint"}
         ctaText={q.ctaText}
-        ctaDisabled={(q.minSelect ?? 1) > 0 ? selected.length < (q.minSelect ?? 1) : selected.length === 0}
+        ctaDisabled={selected.length < (q.minSelect ?? 1)}
         onCtaClick={onCtaClick}
       />
     );
