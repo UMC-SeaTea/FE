@@ -7,11 +7,23 @@ import refresh from '../assets/refresh.svg';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FeedbackButton from '../components/Feedback/FeedbackButton';
+import { showToast } from '../components/Toast/ToastHost';
 
 const SpaceRecommend = () => {
   // const { data, isLoading } = useSpaceDetail();
 
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const onSubmit = (value: 'good' | 'bad') => {
+    if (submitted) return;
+
+    setFeedback(value);
+    setSubmitted(true);
+
+    showToast({ text: '피드백이 성공적으로 제출되었습니다.', duration: 2000 });
+  };
+
   const navigate = useNavigate();
   return (
     <>
@@ -54,27 +66,30 @@ const SpaceRecommend = () => {
             {/* 텍스트 부분 */}
             <div className="flex flex-col text-center gap-[4px]">
               <p className="font-body text-body-1 text-[#414045]">
-                SeaTea의 추천은 어떠셨나요?
+                {submitted ? '감사합니다!' : 'SeaTea의 추천은 어떠셨나요?'}
               </p>
               <p className="font-body text-detail-4 text-gray-100">
-                평가를 남겨주시면 SeaTea가 더 좋은 휴식을 우려올게요
+                {submitted
+                  ? '남겨주신 평가를 바탕으로 더 좋은 휴식을 우려올게요.'
+                  : '평가를 남겨주시면 SeaTea가 더 좋은 휴식을 우려올게요'}
               </p>
             </div>
-            {/* 정확/정확X 버튼 */}
-            <div className="flex gap-[8px]">
-              <FeedbackButton
-                type="good"
-                label="정확해요"
-                isSelected={feedback === 'good'}
-                onClick={() => setFeedback('good')}
-              />
-              <FeedbackButton
-                type="bad"
-                label="정확하지 않아요"
-                isSelected={feedback === 'bad'}
-                onClick={() => setFeedback('bad')}
-              />
-            </div>
+            {submitted ? null : (
+              <div className="flex gap-[8px]">
+                <FeedbackButton
+                  type="good"
+                  label="정확해요"
+                  isSelected={feedback === 'good'}
+                  onClick={() => onSubmit('good')}
+                />
+                <FeedbackButton
+                  type="bad"
+                  label="정확하지 않아요"
+                  isSelected={feedback === 'bad'}
+                  onClick={() => onSubmit('bad')}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

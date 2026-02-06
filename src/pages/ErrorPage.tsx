@@ -7,7 +7,7 @@ const ErrorPage = () => {
 
   return (
     <>
-      <div className="bg-[#2F16FF] min-h-screen w-full text-center pt-[180px]">
+      <div className="bg-[#2F16FF] min-h-screen w-full text-center pt-[140px]">
         <div className="flex flex-col items-center justify-center">
           <p className="text-white font-title text-[100px] leading-[60px] tracking-[-12px] font-normal pb-[14px]">
             404
@@ -20,10 +20,10 @@ const ErrorPage = () => {
             alt="Broken Plate"
             className="w-[84px] h-[50px]"
           />
-          <div className="h-[350px]" />
           <ButtonMedium
-            text="다른 휴식 찾으러 가기"
+            text="홈으로 이동"
             onClick={() => navigate('/')}
+            className="fixed bottom-[52px] w-[334px] h-[50px] text-body-title"
           />
         </div>
       </div>

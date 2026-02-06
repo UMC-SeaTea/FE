@@ -8,6 +8,7 @@ import timeIcon from '../../assets/timeIcon.svg';
 import phoneIcon from '../../assets/phoneIcon.svg';
 import shareButton from '../../assets/RoundButton/share_btn.svg';
 import { useNavigate } from 'react-router-dom';
+import { showToast } from '../../components/Toast/ToastHost';
 // import teaBag from '../../assets/teaBag.svg';
 
 const MapDetailPage = () => {
@@ -19,6 +20,7 @@ const MapDetailPage = () => {
         // title: data.name,
         url: window.location.href,
       });
+      showToast({ text: '공유 링크가 복사되었습니다.', duration: 2000 });
     } catch (error) {
       console.error('링크 공유 실패', error);
     }

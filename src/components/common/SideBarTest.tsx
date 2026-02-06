@@ -25,6 +25,7 @@ const SideBarTest = () => {
             <ButtonMedium
               text="새로 진단해보기"
               onClick={() => navigate('/diagnosis')}
+              className="w-[311px] h-[44px] text-body-4"
             />
           </div>
         </div>

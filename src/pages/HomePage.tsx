@@ -7,6 +7,7 @@ import SideBarTest from '../components/common/SideBarTest';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
 import useSideBar from '../hooks/useSideBar';
+import Footer from '../components/common/Footer';
 
 const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
@@ -28,7 +29,7 @@ const HomePage = () => {
           <SideBarContainer open={open} onClose={closeSideBar} />
           <HomeTestType type="oceanic" />
         </div>
-        <div className="flex flex-col pl-[20px] gap-[29px] pb-[121px]">
+        <div className="flex flex-col pl-[20px] gap-[29px]">
           <div className="flex flex-col gap-[10px]">
             <p className="text-black font-body text-body-title">
               최근 확인한 공간
@@ -42,6 +43,9 @@ const HomePage = () => {
           <HomeComponent />
           <SideBarTest />
         </div>
+      </div>
+      <div className="pt-[52px]">
+        <Footer />
       </div>
     </>
   );

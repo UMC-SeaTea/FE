@@ -113,7 +113,7 @@ export default function DiagnosisStart() {
           <button
             type="button"
             onClick={handleStart}
-            className="w-[335px] h-[50px] rounded-[25px] border border-white text-body-title font-body cursor-pointer"
+            className="w-[335px] h-[50px] rounded-[25px] text-brand bg-white border border-white text-body-title font-body cursor-pointer"
           >
             시작하기
           </button>
