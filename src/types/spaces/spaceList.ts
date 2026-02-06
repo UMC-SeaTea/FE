@@ -7,8 +7,8 @@ export type SpaceListResponse = CommonResponse<{
 }>;
 
 export type SpaceListParams = {
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
   q?: string;
   size?: number;
   cursor?: string;

@@ -5,6 +5,8 @@ import SearchBarTouched from '../../components/SearchBar/SearchBarTouched';
 import { useEffect, useMemo, useState } from 'react';
 import SearchResult from '../../components/Search/SearchResult';
 import useDebounce from '../../hooks/useDebounce';
+import { useSpaceList } from '../../hooks/spaces/useSpaceList';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 type RecentItem = {
   id: string;
@@ -18,6 +20,8 @@ const MapSearchPage = () => {
 
   const q = useMemo(() => (params.get('q') ?? '').trim(), [params]);
   const isResultMode = q.length > 0;
+
+  const { data, isLoading } = useSpaceList({ q });
 
   // inputValue는 입력 중인 값, q는 확정된 검색어
   const [inputValue, setInputValue] = useState(q);
@@ -87,8 +91,15 @@ const MapSearchPage = () => {
             검색 결과
           </p>
           <div className="flex flex-col gap-[8px]">
-            <SearchResult type="Floral" name="국립현대미술관" distance="1.2" />
-            <SearchResult type="Smocky" name="국립중앙박물관" distance="3.2" />
+            {isLoading && <LoadingSpinner />}
+            {data?.result?.items?.map((item) => (
+              <SearchResult
+                key={item.spaceId}
+                type={item.tastingTypeCode}
+                name={item.name}
+                distance={String(item.distanceMeters ?? '')}
+              />
+            ))}
           </div>
         </div>
       ) : (
