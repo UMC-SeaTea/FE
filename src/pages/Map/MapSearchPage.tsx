@@ -72,7 +72,7 @@ const MapSearchPage = () => {
   };
 
   return (
-    <div className="px-[20px] pt-[76px]">
+    <div className="px-[20px] pt-[32px]">
       <SearchBarTouched
         value={inputValue}
         onChange={setInputValue}

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import waveBack from '../../assets/images/simplediagnosis/waveBack.png';
 import waveFront from '../../assets/images/simplediagnosis/waveFront.png';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import clsx from 'clsx';
 
 export default function SimpleDiagnosisIntro() {
   const navigate = useNavigate();
@@ -31,7 +32,6 @@ export default function SimpleDiagnosisIntro() {
       "
     >
       <style>{`
-
         @keyframes wave-float-back {
           0%   { transform: translateX(-50%) translateY(0) scaleY(1); }
           50%  { transform: translateX(-50%) translateY(-8px) scaleY(1.02); }
@@ -45,18 +45,16 @@ export default function SimpleDiagnosisIntro() {
       `}</style>
 
       <div
-        className={[
-          'absolute inset-0',
-          'transition-opacity duration-300 ease-out',
-          leaving ? 'opacity-0' : 'opacity-100',
-        ].join(' ')}
+        className={clsx(
+          'absolute inset-0 transition-opacity duration-300 ease-out',
+          leaving ? 'opacity-0' : 'opacity-100'
+        )}
       >
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <img
             src={waveBack}
             alt=""
-            className="
-              absolute left-1/2 bottom-[-45px]
+            className="absolute left-1/2 bottom-[-45px]
               w-[120%] max-w-none
               [transform-origin:50%_100%]
               animate-[wave-float-back_6s_ease-in-out_infinite]
@@ -66,8 +64,7 @@ export default function SimpleDiagnosisIntro() {
           <img
             src={waveFront}
             alt=""
-            className="
-              absolute left-1/2 bottom-[-50px]
+            className="absolute left-1/2 bottom-[-50px]
               w-[128%] max-w-none
               [transform-origin:50%_100%]
               animate-[wave-float-front_4.6s_ease-in-out_infinite]

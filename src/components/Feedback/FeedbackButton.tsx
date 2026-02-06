@@ -2,6 +2,7 @@ import good from '../../assets/GoodBadIcon/good.svg';
 import emptyGood from '../../assets/GoodBadIcon/emptyGood.svg';
 import bad from '../../assets/GoodBadIcon/bad.svg';
 import emptyBad from '../../assets/GoodBadIcon/emptyBad.svg';
+import clsx from 'clsx';
 
 type Props = {
   type: 'good' | 'bad';
@@ -24,17 +25,12 @@ const FeedbackButton = ({ type, label, isSelected, onClick }: Props) => {
     <button
       type="button"
       onClick={onClick}
-      className={`
-        w-[134px] h-[42px] px-[16px] py-[10px]
-        rounded-[100px] border
-        flex items-center justify-center gap-[2px] cursor-pointer
-        transition
-        ${
-          isSelected
-            ? 'border-brand bg-light-blue-2'
-            : 'border-gray-500 bg-white'
-        }
-      `}
+      className={clsx(
+        'w-[134px] h-[42px] px-[16px] py-[10px] rounded-[100px] border',
+        'flex items-center justify-center gap-[2px] cursor-pointer',
+        'transition',
+        isSelected ? 'border-brand bg-light-blue-2' : 'border-gray-500 bg-white'
+      )}
     >
       <img src={icon} alt={`${type} icon`} className="w-[20px] h-[20px]" />
       <span

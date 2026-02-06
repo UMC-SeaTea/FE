@@ -1,14 +1,16 @@
 import NavBar from '../components/common/NavBar';
 import menu from '../assets/menu_white.svg';
-import { useState } from 'react';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import moveButton from '../assets/moveButton_white.svg';
 import { useNavigate } from 'react-router-dom';
 import MyPageProfile from '../components/MyPage/MyPageProfile';
+import useSideBar from '../hooks/useSideBar';
 
 const MyPage = () => {
-  const [navOpen, setNavOpen] = useState(false);
   const navigate = useNavigate();
+  const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
+    closeOnEsc: true,
+  });
 
   const menuItems = [
     { id: 1, title: '나의 티백', path: '/myteabag' },
@@ -27,12 +29,9 @@ const MyPage = () => {
               text="마이페이지"
               icon={menu}
               className="border-b border-[#000] relative z-[60] !bg-[#0A0A0A] !w-full"
-              onClick={() => setNavOpen((prev) => !prev)}
+              onClick={toggleSideBar}
             />
-            <SideBarContainer
-              open={navOpen}
-              onClose={() => setNavOpen(false)}
-            />
+            <SideBarContainer open={open} onClose={closeSideBar} />
           </div>
 
           <div className="flex flex-col items-center gap-3 self-stretch">
@@ -61,7 +60,11 @@ const MyPage = () => {
                         {item.title}
                       </div>
                       <div className="w-6 h-6 flex items-center justify-center">
-                        <img src={moveButton} alt="move button" className="" />
+                        <img
+                          src={moveButton}
+                          alt="move button"
+                          className="cursor-pointer"
+                        />
                       </div>
                     </div>
                   </div>

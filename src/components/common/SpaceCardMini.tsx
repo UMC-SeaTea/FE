@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import exampleImage from '../../assets/images/exampleSpace.png';
+import clsx from 'clsx';
 // 추후 props로 변경 필요
 // type SpaceCardMiniProps = {
 //   name: string;
@@ -7,12 +8,16 @@ import exampleImage from '../../assets/images/exampleSpace.png';
 //   img?: string;
 // };
 
-const SpaceCardMini = ({ className = "w-[120px] h-[120px]" }: { className?: string }) => {
+const SpaceCardMini = ({
+  className = 'w-[120px] h-[120px]',
+}: {
+  className?: string;
+}) => {
   const navigate = useNavigate();
   return (
     <>
       <div
-        className={`relative overflow-hidden cursor-pointer  ${className}`}
+        className={clsx('relative overflow-hidden cursor-pointer', className)}
         onClick={() => navigate('/map/1')}
       >
         {/* 추후 이미지 API 연동 필요 */}
