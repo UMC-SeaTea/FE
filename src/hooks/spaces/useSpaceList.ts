@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import type { SpaceListResponse } from '../../types/spaces/spaceList';
+import type {
+  SpaceListParams,
+  SpaceListResponse,
+} from '../../types/spaces/spaceList';
 import { getSpaceList } from '../../apis/spaces/spaceList';
 
-export const useSpaceList = () => {
+export const useSpaceList = (params: SpaceListParams) => {
   return useQuery<SpaceListResponse>({
-    queryKey: [],
-    queryFn: () => getSpaceList(),
+    queryKey: ['spaces', params],
+    queryFn: () => getSpaceList(params),
   });
 };
