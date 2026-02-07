@@ -5,7 +5,7 @@ export type SpaceItem = {
   lat: number;
   lng: number;
   thumbnailImageUrl?: string;
-  distanceMeters?: number;
+  distanceMeters: number;
   address?: string;
   roadAddress?: string;
   phone?: string;
