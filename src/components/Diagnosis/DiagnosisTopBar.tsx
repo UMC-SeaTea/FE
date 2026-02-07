@@ -20,7 +20,7 @@ export default function DiagnosisTopBar({ title, onBack }: Props) {
       <div className="flex justify-center">
         <h1
           className="
-            w-full px-[56px] text-center font-title font-medium text-[20px] text-footer whitespace-normal break-keep leading-[140%]"
+            w-full px-[56px] text-center font-body font-medium text-[20px] text-footer whitespace-normal break-keep leading-[140%]"
         >
           {title}
         </h1>

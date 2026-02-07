@@ -12,6 +12,7 @@ import SimpleDiagnosisPick from '../pages/Diagnosis/SimpleDiagnosisPick';
 import DiagnosisResultLoading from '../pages/Diagnosis/DiagnosisResultLoading';
 import DiagnosisCompletePage from '../pages/Diagnosis/DiagnosisCompletePage';
 import DiagnosisSpaceRecommendPage from '../pages/Diagnosis/DiagnosisSpaceRecommendPage';
+import DiagnosisAdvancedLoading from '../pages/Diagnosis/DiagnosisAdvancedLoading';
 import MyPage from '../pages/MyPage';
 import MyTeabag from '../pages/MyTeabagPage';
 import DiagnosisDetail from '../pages/Diagnosis/DiagnosisDetail';
@@ -46,6 +47,7 @@ export const publicRoutes = [
         path: '/diagnosis/recommend',
         element: <DiagnosisSpaceRecommendPage />,
       },
+      { path: '/diagnosis/advanced-loading', element: <DiagnosisAdvancedLoading /> },
       { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element: <LoginPage /> },
       { path: '/login/start', element: <LoginStartPage /> },
