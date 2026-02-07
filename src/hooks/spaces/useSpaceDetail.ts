@@ -1,5 +1,10 @@
-// export const useSpaceDetail = () => {
-//   return useMutation<SpaceDetailResponse, isLoading, Error>({
-//     mutationFn: getSpaceDetail,
-//   });
-// };
+import { useQuery } from '@tanstack/react-query';
+import type { SpaceDetailResponse } from '../../types/spaces/spaceDetail';
+import { getSpaceDetail } from '../../apis/spaces/spaceDetail';
+
+export const useSpaceDetail = (spaceId: number) => {
+  return useQuery<SpaceDetailResponse>({
+    queryKey: ['spaceDetail', spaceId],
+    queryFn: () => getSpaceDetail(spaceId),
+  });
+};
