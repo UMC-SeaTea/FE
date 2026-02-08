@@ -1,14 +1,44 @@
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import HomeTestType from "../../components/common/HomeTestType";
+import { type TastingKey } from "../../types/tastingType/tastingType";
+import { tastingTypeMap } from "../../constants/tastingType/tastingType";
 
-import HomeTestType from '../../components/common/HomeTestType';
-import { type TastingKey } from '../../types/tastingType/tastingType';
-import { tastingTypeMap } from '../../constants/tastingType/tastingType';
+type CompleteState = {
+  resultTypeCode?: string; // "OCEANIC" | "FRUITY" ...
+  // source?: "detail" | "simple";
+  // mode?: "basic" | "advanced";
+};
+
+// ✅ 백 코드 -> 프론트 키 매핑
+const CODE_TO_KEY: Record<string, TastingKey> = {
+  FLORAL: "floral",
+  FRUITY: "fruity",
+  OCEANIC: "oceanic",
+  EARTHY: "earthy",
+  NUTTY: "nutty",
+  SMOKY: "smoky",
+  SPICES: "spices",
+  SWEET: "sweet",
+};
+
+function toTastingKey(code?: string): TastingKey {
+  if (!code) return "floral"; // fallback
+  const upper = String(code).toUpperCase();
+  return CODE_TO_KEY[upper] ?? "floral";
+}
 
 export default function DiagnosisCompletePage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const resultType: TastingKey = 'floral';
+  const state = (location.state ?? {}) as CompleteState;
+
+  // ✅ ResultLoading에서 넘겨준 resultTypeCode 사용
+  const resultType: TastingKey = useMemo(
+    () => toTastingKey(state.resultTypeCode),
+    [state.resultTypeCode]
+  );
 
   const config = useMemo(() => tastingTypeMap[resultType], [resultType]);
 
@@ -33,9 +63,7 @@ export default function DiagnosisCompletePage() {
           <div className="pb-[28px] flex flex-col gap-[12px] items-center">
             <button
               type="button"
-              onClick={() =>
-                navigate('/diagnosis/recommend', { state: { resultType } })
-              }
+              onClick={() => navigate("/diagnosis/recommend", { state: { resultType } })}
               className="w-[334px] h-[50px] rounded-[25px] bg-brand text-white font-body font-weight-regular text-[18px] cursor-pointer"
             >
               공간 추천받기
@@ -43,7 +71,7 @@ export default function DiagnosisCompletePage() {
 
             <button
               type="button"
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
               className="w-[334px] h-[50px] rounded-[25px] bg-white border border-brand text-brand font-body font-weight-regular text-[18px] cursor-pointer"
             >
               홈으로 이동

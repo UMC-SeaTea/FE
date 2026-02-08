@@ -1,21 +1,40 @@
-//src/pages/Diagnosis/DiagnosisResultLoading.tsx
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+// src/pages/Diagnosis/DiagnosisResultLoading.tsx
+import { useEffect, useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import waveBack from '../../assets/Waves/diagnosis_result/wave_back.png';
-import waveMiddle from '../../assets/Waves/diagnosis_result/wave_middle.png';
-import waveFront from '../../assets/Waves/diagnosis_result/wave_front.png';
+import waveBack from "../../assets/Waves/diagnosis_result/wave_back.png";
+import waveMiddle from "../../assets/Waves/diagnosis_result/wave_middle.png";
+import waveFront from "../../assets/Waves/diagnosis_result/wave_front.png";
+
+type ResultLoadingState = {
+  source?: "detail" | "simple";
+  mode?: "basic" | "advanced";
+  resultTypeCode?: string; // ✅ API에서 받은 타입코드
+};
 
 export default function DiagnosisResultLoading() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const state = (location.state ?? {}) as ResultLoadingState;
+
+  // ✅ 혹시 direct access 대비 (state 없으면 detail로 돌려보내거나 기본값)
+  const safeState = useMemo<ResultLoadingState>(() => {
+    return {
+      source: state.source ?? "detail",
+      mode: state.mode ?? "basic",
+      resultTypeCode: state.resultTypeCode ?? "", // 없으면 빈값
+    };
+  }, [state.mode, state.resultTypeCode, state.source]);
+
   useEffect(() => {
     const t = window.setTimeout(() => {
-      navigate('/diagnosis/complete', { replace: true, state: location.state });
+      // ✅ complete로 state 그대로 carry
+      navigate("/diagnosis/complete", { replace: true, state: safeState });
     }, 6000);
+
     return () => window.clearTimeout(t);
-  }, [navigate, location.state]);
+  }, [navigate, safeState]);
 
   return (
     <div className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-[#0A0A0A]">
@@ -39,7 +58,7 @@ export default function DiagnosisResultLoading() {
           src={waveBack}
           alt=""
           className="block w-full h-auto opacity-90"
-          style={{ animation: 'floatSlow 10s ease-in-out infinite' }}
+          style={{ animation: "floatSlow 10s ease-in-out infinite" }}
         />
       </div>
 
@@ -48,7 +67,7 @@ export default function DiagnosisResultLoading() {
           src={waveMiddle}
           alt=""
           className="block w-full h-auto opacity-95"
-          style={{ animation: 'floatMid 8s ease-in-out infinite' }}
+          style={{ animation: "floatMid 8s ease-in-out infinite" }}
         />
       </div>
 
@@ -57,7 +76,7 @@ export default function DiagnosisResultLoading() {
           src={waveFront}
           alt=""
           className="block w-full h-auto"
-          style={{ animation: 'floatFast 6.5s ease-in-out infinite' }}
+          style={{ animation: "floatFast 6.5s ease-in-out infinite" }}
         />
       </div>
 
