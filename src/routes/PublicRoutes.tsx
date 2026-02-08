@@ -12,13 +12,14 @@ import SimpleDiagnosisPick from '../pages/Diagnosis/SimpleDiagnosisPick';
 import DiagnosisResultLoading from '../pages/Diagnosis/DiagnosisResultLoading';
 import DiagnosisCompletePage from '../pages/Diagnosis/DiagnosisCompletePage';
 import DiagnosisSpaceRecommendPage from '../pages/Diagnosis/DiagnosisSpaceRecommendPage';
-import MyPage from '../pages/MyPage';
+import MyPage from '../pages/MyPage/MyPage';
 import MyTeabag from '../pages/MyTeabagPage';
 import DiagnosisDetail from '../pages/Diagnosis/DiagnosisDetail';
 import MapSearchPage from '../pages/Map/MapSearchPage';
 import SignUpPage from '../pages/SignUpPage';
 import MyTastingPage from '../pages/MyTastingPage';
 import SpaceRecommend from '../pages/SpaceRecommendPage';
+import MyPageProfileEdit from '../pages/MyPage/MyPageProfileEdit';
 
 export const publicRoutes = [
   {
@@ -51,6 +52,7 @@ export const publicRoutes = [
       { path: '/login/start', element: <LoginStartPage /> },
       { path: '/myteabag', element: <MyTeabag /> },
       { path: '/signup', element: <SignUpPage /> },
+      { path: '/mypage/mypageprofileedit', element: <MyPageProfileEdit /> },
     ],
   },
 ];

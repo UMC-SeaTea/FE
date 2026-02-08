@@ -1,8 +1,15 @@
 import backButton from '../../assets/backButton_white.svg';
 import profileDefault from '../../assets/profile_default.png';
 import NoteSearch from '../common/NoteSearch';
+import { useNavigate } from 'react-router-dom';
 
 const MyPageProfile = () => {
+  const navigate = useNavigate();
+
+  const handleEditClick = () => {
+    navigate('/mypage/mypageprofileedit');
+  };
+
   return (
     <>
       <div className="w-[335px] h-[116px] rounded-md bg-[rgba(255,255,255,0.1)] px-[16px] py-[24px]">
@@ -40,6 +47,7 @@ const MyPageProfile = () => {
             src={backButton}
             alt="Back Button"
             className="scale-x-[-1] w-[24px] h-[24px] cursor-pointer"
+            onClick={handleEditClick}
           />
         </div>
       </div>
