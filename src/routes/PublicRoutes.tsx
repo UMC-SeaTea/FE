@@ -14,7 +14,6 @@ import DiagnosisCompletePage from '../pages/Diagnosis/DiagnosisCompletePage';
 import DiagnosisSpaceRecommendPage from '../pages/Diagnosis/DiagnosisSpaceRecommendPage';
 import MyPage from '../pages/MyPage/MyPage';
 import DiagnosisAdvancedLoading from '../pages/Diagnosis/DiagnosisAdvancedLoading';
-import MyPage from '../pages/MyPage';
 import MyTeabag from '../pages/MyTeabagPage';
 import DiagnosisDetail from '../pages/Diagnosis/DiagnosisDetail';
 import MapSearchPage from '../pages/Map/MapSearchPage';
@@ -49,7 +48,10 @@ export const publicRoutes = [
         path: '/diagnosis/recommend',
         element: <DiagnosisSpaceRecommendPage />,
       },
-      { path: '/diagnosis/advanced-loading', element: <DiagnosisAdvancedLoading /> },
+      {
+        path: '/diagnosis/advanced-loading',
+        element: <DiagnosisAdvancedLoading />,
+      },
       { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element: <LoginPage /> },
       { path: '/login/start', element: <LoginStartPage /> },

@@ -5,6 +5,7 @@ import ImageSelectionPopup from '../common/ImageSelectionPopup';
 interface Props {
   state: any;
   actions: any;
+  refs: any;
 }
 
 const SignUpProfile = ({ state, actions }: Props) => {
