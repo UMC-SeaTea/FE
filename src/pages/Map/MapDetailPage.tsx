@@ -1,7 +1,7 @@
 // import { useParams } from 'react-router-dom';
 import NavBar from '../../components/common/NavBar';
 import backIcon from '../../assets/backButton_black.svg';
-// import NoteSearch from '../../components/common/NoteSearch';
+import NoteSearch from '../../components/common/NoteSearch';
 // import SampleImg from '../../assets/images/exampleSpace.png';
 import placeIcon from '../../assets/place_gray.svg';
 import timeIcon from '../../assets/timeIcon.svg';
@@ -9,10 +9,11 @@ import phoneIcon from '../../assets/phoneIcon.svg';
 import shareButton from '../../assets/RoundButton/share_btn.svg';
 import { useNavigate } from 'react-router-dom';
 import { showToast } from '../../components/Toast/ToastHost';
+import { useSpaceDetail } from '../../hooks/spaces/useSpaceDetail';
 // import teaBag from '../../assets/teaBag.svg';
 
 const MapDetailPage = () => {
-  // const { data, isLoading } = useSpaceDetail();
+  const { data, isLoading, isError } = useSpaceDetail(1);
 
   const handleShare = async () => {
     try {
@@ -41,19 +42,19 @@ const MapDetailPage = () => {
         <div className="flex flex-col gap-[12px] pt-[42px] pb-[23px]">
           <div className="flex items-start justify-between">
             <p className="text-black font-body text-[20px] font-semibold">
-              {/* {data.name} */}
+              {data?.result?.name}
             </p>
             {/* 유저토큰 있는 경우에만 */}
             {/* (accessToken && (
             <img src={teaBag} alt="tea bag" className="w-[28px] h-[28px]" />
             )) */}
           </div>
-          {/* <NoteSearch text={`${data.tastingTypeName}`} /> */}
+          <NoteSearch text={`${data?.result?.tastingTypeCode}`} />
         </div>
         {/* 이미지 */}
         <div className="relative w-[335px] h-[335px] overflow-hidden">
           <img
-            // src={data.thumbnailImageUrl}
+            src={data?.result?.thumbnailImageUrl}
             alt="Example Space"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -65,13 +66,15 @@ const MapDetailPage = () => {
               <div className="flex text-[#FBFBFB] font-regular">
                 <div className="flex gap-[4px]">
                   <p>총</p>
-                  {/* <p className="text-white">{data.savedCount}명</p> */}
+                  <p className="text-white">{data?.result?.savedCount}명</p>
                 </div>
                 <p>의 SeaTea 사용자가 저장했어요.</p>
               </div>
               <div className="flex gap-[4px] font-medium">
                 <p>나와 동일한 유형</p>
-                {/* <p className=" text-[#B4ABFF] font-bold">{data.sameTypeSavedCount}</p> */}
+                <p className=" text-[#B4ABFF] font-bold">
+                  {data?.result?.sameTypeSavedCount}
+                </p>
               </div>
               {/* 유저토큰 X의 경우 */}
               {/* (accessToken &&{' '}
@@ -97,10 +100,12 @@ const MapDetailPage = () => {
                 className="w-[20px] h-[20px]"
               />
               <div className="flex flex-col gap-[4px]">
-                {/* <p className="text-body-4">{data.roadAddress}</p> */}
+                <p className="text-body-4">{data?.result?.roadAddress}</p>
                 <div className="flex gap-[4px]">
                   <p className="text-gray-100">내 위치에서</p>
-                  {/* <p className="text-brand">{data.distanceMeters}km</p> */}
+                  {/* <p className="text-brand">
+                    {(data?.result?.distanceMeters / 1000).toFixed(2)}km
+                  </p> */}
                 </div>
               </div>
             </div>
@@ -111,7 +116,7 @@ const MapDetailPage = () => {
                 alt="time icon"
                 className="w-[20px] h-[20px]"
               />
-              {/* <p className="">{data.openingHours}</p> */}
+              <p className="">{data?.result?.openingHours}</p>
             </div>
             {/* 전화 번호 */}
             <div className="flex items-center gap-[4px]">
@@ -120,7 +125,7 @@ const MapDetailPage = () => {
                 alt="phone icon"
                 className="w-[20px] h-[20px]"
               />
-              {/* <p>{data.phone}</p> */}
+              <p>{data?.result?.phone}</p>
             </div>
           </div>
         </div>
