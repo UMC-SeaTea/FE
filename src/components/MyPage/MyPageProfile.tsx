@@ -45,7 +45,7 @@ const MyPageProfile = () => {
           </div>
           <img
             src={backButton}
-            alt="Back Button"
+            alt="프로필 수정"
             className="scale-x-[-1] w-[24px] h-[24px] cursor-pointer"
             onClick={handleEditClick}
           />

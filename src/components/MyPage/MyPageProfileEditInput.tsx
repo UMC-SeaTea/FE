@@ -34,7 +34,7 @@ const MyPageProfileEditInput = ({
             className="flex justify-center items-center cursor-pointer"
             onClick={onClear}
           >
-            <img src={closeButton} alt="clear" className="" />
+            <img src={closeButton} alt="입력 내용 삭제" className="" />
           </div>
         )}
       </div>

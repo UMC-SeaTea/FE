@@ -9,6 +9,8 @@ import defaultProfile from '../../assets/profile_default.png';
 import ProfileEditInput from '../../components/MyPage/MyPageProfileEditInput';
 import ProfileReadOnly from '../../components/MyPage/MyPageProfileReadOnly';
 
+const NAME_VALIDATION_REGEX = /^[a-zA-Z0-9가-힣]{4,}$/;
+
 const MyPageProfileEdit = () => {
   const navigate = useNavigate();
 
@@ -24,7 +26,7 @@ const MyPageProfileEdit = () => {
   const [isChanged, setIsChanged] = useState(false);
   const [showImgOption, setShowImgOption] = useState(false);
 
-  const isValidName = /^[a-zA-Z0-9가-힣]{4,}$/.test(name);
+  const isValidName = NAME_VALIDATION_REGEX.test(name);
 
   const canSave = isChanged && isValidName;
 
@@ -75,10 +77,7 @@ const MyPageProfileEdit = () => {
           />
           <div className="absolute right-[20px] flex justify-center items-center gap-[10px] py-[2px] px-[12px]">
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleSave();
-              }}
+              onClick={handleSave}
               disabled={!canSave}
               className={clsx(
                 'font-body text-body-4 transition-colors duration-200',
