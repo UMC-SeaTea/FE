@@ -57,7 +57,7 @@ export const publicRoutes = [
       { path: '/login/start', element: <LoginStartPage /> },
       { path: '/myteabag', element: <MyTeabag /> },
       { path: '/signup', element: <SignUpPage /> },
-      { path: '/mypage/mypageprofileedit', element: <MyPageProfileEdit /> },
+      { path: '/mypage/profile-edit', element: <MyPageProfileEdit /> },
     ],
   },
 ];
