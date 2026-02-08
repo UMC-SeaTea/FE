@@ -7,7 +7,7 @@ const MyPageProfile = () => {
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-    navigate('/mypage/mypageprofileedit');
+    navigate('/mypage/profile-edit');
   };
 
   return (
