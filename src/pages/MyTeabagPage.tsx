@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import SpaceCardMini from '../components/common/SpaceCardMini';
+// import SpaceCardMini from '../components/common/SpaceCardMini';
 import SortButton from '../components/common/SortButton';
 import EditButton from '../components/common/EditButton';
 import MoveupButton from '../assets/RoundButton/moveup_btn.svg';
@@ -68,7 +68,8 @@ const MyTeabagPage = () => {
         >
           {currentItems.map((item) => (
             <div key={item.id} className="w-[162px] h-[162px]">
-              <SpaceCardMini className="w-full h-full rounded-sm" />
+              {/* 추후 마이티백 조회 API로 연동 필요 */}
+              {/* <SpaceCardMini className="w-full h-full rounded-sm" /> */}
             </div>
           ))}
         </div>

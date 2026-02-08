@@ -66,9 +66,9 @@ export default function DiagnosisSpaceRecommendPage() {
 
             <div className="px-[16px] pt-[12px] flex-1 overflow-y-auto">
               <div className="pb-[16px] flex flex-col gap-[12px]">
+                {/* <PlaceList />
                 <PlaceList />
-                <PlaceList />
-                <PlaceList />
+                <PlaceList /> */}
               </div>
             </div>
 

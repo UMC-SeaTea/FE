@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import exampleImage from '../../assets/images/exampleSpace.png';
 import clsx from 'clsx';
 
 type SpaceCardMiniProps = {
@@ -25,7 +24,6 @@ const SpaceCardMini = ({
         )}
         onClick={() => navigate('/map/1')}
       >
-        {/* 추후 이미지 API 연동 필요 */}
         <img
           src={thumbnailImageUrl}
           alt="Example Space"
@@ -33,7 +31,6 @@ const SpaceCardMini = ({
         />
         {/* 그라데이션 */}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_55.8%,#000_92.93%)]" />
-        {/* 추후 장소 API 연동 필요 */}
         <div className="absolute bottom-0 left-0 flex flex-col w-full px-[10px] pb-[11px] text-white">
           <p className="font-body text-body-4">{name}</p>
           <p className="font-body text-detail-4">{roadAddress}</p>
