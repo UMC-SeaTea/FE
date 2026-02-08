@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import SpaceCardMini from '../components/common/SpaceCardMini';
 import SortButton from '../components/common/SortButton';
 import EditButton from '../components/common/EditButton';
@@ -17,7 +17,12 @@ const MyTeabagPage = () => {
 
   const footerRef = useRef<HTMLDivElement>(null);
   const itemsPerPage = 20;
-  const currentItems = TOTAL_DATA.slice(0, page * itemsPerPage);
+
+  const currentItems = useMemo(
+    () => TOTAL_DATA.slice(0, page * itemsPerPage),
+    [page]
+  );
+
   const isAllLoaded = currentItems.length >= TOTAL_DATA.length;
 
   useEffect(() => {
@@ -73,17 +78,17 @@ const MyTeabagPage = () => {
         <button
           onClick={handleLoadMore}
           disabled={isAllLoaded}
-          className={`inline-flex justify-center items-center gap-[10px] 
-            pt-[8px] pb-[10px] px-[20px] 
-            mt-[8px] mb-[34px] 
-            rounded-[100px] border border-[#000] bg-white
-            transition-opacity duration-200
-            ${
-              isAllLoaded
-                ? 'opacity-30 cursor-not-allowed'
-                : 'opacity-100 hover:opacity-70 cursor-pointer'
+          className={clsx(
+            'inline-flex justify-center items-center gap-[10px]',
+            'pt-[8px] pb-[10px] px-[20px]',
+            'mt-[8px] mb-[34px]',
+            'rounded-[100px] border border-[#000] bg-white',
+            'transition-opacity duration-200',
+            {
+              'opacity-30 cursor-not-allowed': isAllLoaded,
+              'opacity-100 hover:opacity-70 cursor-pointer': !isAllLoaded,
             }
-          `}
+          )}
         >
           <span className="text-black font-body text-[16px] font-normal leading-[100%] tracking-[-0.4px]">
             more
