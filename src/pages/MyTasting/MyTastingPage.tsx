@@ -79,16 +79,16 @@ const MyTastingPage = () => {
             <PastResult type="Nutty" date="2025.09.09" />
           </div>
           {/* 임의 버튼 UI */}
-          <div
+          <button
             className="flex justify-center cursor-pointer"
             onClick={() => navigate('/mytasting/past')}
           >
             <img
               src={moreButton}
-              alt="moreButton"
+              alt="더보기버튼"
               className="w-[76px] h-[34px]"
             />
-          </div>
+          </button>
         </div>
       </div>
       <Footer />
