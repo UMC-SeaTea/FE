@@ -69,6 +69,7 @@ const SpaceRecommend = () => {
                   name={item.name}
                   address={item.address}
                   description={item.description}
+                  spaceId={item.spaceId}
                 />
               ))
             )}
