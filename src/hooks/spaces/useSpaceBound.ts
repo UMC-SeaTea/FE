@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import { getSpaceBound } from '../../apis/spaces/spaceBound';
 import type { SpaceBoundResponse } from '../../types/spaces/spaceBound';
 
