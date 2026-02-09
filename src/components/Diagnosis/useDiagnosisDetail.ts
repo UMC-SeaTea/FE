@@ -1,3 +1,4 @@
+// src/components/Diagnosis/useDiagnosisDetail.ts
 import { useMemo, useState } from "react";
 
 import type { DiagnosisQuestion } from "../../constants/diagnosis/types";
@@ -17,14 +18,12 @@ type GoNextResult =
 function normalizeString(v: unknown) {
   return typeof v === "string" ? v : v == null ? "" : String(v);
 }
-
 function normalizeNumber(v: unknown) {
   if (typeof v === "number") return v;
   if (v == null) return undefined;
   const n = Number(v);
   return Number.isNaN(n) ? undefined : n;
 }
-
 function normalizeStringArray(v: unknown): string[] {
   if (Array.isArray(v)) return v.map(String);
   if (typeof v === "string" && v.length > 0) return [v];
@@ -48,8 +47,9 @@ export function useDiagnosisDetail(params: Params = {}) {
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
 
-  // ✅ 라우트 이동 후에도 주입 가능
-  const [sessionId, setSessionId] = useState<number | null>(params.initialSessionId ?? null);
+  const [sessionId, setSessionId] = useState<number | null>(
+    params.initialSessionId ?? null
+  );
 
   const { mutateAsync, isPending } = useDetailDiagnosis();
 
@@ -65,7 +65,8 @@ export function useDiagnosisDetail(params: Params = {}) {
   const isNextEnabled = useMemo(() => {
     if (!current) return false;
 
-    if (current.type === "two_choice") return typeof value === "string" && value.length > 0;
+    if (current.type === "two_choice")
+      return typeof value === "string" && value.length > 0;
 
     if (current.type === "dial") return typeof value === "number";
 
@@ -93,7 +94,6 @@ export function useDiagnosisDetail(params: Params = {}) {
     setAnswers((prev) => ({ ...prev, [current.id]: v }));
   };
 
-  // ✅ step1 payload
   const buildStep1Body = (): DetailDiagnosisRequest => ({
     step: 1,
     q1: normalizeString(answers.q1),
@@ -102,7 +102,6 @@ export function useDiagnosisDetail(params: Params = {}) {
     q4: normalizeStringArray(answers.q4),
   });
 
-  // ✅ step2 payload
   const buildStep2Body = (): DetailDiagnosisRequest => ({
     step: 2,
     sessionId: sessionId ?? undefined,
@@ -116,7 +115,6 @@ export function useDiagnosisDetail(params: Params = {}) {
     if (!isNextEnabled) return;
     if (isPending) return;
 
-    // ✅ BASIC 마지막(q4)에서 step1 제출
     if (!isAdvanced && current?.id === "q4") {
       const res = await mutateAsync(buildStep1Body());
       if (!res.isSuccess) throw new Error(res.message);
@@ -127,13 +125,11 @@ export function useDiagnosisDetail(params: Params = {}) {
         return { status: "DONE", resultTypeCode: code };
       }
 
-      // NEED_MORE
       const sid = res.result.sessionId;
       setSessionId(sid);
       return { status: "NEED_MORE", sessionId: sid };
     }
 
-    // ✅ ADVANCED 마지막(q8)에서 step2 제출
     if (isAdvanced && current?.id === "q8") {
       if (!sessionId) throw new Error("sessionId is missing for step2");
 
@@ -145,7 +141,6 @@ export function useDiagnosisDetail(params: Params = {}) {
       return { status: "DONE", resultTypeCode: code };
     }
 
-    // ✅ 일반 다음
     if (stepIndex >= total - 1) return;
     setStepIndex((prev) => prev + 1);
     return { status: "NEXT" };
@@ -163,10 +158,13 @@ export function useDiagnosisDetail(params: Params = {}) {
   };
 
   return {
+    // ✅ 추가 반환
+    questions,
+    answers,
+
     stepIndex,
     total,
     current,
-    answers,
     value,
     progressRatio,
     isNextEnabled,
@@ -177,6 +175,6 @@ export function useDiagnosisDetail(params: Params = {}) {
 
     isSubmitting: isPending,
     sessionId,
-    setSessionId, // ✅ advanced-loading에서 주입/수정 필요하면 사용
+    setSessionId,
   };
 }

@@ -1,15 +1,20 @@
 // src/pages/Diagnosis/DiagnosisDetail.tsx
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
 import DiagnosisProgressBar from "../../components/Diagnosis/DiagnosisProgressBar";
 import DiagnosisTopBar from "../../components/Diagnosis/DiagnosisTopBar";
 import DiagnosisWaveBackground from "../../components/Diagnosis/DiagnosisWaveBackground";
 import { useDiagnosisDetail } from "../../components/Diagnosis/useDiagnosisDetail";
 import QuestionRenderer from "../../components/Diagnosis/QuestionRenderer";
-import clsx from "clsx";
-
 import DiagnosisAdvancedWaveOverlay from "../../components/Diagnosis/DiagnosisAdvancedWaveOverlay";
+
+import { calcLeadingTypeFromAnswers } from "../../components/Diagnosis/score/calcLeadingTypeFromAnswers";
+import type { TastingKey } from "../../types/tastingType/tastingType";
+import { getWaveColor } from "../../constants/tastingType/waveBg";
+
+const DEFAULT_WAVE_COLOR = "#2F16FF";
 
 export default function DiagnosisDetail() {
   const navigate = useNavigate();
@@ -18,10 +23,12 @@ export default function DiagnosisDetail() {
   const params = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const isAdvanced = params.get("mode") === "advanced";
 
-  // ✅ advanced-loading에서 넘긴 sessionId 받기
   const initialSessionId = (location.state?.sessionId as number | undefined) ?? undefined;
 
   const {
+    questions,
+    answers,
+
     stepIndex,
     total,
     current,
@@ -34,14 +41,26 @@ export default function DiagnosisDetail() {
     isSubmitting,
   } = useDiagnosisDetail({ isAdvanced, initialSessionId });
 
-  const [, setPicked] = useState(false);
+  const [picked, setPicked] = useState(false);
 
-  // ✅ mode가 바뀌면(= basic -> advanced) 질문 흐름 리셋
+  /**
+   * ✅ 플리커 방지용 "즉시 반영 answers"
+   * - setAnswer는 비동기라 step 전환 순간 answers가 잠깐 비어 보일 수 있음
+   * - shadow에 먼저 반영하고, answers 변경되면 shadow를 다시 동기화
+   */
+  const [answersShadow, setAnswersShadow] = useState<Record<string, unknown>>({});
+
+  useEffect(() => {
+    setAnswersShadow(answers);
+  }, [answers]);
+
+  // mode 변경 시 리셋
   useEffect(() => {
     reset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdvanced]);
 
+  // step 이동 시 picked 상태 초기화
   useEffect(() => {
     setPicked(false);
   }, [stepIndex]);
@@ -60,30 +79,54 @@ export default function DiagnosisDetail() {
         : []
       : [];
 
+  /**
+   * ✅ PM 요구사항: "현재 step까지의 답변 누적"으로 leadingType 계산 → waveColor 결정
+   * ✅ answersShadow를 사용해서 step 전환 순간 DEFAULT로 떨어지는 플리커 제거
+   */
+  const waveColor = useMemo(() => {
+    const hasAnyAnswer = Object.keys(answersShadow).length > 0;
+    if (!hasAnyAnswer) return DEFAULT_WAVE_COLOR;
+
+    // 현재 단계(= 지금까지 본 질문)까지만 누적 계산
+    const visibleQuestions = questions.slice(0, stepIndex + 1);
+
+    // 현재 단계까지만 answers 반영 (미래 답 포함 방지)
+    const visibleIds = new Set(visibleQuestions.map((q) => q.id));
+    const visibleAnswers: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(answersShadow)) {
+      if (visibleIds.has(k)) visibleAnswers[k] = v;
+    }
+
+    const leading = calcLeadingTypeFromAnswers(
+      visibleQuestions,
+      visibleAnswers,
+      "floral"
+    ) as unknown as TastingKey;
+
+    return getWaveColor(leading);
+  }, [answersShadow, questions, stepIndex]);
+
   const onBack = () => {
     if (stepIndex === 0) navigate(-1);
     else goBack();
   };
 
-  // ✅ DONE일 때만 결과 로딩으로 이동 (resultTypeCode 전달)
   const goResultLoading = (resultTypeCode: string) => {
     navigate("/diagnosis/result/loading", {
       state: {
         source: "detail",
         mode: isAdvanced ? "advanced" : "basic",
-        resultTypeCode, // ✅ 중요: 결과/테마/배경에 쓰게 될 값
+        resultTypeCode,
       },
     });
   };
 
-  // ✅ NEED_MORE면 advanced-loading으로 이동하며 sessionId 전달
   const goAdvancedLoading = (sessionId: number) => {
     navigate("/diagnosis/advanced-loading", {
       state: { sessionId },
     });
   };
 
-  // ✅ goNext 실행 후 결과 분기 처리 (DONE/NEED_MORE/NEXT)
   const handleNextFlow = async () => {
     try {
       const r = await goNext();
@@ -98,11 +141,8 @@ export default function DiagnosisDetail() {
         goAdvancedLoading(r.sessionId);
         return;
       }
-
-      // NEXT면 그냥 훅 안에서 stepIndex 증가 처리됨
     } catch (e) {
       console.error(e);
-      // TODO: 토스트/모달 등 에러 UI 넣기
     }
   };
 
@@ -119,7 +159,9 @@ export default function DiagnosisDetail() {
   return (
     <div className="relative min-h-dvh bg-white overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        {!isAdvanced && <DiagnosisWaveBackground stepIndex={stepIndex} />}
+        {!isAdvanced && (
+          <DiagnosisWaveBackground stepIndex={stepIndex} picked={picked} color={waveColor} />
+        )}
         {isAdvanced && <DiagnosisAdvancedWaveOverlay count={advancedCount} />}
       </div>
 
@@ -137,23 +179,24 @@ export default function DiagnosisDetail() {
               value={value}
               stepIndex={stepIndex}
               onChange={(v) => {
+                // ✅ 0) 즉시 반영 shadow 먼저 업데이트 (플리커 제거 핵심)
+                setAnswersShadow((prev) => ({ ...prev, [current.id]: v }));
+
+                // ✅ 1) 실제 훅 answers 업데이트
                 setAnswer(v);
 
-                // ✅ two_choice는 기존처럼 자동 다음
+                // ✅ auto next
                 if (current.type === "two_choice") {
-                  // 마지막 단계여도 "그냥 결과로 이동"이 아니라 API goNext 결과로 처리해야 함
                   triggerPickedThenNext(120);
                 }
               }}
               onCommit={() => {
-                // ✅ dial은 기존처럼 commit 시 자동 다음
                 if (current.type === "dial") triggerPickedThenNext(420);
               }}
             />
           </div>
         </div>
 
-        {/* ✅ 중간 multi_select는 "다음" 버튼 */}
         {!isLastStep && current.type === "multi_select" && (
           <div className="mt-[28px] px-[20px]">
             <div className="mx-auto w-[335px]">
@@ -176,9 +219,6 @@ export default function DiagnosisDetail() {
         )}
       </div>
 
-      {/* ✅ 마지막 multi_select는 '결과 확인하기' 버튼
-          - 기존에는 그냥 결과로 갔지만
-          - 이제는 API 호출(goNext) 결과에 따라 DONE/NEED_MORE 처리해야 함 */}
       {isLastStep && isMulti && (
         <div className="fixed left-0 right-0 bottom-0 z-20 px-[20px] pb-[34px]">
           <div className="mx-auto w-[335px]">

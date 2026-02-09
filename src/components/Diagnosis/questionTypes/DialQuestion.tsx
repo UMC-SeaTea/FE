@@ -7,10 +7,14 @@ type Props = {
   min: number;
   max: number;
   step: number;
-  value: number;
+
+
+  value?: number;
+
   unit?: string;
   label: string;
 
+ 
   onChange: (next: number) => void;
   onCommit?: (finalValue: number) => void;
 };
@@ -23,7 +27,6 @@ function quantize(v: number, step: number) {
   if (step <= 0) return v;
   return Math.round(v / step) * step;
 }
-
 
 function angleFromPoint(cx: number, cy: number, x: number, y: number) {
   const dx = x - cx;
@@ -65,22 +68,20 @@ export default function DialQuestion({
 
   const TICKS_SIZE = 230;
   const HANDLE_HIT_SIZE = 48;
-  const HANDLE_VISUAL_SIZE = STROKE; // 30
+  const HANDLE_VISUAL_SIZE = STROKE; 
   const HANDLE_ICON_SIZE = 20;
   const cx = SIZE / 2;
   const cy = SIZE / 2;
   const COLOR_LIGHT = "#78C2FF";
   const COLOR_DARK = "#0087F6";
-
-  const didInitRef = useRef(false);
-  useEffect(() => {
-    if (didInitRef.current) return;
-    didInitRef.current = true;
-    onChange(min);
-  }, [min, onChange]);
+  const hasInteractedRef = useRef(false);
 
   const ratio = useMemo(() => {
     if (max <= min) return 0;
+
+  
+    if (typeof value !== "number") return 0;
+
     return clamp((value - min) / (max - min), 0, 1);
   }, [value, min, max]);
 
@@ -93,12 +94,10 @@ export default function DialQuestion({
   const message = useMemo(() => MESSAGE_BY_PERCENT[snappedPercent] ?? "", [snappedPercent]);
   const percentText = `${snappedPercent}${unit}`;
 
-
   const angle = useMemo(() => {
     if (ratio <= 0) return 0.001;
     return Math.min(359.999, ratio * 360);
   }, [ratio]);
-
 
   const handleRadius = SIZE / 2 - STROKE / 2;
 
@@ -122,6 +121,7 @@ export default function DialQuestion({
       commitTimerRef.current = null;
     }
   };
+
   const scheduleCommit = (finalValue: number) => {
     clearCommitTimer();
     commitTimerRef.current = window.setTimeout(() => {
@@ -144,6 +144,9 @@ export default function DialQuestion({
     const raw = min + nextRatio * (max - min);
     const stepped = quantize(raw, step);
     const next = clamp(stepped, min, max);
+
+   
+    hasInteractedRef.current = true;
     onChange(next);
   };
 
@@ -154,6 +157,8 @@ export default function DialQuestion({
     setDragging(true);
     activePointerIdRef.current = e.pointerId;
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+
+   
     setFromClientPoint(e.clientX, e.clientY);
   };
 
@@ -169,17 +174,20 @@ export default function DialQuestion({
     if (!dragging) return;
     setDragging(false);
     activePointerIdRef.current = null;
-    scheduleCommit(value);
+
+    
+    if (hasInteractedRef.current && typeof value === "number") {
+      scheduleCommit(value);
+    }
   };
 
   useEffect(() => {
     const up = () => dragging && endDrag();
     window.addEventListener("pointerup", up);
     return () => window.removeEventListener("pointerup", up);
-  }, [dragging, value, onCommit]);
+  }, [dragging, value]);
 
   useEffect(() => () => clearCommitTimer(), []);
-
 
   const donutMask = useMemo(() => {
     return `radial-gradient(
@@ -219,7 +227,6 @@ export default function DialQuestion({
     };
   }, [SIZE, angle, progressMask, COLOR_LIGHT, COLOR_DARK]);
 
-
   const SCALE = 1.22;
   const waveW = Math.round(INNER * SCALE);
   const waveH = Math.round(INNER * SCALE);
@@ -237,9 +244,7 @@ export default function DialQuestion({
     return clamp(raw, minY, downAtZero);
   }, [ratio, downAtZero, contentShiftUp, minY]);
 
-
   const handleBlueAlpha = 1;
-
 
   const iconBackSize = Math.min(
     HANDLE_VISUAL_SIZE - 4,
@@ -275,7 +280,6 @@ export default function DialQuestion({
         }}
       />
 
-      {/* 핸들 */}
       <div
         className="absolute"
         style={{
@@ -295,7 +299,6 @@ export default function DialQuestion({
           endDrag();
         }}
       >
-
         <div
           aria-hidden
           style={{
@@ -311,7 +314,6 @@ export default function DialQuestion({
             pointerEvents: "none",
           }}
         />
-
 
         <div
           aria-hidden
@@ -344,7 +346,6 @@ export default function DialQuestion({
           }}
         />
       </div>
-
 
       <div
         className="absolute pointer-events-none"
@@ -379,7 +380,6 @@ export default function DialQuestion({
           }}
         />
       </div>
-
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="text-center" style={{ transform: "translateY(6px)" }}>

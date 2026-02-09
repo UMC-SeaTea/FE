@@ -1,5 +1,4 @@
 import type { DiagnosisQuestion } from "../../constants/diagnosis/types";
-
 import TwoChoiceQuestion from "./questionTypes/TwoChoiceQuestion";
 import DialQuestion from "./questionTypes/DialQuestion";
 import MultiSelectQuestion from "./questionTypes/MultiSelectQuestion";
@@ -27,19 +26,24 @@ export default function QuestionRenderer({
   if (q.type === "two_choice") {
     return (
       <TwoChoiceQuestion
-        options={q.options.map((o) => ({ id: o.id, label: o.label })) as [{ id: string; label: string }, { id: string; label: string }]}
+        options={
+          q.options.map((o) => ({ id: o.id, label: o.label })) as [
+            { id: string; label: string },
+            { id: string; label: string }
+          ]
+        }
         value={value as string | undefined}
         stepIndex={stepIndex}
         onChange={(id: string) => {
           onChange(id);
-          onCommit?.(); 
+          onCommit?.();
         }}
       />
     );
   }
 
   if (q.type === "dial") {
-    const v = typeof value === "number" ? value : q.defaultValue ?? 0;
+    const v = typeof value === "number" ? value : undefined;
 
     return (
       <DialQuestion
@@ -48,7 +52,7 @@ export default function QuestionRenderer({
         step={q.step ?? 1}
         value={v}
         unit={q.unit ?? "%"}
-        label={q.title} 
+        label={q.title}
         onChange={(next: number) => onChange(next)}
         onCommit={onCommit}
       />
