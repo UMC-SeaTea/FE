@@ -8,25 +8,24 @@ export default function DiagnosisAdvancedLoading() {
   const location = useLocation();
 
   const sessionId = location.state?.sessionId as number | undefined;
+  const startWaveColor = location.state?.startWaveColor as string | undefined;
 
   useEffect(() => {
     const t = window.setTimeout(() => {
       navigate("/diagnosis/detail?mode=advanced", {
-        state: { sessionId }, // ✅ 핵심: sessionId carry
+        state: { sessionId, startWaveColor }, 
         replace: true,
       });
-    }, 3600); // 기존 durationMs 맞춤
+    }, 3600);
 
     return () => window.clearTimeout(t);
-  }, [navigate, sessionId]);
+  }, [navigate, sessionId, startWaveColor]);
 
   return (
     <DiagnosisLoading
       variant="advanced"
       spinnerVariant="ring"
       durationMs={3600}
-      // ❗ nextPath는 더 이상 사용하지 않음 (자동 이동 방지용)
-      // nextPath="/diagnosis/detail?mode=advanced"
     />
   );
 }

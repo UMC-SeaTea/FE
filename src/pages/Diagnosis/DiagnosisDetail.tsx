@@ -1,8 +1,7 @@
 // src/pages/Diagnosis/DiagnosisDetail.tsx
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import clsx from "clsx";
-
 import DiagnosisProgressBar from "../../components/Diagnosis/DiagnosisProgressBar";
 import DiagnosisTopBar from "../../components/Diagnosis/DiagnosisTopBar";
 import DiagnosisWaveBackground from "../../components/Diagnosis/DiagnosisWaveBackground";
@@ -15,6 +14,21 @@ import type { TastingKey } from "../../types/tastingType/tastingType";
 import { getWaveColor } from "../../constants/tastingType/waveBg";
 
 const DEFAULT_WAVE_COLOR = "#2F16FF";
+
+function hasMeaningfulAnswer(v: unknown, qType: string) {
+  if (v === undefined || v === null) return false;
+
+  if (qType === "multi_select") {
+    if (Array.isArray(v)) return v.length > 0;
+    if (typeof v === "string") return v.trim().length > 0;
+    return false;
+  }
+
+  if (typeof v === "string") return v.trim().length > 0;
+
+  
+  return true;
+}
 
 export default function DiagnosisDetail() {
   const navigate = useNavigate();
@@ -43,24 +57,20 @@ export default function DiagnosisDetail() {
 
   const [picked, setPicked] = useState(false);
 
-  /**
-   * ✅ 플리커 방지용 "즉시 반영 answers"
-   * - setAnswer는 비동기라 step 전환 순간 answers가 잠깐 비어 보일 수 있음
-   * - shadow에 먼저 반영하고, answers 변경되면 shadow를 다시 동기화
-   */
+  
   const [answersShadow, setAnswersShadow] = useState<Record<string, unknown>>({});
 
   useEffect(() => {
     setAnswersShadow(answers);
   }, [answers]);
 
-  // mode 변경 시 리셋
+  
   useEffect(() => {
     reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [isAdvanced]);
 
-  // step 이동 시 picked 상태 초기화
+  
   useEffect(() => {
     setPicked(false);
   }, [stepIndex]);
@@ -79,18 +89,13 @@ export default function DiagnosisDetail() {
         : []
       : [];
 
-  /**
-   * ✅ PM 요구사항: "현재 step까지의 답변 누적"으로 leadingType 계산 → waveColor 결정
-   * ✅ answersShadow를 사용해서 step 전환 순간 DEFAULT로 떨어지는 플리커 제거
-   */
+
   const waveColor = useMemo(() => {
     const hasAnyAnswer = Object.keys(answersShadow).length > 0;
     if (!hasAnyAnswer) return DEFAULT_WAVE_COLOR;
 
-    // 현재 단계(= 지금까지 본 질문)까지만 누적 계산
     const visibleQuestions = questions.slice(0, stepIndex + 1);
 
-    // 현재 단계까지만 answers 반영 (미래 답 포함 방지)
     const visibleIds = new Set(visibleQuestions.map((q) => q.id));
     const visibleAnswers: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(answersShadow)) {
@@ -105,6 +110,39 @@ export default function DiagnosisDetail() {
 
     return getWaveColor(leading);
   }, [answersShadow, questions, stepIndex]);
+
+  
+  const startWaveColor =
+    (location.state?.startWaveColor as string | undefined) ?? undefined;
+
+  const startWaveColorRef = useRef<string | undefined>(undefined);
+
+  
+  useEffect(() => {
+    if (isAdvanced && startWaveColor && !startWaveColorRef.current) {
+      startWaveColorRef.current = startWaveColor;
+    }
+  }, [isAdvanced, startWaveColor]);
+
+
+  const isFirstAdvancedStep = isAdvanced && stepIndex === 0;
+
+  const firstStepAnswered = useMemo(() => {
+    if (!isFirstAdvancedStep) return true; 
+    const v = answersShadow[current.id];
+    return hasMeaningfulAnswer(v, current.type);
+  }, [answersShadow, current.id, current.type, isFirstAdvancedStep]);
+
+  const finalWaveColor = useMemo(() => {
+    if (!isAdvanced) return waveColor;
+
+    
+    if (isFirstAdvancedStep && !firstStepAnswered && startWaveColorRef.current) {
+      return startWaveColorRef.current;
+    }
+
+    return waveColor;
+  }, [isAdvanced, isFirstAdvancedStep, firstStepAnswered, waveColor]);
 
   const onBack = () => {
     if (stepIndex === 0) navigate(-1);
@@ -121,9 +159,10 @@ export default function DiagnosisDetail() {
     });
   };
 
+  
   const goAdvancedLoading = (sessionId: number) => {
     navigate("/diagnosis/advanced-loading", {
-      state: { sessionId },
+      state: { sessionId, startWaveColor: waveColor },
     });
   };
 
@@ -160,9 +199,19 @@ export default function DiagnosisDetail() {
     <div className="relative min-h-dvh bg-white overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
         {!isAdvanced && (
-          <DiagnosisWaveBackground stepIndex={stepIndex} picked={picked} color={waveColor} />
+          <DiagnosisWaveBackground
+            stepIndex={stepIndex}
+            picked={picked}
+            color={waveColor}
+          />
         )}
-        {isAdvanced && <DiagnosisAdvancedWaveOverlay count={advancedCount} />}
+
+        {isAdvanced && (
+          <DiagnosisAdvancedWaveOverlay
+            count={advancedCount}
+            color={finalWaveColor} 
+          />
+        )}
       </div>
 
       <div className="relative z-10 pt-[80px] pb-[120px]">
@@ -179,13 +228,13 @@ export default function DiagnosisDetail() {
               value={value}
               stepIndex={stepIndex}
               onChange={(v) => {
-                // ✅ 0) 즉시 반영 shadow 먼저 업데이트 (플리커 제거 핵심)
+                
                 setAnswersShadow((prev) => ({ ...prev, [current.id]: v }));
 
-                // ✅ 1) 실제 훅 answers 업데이트
+                
                 setAnswer(v);
 
-                // ✅ auto next
+                
                 if (current.type === "two_choice") {
                   triggerPickedThenNext(120);
                 }
