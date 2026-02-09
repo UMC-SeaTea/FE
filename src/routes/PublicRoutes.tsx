@@ -18,9 +18,10 @@ import MyTeabag from '../pages/MyTeabagPage';
 import DiagnosisDetail from '../pages/Diagnosis/DiagnosisDetail';
 import MapSearchPage from '../pages/Map/MapSearchPage';
 import SignUpPage from '../pages/SignUpPage';
-import MyTastingPage from '../pages/MyTastingPage';
+import MyTastingPage from '../pages/MyTasting/MyTastingPage';
 import SpaceRecommend from '../pages/SpaceRecommendPage';
 import MyPageProfileEdit from '../pages/MyPage/MyPageProfileEdit';
+import PastResultPage from '../pages/MyTasting/PastResultPage';
 
 export const publicRoutes = [
   {
@@ -33,6 +34,8 @@ export const publicRoutes = [
       { path: '/map/:sid', element: <MapDetailPage /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/mytasting', element: <MyTastingPage /> },
+      { path: '/mytasting/past', element: <PastResultPage /> },
+      { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/diagnosis', element: <DiagnosisStart /> },
       { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
       { path: '/diagnosis/detail', element: <DiagnosisDetail /> },
@@ -52,11 +55,10 @@ export const publicRoutes = [
         path: '/diagnosis/advanced-loading',
         element: <DiagnosisAdvancedLoading />,
       },
-      { path: '/recommend', element: <SpaceRecommend /> },
       { path: '/login', element: <LoginPage /> },
       { path: '/login/start', element: <LoginStartPage /> },
-      { path: '/myteabag', element: <MyTeabag /> },
       { path: '/signup', element: <SignUpPage /> },
+      { path: '/myteabag', element: <MyTeabag /> },
       { path: '/mypage/profile-edit', element: <MyPageProfileEdit /> },
     ],
   },
