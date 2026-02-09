@@ -9,12 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import FeedbackButton from '../components/Feedback/FeedbackButton';
 import { showToast } from '../components/Toast/ToastHost';
 import { useSpaceRecommend } from '../hooks/spaces/useSpaceRecommend';
+import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 
 const SpaceRecommend = () => {
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  const { data, isLoading, isError } = useSpaceRecommend({
+  const { data, isLoading, isError, refetch } = useSpaceRecommend({
     tastingTypeCode: 'SMOKY',
   });
 
@@ -53,17 +54,24 @@ const SpaceRecommend = () => {
               src={refresh}
               alt="refresh icon"
               className="w-[28px] h-[28px] cursor-pointer"
+              onClick={() => refetch()}
             />
           </div>
           <div className="flex flex-col gap-2 pb-[32px]">
-            {data?.result?.items?.map((item) => (
-              <PlaceList
-                key={item.spaceId}
-                name={item.name}
-                address={item.address}
-                description={item.description}
-              />
-            ))}
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : isError ? (
+              <p>오류가 발생했습니다. 잠시 후 다시 시도해주세요</p>
+            ) : (
+              data?.result?.items?.map((item) => (
+                <PlaceList
+                  key={item.spaceId}
+                  name={item.name}
+                  address={item.address}
+                  description={item.description}
+                />
+              ))
+            )}
           </div>
         </div>
         <div
