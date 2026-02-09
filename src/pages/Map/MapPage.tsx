@@ -4,18 +4,35 @@ import SearchBarDefault from '../../components/SearchBar/SearchBarDefault';
 import Map from '../../components/common/Map';
 import Chip from '../../components/common/Chip';
 import Carousel from '../../components/common/Carousel';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import GPSIcon from '../../assets/RoundButton/gps_btn.svg';
 import useLocation from '../../hooks/useLocation';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';
 import useSideBar from '../../hooks/useSideBar';
 import { CHIP_LIST } from '../../constants/chip';
+import { type SpaceBoundParams } from '../../types/spaces/spaceBound';
+import useDebounce from '../../hooks/useDebounce';
+import { useSpaceBound } from '../../hooks/spaces/useSpaceBound';
 
 const MapPage = () => {
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
     closeOnEsc: true,
   });
+  const [bounds, setBounds] = useState<SpaceBoundParams | null>(null);
+  const debouncedBounds = useDebounce(bounds, 500);
+
+  const { data, isLoading, isError } = useSpaceBound(debouncedBounds);
+
+  const pins = useMemo(() => {
+    const items = data?.result?.items || [];
+    return items.map((it: any) => ({
+      spaceId: it.spaceId,
+      name: it.name,
+      lat: it.latitude,
+      lng: it.longitude,
+    }));
+  }, [data]);
 
   const { location, setCurrentLocation, loading, error } = useLocation();
 
@@ -57,7 +74,7 @@ const MapPage = () => {
           </div>
           {error && <p>{error}</p>}
         </div>
-        <Map center={location} />
+        <Map center={location} onBoundsChange={setBounds} pins={pins} />
         <button
           type="button"
           onClick={setCurrentLocation}
