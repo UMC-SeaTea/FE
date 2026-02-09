@@ -1,8 +1,8 @@
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import NavBar from '../../components/common/NavBar';
 import backIcon from '../../assets/backButton_black.svg';
 import NoteSearch from '../../components/common/NoteSearch';
-// import SampleImg from '../../assets/images/exampleSpace.png';
+import SampleImg from '../../assets/images/exampleSpace.png';
 import placeIcon from '../../assets/place_gray.svg';
 import timeIcon from '../../assets/timeIcon.svg';
 import phoneIcon from '../../assets/phoneIcon.svg';
@@ -14,7 +14,22 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 // import teaBag from '../../assets/teaBag.svg';
 
 const MapDetailPage = () => {
-  const { data, isLoading, isError } = useSpaceDetail(1);
+  const { sid } = useParams();
+  const { data, isLoading, isError } = useSpaceDetail(Number(sid));
+
+  const handleShare = async () => {
+    try {
+      await navigator.share({
+        title: data?.result?.name,
+        url: window.location.href,
+      });
+      showToast({ text: '공유 링크가 복사되었습니다.', duration: 2000 });
+    } catch (error) {
+      console.error('링크 공유 실패', error);
+    }
+  };
+
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -26,20 +41,6 @@ const MapDetailPage = () => {
   if (isError || !data) {
     return <p>{data?.message}</p>;
   }
-
-  const handleShare = async () => {
-    try {
-      await navigator.share({
-        // title: data.name,
-        url: window.location.href,
-      });
-      showToast({ text: '공유 링크가 복사되었습니다.', duration: 2000 });
-    } catch (error) {
-      console.error('링크 공유 실패', error);
-    }
-  };
-
-  const navigate = useNavigate();
 
   return (
     <>
@@ -66,7 +67,7 @@ const MapDetailPage = () => {
         {/* 이미지 */}
         <div className="relative w-[335px] h-[335px] overflow-hidden">
           <img
-            src={data?.result?.thumbnailImageUrl}
+            src={data?.result?.thumbnailImageUrl || SampleImg}
             alt="Example Space"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -85,7 +86,7 @@ const MapDetailPage = () => {
               <div className="flex gap-[4px] font-medium">
                 <p>나와 동일한 유형</p>
                 <p className=" text-[#B4ABFF] font-bold">
-                  {data?.result?.sameTypeSavedCount}
+                  {data?.result?.sameTypeSavedCount}명
                 </p>
               </div>
               {/* 유저토큰 X의 경우 */}
@@ -128,7 +129,9 @@ const MapDetailPage = () => {
                 alt="time icon"
                 className="w-[20px] h-[20px]"
               />
-              <p className="">{data?.result?.openingHours}</p>
+              <p className="h-[20px] flex items-center">
+                {data?.result?.openingHours}
+              </p>
             </div>
             {/* 전화 번호 */}
             <div className="flex items-center gap-[4px]">
@@ -137,7 +140,9 @@ const MapDetailPage = () => {
                 alt="phone icon"
                 className="w-[20px] h-[20px]"
               />
-              <p>{data?.result?.phone}</p>
+              <p className="h-[20px] flex items-center text-[14px]">
+                {data?.result?.phone}
+              </p>
             </div>
           </div>
         </div>
