@@ -11,19 +11,19 @@ const PlaceList = ({ name, address, description }: PlaceListProps) => {
   return (
     <>
       <div
-        className="flex flex-col items-start justify-center gap-3 py-5 px-6 w-[335px] min-h-[133px] 
-      rounded-lg border border-[#DEDEDE] bg-white cursor-pointer"
+        className="flex flex-col items-start justify-center py-5 px-6 w-[335px] h-[133px] 
+      rounded-lg border border-gray-400 bg-white cursor-pointer"
         onClick={() => navigate('/map/1')}
       >
-        <div className="flex flex-col items-start justify-end gap-1 self-stretch">
-          <p className="font-body text-body-3 text-black">{name}</p>
-          <p className="font-body text-detail-4 text-gray-100 self-stretch">
-            {address}
+        <div className="flex flex-col gap-[12px]">
+          <div className="flex flex-col gap-[4px]">
+            <p className="font-body text-body-3 text-black">{name}</p>
+            <p className="font-body text-detail-4 text-gray-100">{address}</p>
+          </div>
+          <p className="font-body text-body-5 text-black-2 break-all">
+            {description}
           </p>
         </div>
-        <p className="font-body text-body-5 text-black-2 self-stretch">
-          {description}
-        </p>
       </div>
     </>
   );
