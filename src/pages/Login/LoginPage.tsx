@@ -21,7 +21,7 @@ const LoginPage = () => {
           src={backMoveButton}
           alt="back move button"
           className="w-[10px] h-5 cursor-pointer"
-          onClick={() => navigate('/loginstart', { replace: true })}
+          onClick={() => navigate('/login/start', { replace: true })}
         />
         <div className="text-center font-title text-title-3 text-brand">
           로그인
