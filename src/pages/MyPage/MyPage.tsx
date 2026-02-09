@@ -1,10 +1,11 @@
-import NavBar from '../components/common/NavBar';
-import menu from '../assets/menu_white.svg';
-import SideBarContainer from '../components/SideBar/SideBarContainer';
-import moveButton from '../assets/moveButton_white.svg';
-import { useNavigate } from 'react-router-dom';
-import MyPageProfile from '../components/MyPage/MyPageProfile';
-import useSideBar from '../hooks/useSideBar';
+import NavBar from '../../components/common/NavBar';
+import menu from '../../assets/menu_white.svg';
+import SideBarContainer from '../../components/SideBar/SideBarContainer';
+import moveButton from '../../assets/moveButton_white.svg';
+import { useNavigate, type To } from 'react-router-dom';
+import MyPageProfile from '../../components/MyPage/MyPageProfile';
+import useSideBar from '../../hooks/useSideBar';
+import Footer from '../../components/common/Footer';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -18,6 +19,14 @@ const MyPage = () => {
     { id: 3, title: '고객센터', path: '' },
     { id: 4, title: '로그아웃 · 탈퇴', path: '' },
   ];
+
+  const handleMenuClick = (path: To) => {
+    if (!path) {
+      alert('준비중입니다. 다음 업데이트를 기다려주세요! 감사합니다.');
+    } else {
+      navigate(path);
+    }
+  };
 
   return (
     <>
@@ -52,8 +61,8 @@ const MyPage = () => {
                 {menuItems.map((item) => (
                   <div
                     key={item.id}
-                    onClick={() => navigate(item.path)}
-                    className="flex flex-col justify-center items-center gap-[10px] self-stretch py-3 px-[18px]"
+                    onClick={() => handleMenuClick(item.path)}
+                    className="flex flex-col justify-center items-center gap-[10px] self-stretch py-3 px-[18px] cursor-pointer"
                   >
                     <div className="flex justify-between items-center self-stretch">
                       <div className="text-white font-body text-sm font-medium leading-[140%] tracking-[-0.35px]">
@@ -73,8 +82,8 @@ const MyPage = () => {
             </div>
           </div>
 
-          <div className="w-[183px] font-regular font-body text-gray-200 text-[10px] leading-[120%] tracking-[-0.25px] mt-[123px] ml-5 mr-[172px] mb-[122px]">
-            Copyright 2025. SeaTea All rights reserved.
+          <div className="mt-[105px]">
+            <Footer />
           </div>
         </div>
       </div>

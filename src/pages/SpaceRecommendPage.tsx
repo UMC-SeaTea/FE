@@ -3,15 +3,18 @@ import backIcon from '../assets/backButton_white.svg';
 import HomeTestType from '../components/common/HomeTestType';
 import tea from '../assets/images/teaIcon.png';
 import refresh from '../assets/refresh.svg';
-import PlaceList from '../components/common/PlaceList';
+// import PlaceList from '../components/common/PlaceList';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FeedbackButton from '../components/Feedback/FeedbackButton';
 import { showToast } from '../components/Toast/ToastHost';
 import { useSpaceRecommend } from '../hooks/spaces/useSpaceRecommend';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
+import PlaceList from '../components/common/PlaceList';
 
 const SpaceRecommend = () => {
+  // const { data, isLoading } = useSpaceDetail();
+
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
@@ -67,7 +70,7 @@ const SpaceRecommend = () => {
                 <PlaceList
                   key={item.spaceId}
                   name={item.name}
-                  address={item.address}
+                  roadAddress={item.address}
                   description={item.description}
                   spaceId={item.spaceId}
                 />

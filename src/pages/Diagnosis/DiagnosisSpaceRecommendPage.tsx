@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SpaceRecommendation from '../../components/common/SpaceRecommendation';
-import PlaceList from '../../components/common/PlaceList';
+// import PlaceList from '../../components/common/PlaceList';
 import FeedbackButton from '../../components/Feedback/FeedbackButton';
 import refreshIcon from '../../assets/refresh.svg';
 import { type TastingKey } from '../../types/tastingType/tastingType';
 import { showToast } from '../../components/Toast/ToastHost';
 import { useSpaceRecommend } from '../../hooks/spaces/useSpaceRecommend';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import PlaceList from '../../components/common/PlaceList';
 
 export default function DiagnosisSpaceRecommendPage() {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ export default function DiagnosisSpaceRecommendPage() {
                     <PlaceList
                       key={item.spaceId}
                       name={item.name}
-                      address={item.address}
+                      roadAddress={item.address}
                       description={item.description}
                       spaceId={item.spaceId}
                     />
