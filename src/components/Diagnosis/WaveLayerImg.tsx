@@ -1,3 +1,4 @@
+//src/compoenents/Diagnosis/WaveLayerImg.tsx
 import type { WaveLayer } from "./DiagnosisWaveLayers";
 
 type Props = WaveLayer;

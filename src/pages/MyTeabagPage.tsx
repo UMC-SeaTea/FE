@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import SpaceCardMini from '../components/common/SpaceCardMini';
 import SortButton from '../components/common/SortButton';
 import EditButton from '../components/common/EditButton';
 import MoveupButton from '../assets/RoundButton/moveup_btn.svg';
-import MyTeabagPagination from '../components/MyTeabag/MyTeabagPagination';
 import Footer from '../components/common/Footer';
 import clsx from 'clsx';
 
@@ -17,16 +16,14 @@ const MyTeabagPage = () => {
   const [isFooterInView, setIsFooterInView] = useState(false);
 
   const footerRef = useRef<HTMLDivElement>(null);
-
   const itemsPerPage = 20;
-  const indexOfLastItem = page * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = TOTAL_DATA.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(TOTAL_DATA.length / itemsPerPage);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [page]);
+  const currentItems = useMemo(
+    () => TOTAL_DATA.slice(0, page * itemsPerPage),
+    [page]
+  );
+
+  const isAllLoaded = currentItems.length >= TOTAL_DATA.length;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,6 +44,11 @@ const MyTeabagPage = () => {
 
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLoadMore = () => {
+    if (isAllLoaded) return;
+    setPage((prev) => prev + 1);
   };
 
   return (
@@ -73,11 +75,25 @@ const MyTeabagPage = () => {
           ))}
         </div>
 
-        <MyTeabagPagination
-          page={page}
-          totalPages={totalPages}
-          setPage={setPage}
-        />
+        <button
+          onClick={handleLoadMore}
+          disabled={isAllLoaded}
+          className={clsx(
+            'inline-flex justify-center items-center gap-[10px]',
+            'pt-[8px] pb-[10px] px-[20px]',
+            'mt-[8px] mb-[34px]',
+            'rounded-[100px] border border-[#000] bg-white',
+            'transition-opacity duration-200',
+            {
+              'opacity-30 cursor-not-allowed': isAllLoaded,
+              'opacity-100 hover:opacity-70 cursor-pointer': !isAllLoaded,
+            }
+          )}
+        >
+          <span className="text-black font-body text-[16px] font-normal leading-[100%] tracking-[-0.4px]">
+            more
+          </span>
+        </button>
       </div>
 
       <div ref={footerRef} className="w-full">
