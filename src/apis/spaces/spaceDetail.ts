@@ -5,7 +5,7 @@ export const getSpaceDetail = async (
   spaceId: number
 ): Promise<SpaceDetailResponse> => {
   const res = await axiosInstance.get<SpaceDetailResponse>(
-    `/space/v1/spaces/${spaceId}`
+    `/api/spaces/${spaceId}`
   );
   return res.data;
 };
