@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SpaceRecommendation from '../../components/common/SpaceRecommendation';
-import PlaceList from '../../components/common/PlaceList';
+// import PlaceList from '../../components/common/PlaceList';
 import FeedbackButton from '../../components/Feedback/FeedbackButton';
 import refreshIcon from '../../assets/refresh.svg';
 import { type TastingKey } from '../../types/tastingType/tastingType';
@@ -66,9 +66,9 @@ export default function DiagnosisSpaceRecommendPage() {
 
             <div className="px-[16px] pt-[12px] flex-1 overflow-y-auto">
               <div className="pb-[16px] flex flex-col gap-[12px]">
+                {/* <PlaceList />
                 <PlaceList />
-                <PlaceList />
-                <PlaceList />
+                <PlaceList /> */}
               </div>
             </div>
 

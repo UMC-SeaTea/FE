@@ -3,13 +3,15 @@ import backIcon from '../assets/backButton_white.svg';
 import HomeTestType from '../components/common/HomeTestType';
 import tea from '../assets/images/teaIcon.png';
 import refresh from '../assets/refresh.svg';
-import PlaceList from '../components/common/PlaceList';
+// import PlaceList from '../components/common/PlaceList';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FeedbackButton from '../components/Feedback/FeedbackButton';
 import { showToast } from '../components/Toast/ToastHost';
 
 const SpaceRecommend = () => {
+  // const { data, isLoading } = useSpaceDetail();
+
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
@@ -51,9 +53,9 @@ const SpaceRecommend = () => {
             />
           </div>
           <div className="flex flex-col gap-2 pb-[32px]">
-            <PlaceList />
-            <PlaceList />
-            <PlaceList />
+            {/* <PlaceList name={data.name} roadAddress={data.roadAddress} description={data.description} />
+            <PlaceList name={data.name} roadAddress={data.roadAddress} description={data.description} />
+            <PlaceList name={data.name} roadAddress={data.roadAddress} description={data.description} /> */}
           </div>
         </div>
         <div

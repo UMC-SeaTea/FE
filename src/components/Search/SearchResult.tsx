@@ -5,16 +5,17 @@ type SearchResultProps = {
   name: string;
   type: string;
   distance: string;
+  spaceId: number;
 };
 
-const SearchResult = ({ name, type, distance }: SearchResultProps) => {
+const SearchResult = ({ name, type, distance, spaceId }: SearchResultProps) => {
   const navigate = useNavigate();
   return (
     <>
       <div
         className="w-[335px] h-[124px] bg-white border-1 border-gray-400 rounded-lg 
       px-[20px] pt-[20px] pb-[24px] cursor-pointer"
-        onClick={() => navigate('/map/1')}
+        onClick={() => navigate(`/map/${spaceId}`)}
       >
         <div className="flex flex-col gap-[12px]">
           <NoteSearch text={type} />
