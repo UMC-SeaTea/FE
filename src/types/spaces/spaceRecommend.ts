@@ -1,9 +1,11 @@
 import type { CommonResponse } from '../common';
-import type { CursorInfo } from './spaceItem';
-import type { SpaceList } from './spaceList';
+import type { CursorInfo, SpaceBase } from './spaceItem';
 
-export type SpaceRecommend = SpaceList & {
+export type SpaceRecommend = SpaceBase & {
+  thumbnailImageUrl: string;
+  address: string;
   description: string;
+  distanceMeters: number;
 };
 
 export type SpaceRecommendResponse = CommonResponse<{

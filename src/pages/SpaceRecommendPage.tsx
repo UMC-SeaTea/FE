@@ -8,10 +8,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FeedbackButton from '../components/Feedback/FeedbackButton';
 import { showToast } from '../components/Toast/ToastHost';
+import { useSpaceRecommend } from '../hooks/spaces/useSpaceRecommend';
 
 const SpaceRecommend = () => {
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
   const [submitted, setSubmitted] = useState(false);
+
+  const { data, isLoading, isError } = useSpaceRecommend({
+    tastingTypeCode: 'SMOKY',
+  });
 
   const onSubmit = (value: 'good' | 'bad') => {
     if (submitted) return;
@@ -51,9 +56,14 @@ const SpaceRecommend = () => {
             />
           </div>
           <div className="flex flex-col gap-2 pb-[32px]">
-            <PlaceList />
-            <PlaceList />
-            <PlaceList />
+            {data?.result?.items?.map((item) => (
+              <PlaceList
+                key={item.spaceId}
+                name={item.name}
+                address={item.address}
+                description={item.description}
+              />
+            ))}
           </div>
         </div>
         <div
