@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SpaceRecommendation from '../../components/common/SpaceRecommendation';
-import PlaceList from '../../components/common/PlaceList';
+// import PlaceList from '../../components/common/PlaceList';
 import FeedbackButton from '../../components/Feedback/FeedbackButton';
 import refreshIcon from '../../assets/refresh.svg';
 import { type TastingKey } from '../../types/tastingType/tastingType';
