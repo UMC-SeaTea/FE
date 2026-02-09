@@ -14,8 +14,9 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 // import teaBag from '../../assets/teaBag.svg';
 
 const MapDetailPage = () => {
-  const { sid } = useParams();
-  const { data, isLoading, isError } = useSpaceDetail(Number(sid));
+  const { sid } = useParams<{ sid: string }>();
+  const spaceId = Number(sid);
+  const { data, isLoading, isError } = useSpaceDetail(spaceId);
 
   const handleShare = async () => {
     try {
@@ -39,7 +40,7 @@ const MapDetailPage = () => {
     );
   }
   if (isError || !data) {
-    return <p>{data?.message}</p>;
+    return <p>오류가 발생했습니다.</p>;
   }
 
   return (

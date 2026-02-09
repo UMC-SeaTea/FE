@@ -6,6 +6,7 @@ type SpaceCardMiniProps = {
   name: string;
   roadAddress: string;
   thumbnailImageUrl: string;
+  spaceId: number;
 };
 
 const SpaceCardMini = ({
@@ -13,6 +14,7 @@ const SpaceCardMini = ({
   name,
   roadAddress,
   thumbnailImageUrl,
+  spaceId,
 }: SpaceCardMiniProps) => {
   const navigate = useNavigate();
   return (
@@ -22,7 +24,7 @@ const SpaceCardMini = ({
           'relative overflow-hidden cursor-pointer w-[120px] h-[120px]',
           className
         )}
-        onClick={() => navigate('/map/1')}
+        onClick={() => navigate(`/map/${spaceId}`)}
       >
         <img
           src={thumbnailImageUrl}

@@ -4,16 +4,22 @@ type PlaceListProps = {
   name: string;
   roadAddress: string;
   description: string;
+  spaceId: number;
 };
 
-const PlaceList = ({ name, roadAddress, description }: PlaceListProps) => {
+const PlaceList = ({
+  name,
+  roadAddress,
+  description,
+  spaceId,
+}: PlaceListProps) => {
   const navigate = useNavigate();
   return (
     <>
       <div
         className="flex flex-col items-start justify-center gap-3 py-5 px-6 w-[335px] min-h-[133px] 
       rounded-lg border border-[#DEDEDE] bg-white cursor-pointer"
-        onClick={() => navigate('/map/1')}
+        onClick={() => navigate(`/map/${spaceId}`)}
       >
         <div className="flex flex-col items-start justify-end gap-1 self-stretch">
           <p className="font-body text-body-3 text-black">{name}</p>

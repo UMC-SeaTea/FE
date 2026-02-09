@@ -110,6 +110,7 @@ const MapSearchPage = () => {
                   type={item.tastingTypeCode}
                   name={item.name}
                   distance={(item.distanceMeters / 1000).toFixed(1)}
+                  spaceId={item.spaceId}
                 />
               ))}
             </div>
