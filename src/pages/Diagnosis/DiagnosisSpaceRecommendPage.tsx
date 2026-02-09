@@ -6,11 +6,18 @@ import FeedbackButton from '../../components/Feedback/FeedbackButton';
 import refreshIcon from '../../assets/refresh.svg';
 import { type TastingKey } from '../../types/tastingType/tastingType';
 import { showToast } from '../../components/Toast/ToastHost';
+import { useSpaceRecommend } from '../../hooks/spaces/useSpaceRecommend';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import PlaceList from '../../components/common/PlaceList';
 
 export default function DiagnosisSpaceRecommendPage() {
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
   const [submitted, setSubmitted] = useState(false);
+
+  const { data, isLoading, isError, refetch } = useSpaceRecommend({
+    tastingTypeCode: 'SMOKY',
+  });
 
   const onSubmit = (value: 'good' | 'bad') => {
     if (submitted) return;
@@ -22,10 +29,6 @@ export default function DiagnosisSpaceRecommendPage() {
   };
 
   const resultType: TastingKey = 'floral';
-
-  const handleRefresh = () => {
-    console.log('refresh');
-  };
 
   return (
     <main className="min-h-dvh bg-[#F6F7FB] flex justify-center overflow-hidden">
@@ -52,7 +55,7 @@ export default function DiagnosisSpaceRecommendPage() {
                 </span>
                 <button
                   type="button"
-                  onClick={handleRefresh}
+                  onClick={() => refetch()}
                   className="w-[28px] h-[28px] cursor-pointer"
                 >
                   <img
@@ -66,9 +69,21 @@ export default function DiagnosisSpaceRecommendPage() {
 
             <div className="px-[16px] pt-[12px] flex-1 overflow-y-auto">
               <div className="pb-[16px] flex flex-col gap-[12px]">
-                {/* <PlaceList />
-                <PlaceList />
-                <PlaceList /> */}
+                {isLoading ? (
+                  <LoadingSpinner />
+                ) : isError ? (
+                  <p>오류가 발생했습니다. 잠시 후 다시 시도해주세요</p>
+                ) : (
+                  data?.result?.items?.map((item) => (
+                    <PlaceList
+                      key={item.spaceId}
+                      name={item.name}
+                      roadAddress={item.address}
+                      description={item.description}
+                      spaceId={item.spaceId}
+                    />
+                  ))
+                )}
               </div>
             </div>
 
