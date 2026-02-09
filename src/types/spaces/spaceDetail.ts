@@ -1,12 +1,15 @@
 import type { CommonResponse } from '../common';
-import type { SpaceList } from './spaceList';
+import type { SpaceBase } from './spaceItem';
 
-export type SpaceDetail = SpaceList & {
+export type SpaceDetail = SpaceBase & {
+  thumbnailImageUrl: string;
+  address: string;
   roadAddress: string;
   phone: string;
   openingHours: string;
   description: string;
   note: string;
+  distanceMeters: number;
   savedCount: number;
   sameTypeSavedCount: number;
   isSaved: boolean;

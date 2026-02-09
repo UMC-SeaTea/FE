@@ -10,10 +10,22 @@ import shareButton from '../../assets/RoundButton/share_btn.svg';
 import { useNavigate } from 'react-router-dom';
 import { showToast } from '../../components/Toast/ToastHost';
 import { useSpaceDetail } from '../../hooks/spaces/useSpaceDetail';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 // import teaBag from '../../assets/teaBag.svg';
 
 const MapDetailPage = () => {
   const { data, isLoading, isError } = useSpaceDetail(1);
+
+  if (isLoading) {
+    return (
+      <div className="pt-[204px]">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+  if (isError || !data) {
+    return <p>{data?.message}</p>;
+  }
 
   const handleShare = async () => {
     try {
@@ -103,9 +115,9 @@ const MapDetailPage = () => {
                 <p className="text-body-4">{data?.result?.roadAddress}</p>
                 <div className="flex gap-[4px]">
                   <p className="text-gray-100">내 위치에서</p>
-                  {/* <p className="text-brand">
-                    {(data?.result?.distanceMeters / 1000).toFixed(2)}km
-                  </p> */}
+                  <p className="text-brand">
+                    {((data?.result?.distanceMeters ?? 0) / 1000).toFixed(2)}km
+                  </p>
                 </div>
               </div>
             </div>
