@@ -9,17 +9,7 @@ import GPSIcon from '../../assets/RoundButton/gps_btn.svg';
 import useLocation from '../../hooks/useLocation';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';
 import useSideBar from '../../hooks/useSideBar';
-
-const CHIP_LIST = [
-  { label: 'Floral', value: 'Floral', textColor: 'floral' },
-  { label: 'Fruity', value: 'Fruity', textColor: 'fruity' },
-  { label: 'Smoky', value: 'Smoky', textColor: 'smoky' },
-  { label: 'Oceanic', value: 'Oceanic', textColor: 'oceanic' },
-  { label: 'Earthy', value: 'Earthy', textColor: 'earthy' },
-  { label: 'Sweet', value: 'Sweet', textColor: 'sweet' },
-  { label: 'Spices', value: 'Spices', textColor: 'spices' },
-  { label: 'Nutty', value: 'Nutty', textColor: 'nutty' },
-] as const;
+import { CHIP_LIST } from '../../constants/chip';
 
 const MapPage = () => {
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
