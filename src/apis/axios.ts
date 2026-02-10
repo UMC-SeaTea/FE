@@ -8,6 +8,7 @@ interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
 });
 
 export const refreshInstance = (refresh: string): AxiosInstance =>
@@ -57,34 +58,10 @@ axiosInstance.interceptors.response.use(
     // 401 에러면서, 아직 재시도 하지 않은 요청 경우 처리
     if (status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const refreshToken = localStorage.getItem(
-        LOCAL_STORAGE_KEYS.refreshToken
-      );
-
-      // refreshToken이 없으면 로그인 페이지로 이동
-      if (!refreshToken) {
-        return handleTokenError(error);
-      }
-
-      // refreshToken으로 새 accessToken 발급
       try {
-        const { data } =
-          await refreshInstance(refreshToken).post('/api/auth/reissue');
-
-        // 새 토큰 반환
-        const newAccessToken = data?.result?.accessToken;
-        const newRefreshToken = data?.result?.refreshToken;
-
-        if (!newAccessToken || !newRefreshToken)
-          throw new Error('토큰 재발급 실패');
-        localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, newAccessToken);
-        localStorage.setItem(LOCAL_STORAGE_KEYS.refreshToken, newRefreshToken);
-
-        originalRequest.headers = originalRequest.headers ?? {};
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        await axiosInstance.post('/api/auth/reissue');
         return axiosInstance(originalRequest);
       } catch (error) {
-        // 에러 발생 시 로그인 페이지로 이동
         return handleTokenError(error);
       }
     }
