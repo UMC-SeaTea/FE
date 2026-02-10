@@ -1,7 +1,4 @@
 import { axiosInstance } from '../axios';
-import axios from 'axios';
-
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export interface CommonResponse<T> {
   isSuccess: boolean;
@@ -67,8 +64,8 @@ export const uploadImage = async (formData: FormData) => {
 };
 
 export const signUp = async (data: SignUpRequest) => {
-  const response = await axios.post<CommonResponse<SignUpResult>>(
-    `${BASE_URL}/api/sign-up`,
+  const response = await axiosInstance.post<CommonResponse<SignUpResult>>(
+    '/api/sign-up',
     data
   );
   return response.data;

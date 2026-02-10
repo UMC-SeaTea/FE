@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { signUp, type SignUpRequest } from '../../apis/auth/auth';
+import { AxiosError } from 'axios';
 
 export const useSignUp = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ export const useSignUp = () => {
         alert(response.message || '회원가입에 실패했습니다.');
       }
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<{ message: string }>) => {
       const errorMsg =
         error.response?.data?.message || '회원가입 중 오류가 발생했습니다.';
       alert(errorMsg);
