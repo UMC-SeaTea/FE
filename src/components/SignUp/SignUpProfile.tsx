@@ -1,7 +1,6 @@
 import SignUpPageBottomButton from './SignUpPageBottomButton';
 import defaultProfileImage from '../../assets/defaultProfileImage.svg';
-import cameraIcon from '../../assets/cameraIcon.svg';
-import galleryIcon from '../../assets/galleryIcon.svg';
+import ImageSelectionPopup from '../common/ImageSelectionPopup';
 
 interface Props {
   state: any;
@@ -9,9 +8,9 @@ interface Props {
   refs: any;
 }
 
-const SignUpProfile = ({ state, actions, refs }: Props) => {
+const SignUpProfile = ({ state, actions }: Props) => {
   return (
-    <div className="flex flex-col items-center w-full h-full">
+    <div className="flex flex-col items-center w-full h-full relative">
       <div className="flex flex-col items-center gap-[22px] w-[229px] mt-[37px]">
         <img
           src={defaultProfileImage}
@@ -25,22 +24,6 @@ const SignUpProfile = ({ state, actions, refs }: Props) => {
         </p>
       </div>
 
-      <input
-        type="file"
-        ref={refs.fileInputRef}
-        onChange={actions.handleImageUpload}
-        className="hidden"
-        accept="image/*"
-      />
-      <input
-        type="file"
-        ref={refs.cameraInputRef}
-        onChange={actions.handleImageUpload}
-        className="hidden"
-        accept="image/*"
-        capture="user"
-      />
-
       <div className="fixed bottom-[15px] w-[335px] left-0 right-0 mx-auto z-50 flex flex-col items-center">
         <button
           onClick={() => actions.handleSkipImage()}
@@ -51,46 +34,14 @@ const SignUpProfile = ({ state, actions, refs }: Props) => {
 
         <div className="relative w-full">
           {state.showImgOption && (
-            <div className="absolute bottom-[9px] left-0 z-10 animate-fade-in ml-1">
-              <div
-                className="flex flex-col w-[252px] h-[75px] justify-center items-center rounded-[13px] 
-                  bg-[rgba(249,249,249,0.80)] backdrop-blur-[2px] shadow-[0_0_12.6px_0_rgba(0,0,0,0.25)] overflow-hidden"
-              >
-                <button
-                  className="w-full flex-1 flex justify-between items-center pl-[16px] pr-[19px] mb-[1px]"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    refs.cameraInputRef.current?.click();
-                  }}
-                >
-                  <span className="font-body text-footer text-body-5">
-                    사진 찍기
-                  </span>
-                  <img
-                    src={cameraIcon}
-                    alt="카메라"
-                    className="w-[16px] h-[11.5px]"
-                  />
-                </button>
-                <div className="w-[252px] h-[0.3px] bg-gray-300"></div>
-                <button
-                  className="w-full flex-1 flex justify-between items-center pl-[16px] pr-[18px]"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    refs.fileInputRef.current?.click();
-                  }}
-                >
-                  <span className="font-body text-footer text-body-5">
-                    사진 보관함
-                  </span>
-                  <img
-                    src={galleryIcon}
-                    alt="갤러리"
-                    className="w-[17px] h-[14px]"
-                  />
-                </button>
-              </div>
-            </div>
+            <ImageSelectionPopup
+              className="absolute bottom-[9px] left-0 ml-1"
+              onImageSelected={(e) => {
+                actions.handleImageUpload(e);
+                actions.setShowImgOption(false);
+              }}
+              onClose={() => actions.setShowImgOption(false)}
+            />
           )}
         </div>
 

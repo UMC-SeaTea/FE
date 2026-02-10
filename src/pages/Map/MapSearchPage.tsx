@@ -5,6 +5,8 @@ import SearchBarTouched from '../../components/SearchBar/SearchBarTouched';
 import { useEffect, useMemo, useState } from 'react';
 import SearchResult from '../../components/Search/SearchResult';
 import useDebounce from '../../hooks/useDebounce';
+import { useSpaceList } from '../../hooks/spaces/useSpaceList';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 type RecentItem = {
   id: string;
@@ -21,17 +23,9 @@ const MapSearchPage = () => {
 
   // inputValue는 입력 중인 값, q는 확정된 검색어
   const [inputValue, setInputValue] = useState(q);
-
   const deBouncedValue = useDebounce(inputValue, 300);
 
-  useEffect(() => {
-    const keyword = deBouncedValue.trim();
-    if (!keyword) return;
-
-    console.log('검색 API 요청:', keyword);
-  }, [deBouncedValue]);
-
-  // 최근 검색어: 하드코딩으로 진행, 추후 연동
+  // 최근 검색어
   const [recentItems, setRecentItems] = useState<RecentItem[]>([
     { id: '1', name: '국립현대미술관', timeText: '1시간전' },
     { id: '2', name: 'LCDC', timeText: '어제' },
@@ -42,6 +36,16 @@ const MapSearchPage = () => {
   useEffect(() => {
     setInputValue(q);
   }, [q]);
+
+  useEffect(() => {
+    const keyword = deBouncedValue.trim();
+    if (!keyword) return;
+    console.log('검색 API 요청:', keyword);
+  }, [deBouncedValue]);
+
+  const { data, isLoading, isError } = useSpaceList({ q });
+
+  const items = data?.result?.items ?? [];
 
   // 검색어 확정
   const commitQuery = (raw: string) => {
@@ -67,6 +71,7 @@ const MapSearchPage = () => {
   const handleClickRecent = (name: string) => {
     setParams({ q: name }, { replace: true });
   };
+
   const handleRemoveRecent = (id: string) => {
     setRecentItems((prev) => prev.filter((item) => item.id !== id));
   };
@@ -86,10 +91,30 @@ const MapSearchPage = () => {
           <p className="pb-[16px] text-body-4 font-body text-gray-100">
             검색 결과
           </p>
-          <div className="flex flex-col gap-[8px]">
-            <SearchResult type="Floral" name="국립현대미술관" distance="1.2" />
-            <SearchResult type="Smocky" name="국립중앙박물관" distance="3.2" />
-          </div>
+
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : isError ? (
+            <p className="font-body text-body-4 py-4 text-center text-gray-100">
+              검색 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.
+            </p>
+          ) : items.length === 0 ? (
+            <p className="font-body text-body-4 py-4 text-center text-gray-100">
+              검색 결과가 없습니다.
+            </p>
+          ) : (
+            <div className="flex flex-col gap-[8px]">
+              {items.map((item) => (
+                <SearchResult
+                  key={item.spaceId}
+                  type={item.tastingTypeCode}
+                  name={item.name}
+                  distance={(item.distanceMeters / 1000).toFixed(1)}
+                  spaceId={item.spaceId}
+                />
+              ))}
+            </div>
+          )}
         </div>
       ) : (
         <>
@@ -110,6 +135,7 @@ const MapSearchPage = () => {
               </div>
             </div>
           </div>
+
           {/* 추천 검색어 */}
           <div className="flex flex-col gap-[12px]">
             <p className="text-body-4 font-body text-gray-100">추천 검색어</p>
