@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { signUp, type SignUpRequest } from '../../apis/auth/auth';
 
 export const useSignUp = () => {
   const navigate = useNavigate();
@@ -31,9 +33,49 @@ export const useSignUp = () => {
     );
   const isNicknameValid = /^[a-zA-Z0-9가-힣]{4,}$/.test(nickname);
 
+  const signUpMutation = useMutation({
+    mutationFn: async () => {
+      const finalProfileUrl = '';
+
+      /* 추후 이미지 업로드 전용 api 연결 시 */
+
+      const requestData: SignUpRequest = {
+        email,
+        password,
+        passwordConfirm: confirmPassword,
+        nickname,
+        profile_url: finalProfileUrl,
+      };
+
+      return await signUp(requestData);
+    },
+    onSuccess: (response) => {
+      if (response.isSuccess) {
+        alert('회원가입이 완료되었습니다! 로그인해주세요.');
+        navigate('/login/start');
+      } else {
+        alert(response.message || '회원가입에 실패했습니다.');
+      }
+    },
+    onError: (error: any) => {
+      const errorMsg =
+        error.response?.data?.message || '회원가입 중 오류가 발생했습니다.';
+      alert(errorMsg);
+    },
+  });
+
+  /* 중복확인API가 없어 일단 무조건 성공 처리 */
+  const handleCheckEmail = () => {
+    if (!isEmailValid) {
+      alert('이메일 형식이 올바르지 않습니다.');
+      return;
+    }
+    setIsEmailChecked(true);
+    alert('사용 가능한 이메일입니다.');
+  };
+
   const handleNextStep1 = () => {
     let isValid = true;
-
     if (!email) {
       setEmailEmptyError('이메일을 입력해주세요');
       isValid = false;
@@ -47,16 +89,12 @@ export const useSignUp = () => {
       isValid = false;
     }
 
-    if (
-      !isValid ||
-      !isEmailValid ||
-      !isPwValid ||
-      password !== confirmPassword
-    ) {
-      if (isValid && !isEmailChecked) alert('이메일 중복 확인이 필요합니다.');
+    if (!isValid || !isEmailValid || !isPwValid || password !== confirmPassword)
+      return;
+    if (!isEmailChecked) {
+      alert('이메일 중복 확인이 필요합니다.');
       return;
     }
-
     setStep(2);
   };
 
@@ -77,9 +115,8 @@ export const useSignUp = () => {
   };
 
   const handleSubmit = () => {
-    console.log('최종 데이터:', { email, password, nickname, profileImage });
-    alert('회원가입 완료!');
-    navigate('/');
+    if (!isNicknameValid) return;
+    signUpMutation.mutate();
   };
 
   return {
@@ -96,11 +133,9 @@ export const useSignUp = () => {
       emailEmptyError,
       passwordEmptyError,
       confirmPasswordEmptyError,
+      isPending: signUpMutation.isPending,
     },
-    refs: {
-      fileInputRef,
-      cameraInputRef,
-    },
+    refs: { fileInputRef, cameraInputRef },
     computed: {
       title: step === 1 ? '회원가입' : step === 2 ? '프로필' : '사용자 닉네임',
       emailFormatError:
@@ -135,11 +170,7 @@ export const useSignUp = () => {
         setConfirmPassword(e.target.value);
         setConfirmPasswordEmptyError('');
       },
-      handleCheckEmail: () => {
-        if (!isEmailValid) return;
-        setIsEmailChecked(true);
-        alert('사용 가능한 이메일입니다.');
-      },
+      handleCheckEmail,
       handleNextStep1,
       handleBack: () => (step === 1 ? navigate(-1) : setStep(step - 1)),
       setShowImgOption,
