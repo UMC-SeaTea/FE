@@ -5,9 +5,10 @@ import type {
   SpaceBoundResponse,
 } from '../../types/spaces/spaceBound';
 
-export const useSpaceBound = (params: SpaceBoundParams) => {
+export const useSpaceBound = (params: SpaceBoundParams | null) => {
   return useQuery<SpaceBoundResponse>({
     queryKey: ['spaces', params],
-    queryFn: () => getSpaceBound(params),
+    queryFn: () => getSpaceBound(params as SpaceBoundParams),
+    enabled: !!params,
   });
 };

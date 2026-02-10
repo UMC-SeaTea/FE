@@ -4,7 +4,7 @@ import SearchBarDefault from '../../components/SearchBar/SearchBarDefault';
 import Map from '../../components/common/Map';
 import Chip from '../../components/common/Chip';
 import Carousel from '../../components/common/Carousel';
-import { useEffect, useState, useRef, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import GPSIcon from '../../assets/RoundButton/gps_btn.svg';
 import useLocation from '../../hooks/useLocation';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';
@@ -29,8 +29,9 @@ const MapPage = () => {
     return items.map((it: any) => ({
       spaceId: it.spaceId,
       name: it.name,
-      lat: it.latitude,
-      lng: it.longitude,
+      lat: it.lat,
+      lng: it.lng,
+      tastingTypeCode: it.tastingTypeCode,
     }));
   }, [data]);
 
@@ -40,6 +41,12 @@ const MapPage = () => {
     if (!location) return;
     console.log('현재 위치:', location.lat, location.lng);
   }, [location]);
+
+  useEffect(() => {
+    if (!debouncedBounds) return;
+
+    console.log('API params:', debouncedBounds);
+  }, [debouncedBounds]);
 
   return (
     <>
