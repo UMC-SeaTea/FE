@@ -28,14 +28,21 @@ const MapPage = () => {
 
   const pins = useMemo(() => {
     const items = data?.result?.items || [];
-    return items.map((it) => ({
+
+    const allPins = items.map((it: any) => ({
       spaceId: it.spaceId,
       name: it.name,
-      lat: it.lat,
+      lat: it.latm,
       lng: it.lng,
       tastingTypeCode: it.tastingTypeCode,
     }));
-  }, [data]);
+
+    // 선택된 칩 없으면 전체 표시
+    if (!selectedChip) return allPins;
+
+    // 칩 선택 있으면 타입만 필터
+    return allPins.filter((p) => p.tastingTypeCode === selectedChip);
+  }, [data, selectedChip]);
 
   const { location, setCurrentLocation, loading, error } = useLocation();
 
