@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-type Propse = {
+type Props = {
   center?: {
     lat: number;
     lng: number;
@@ -20,7 +20,7 @@ type Propse = {
   pins?: SpaceBase[];
 };
 
-const Map = ({ center, onBoundsChange, pins = [] }: Propse) => {
+const Map = ({ center, onBoundsChange, pins = [] }: Props) => {
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
 
@@ -113,7 +113,7 @@ const Map = ({ center, onBoundsChange, pins = [] }: Propse) => {
     pinsRef.current = [];
 
     // 새로운 핀들 추가
-    const markers = pins.map((p: any) => {
+    const markers = pins.map((p: SpaceBase) => {
       const marker = new window.naver.maps.Marker({
         position: new window.naver.maps.LatLng(p.lat, p.lng),
         map: mapRef.current,

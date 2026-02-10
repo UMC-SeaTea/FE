@@ -28,7 +28,7 @@ const MapPage = () => {
 
   const pins = useMemo(() => {
     const items = data?.result?.items || [];
-    return items.map((it: any) => ({
+    return items.map((it) => ({
       spaceId: it.spaceId,
       name: it.name,
       lat: it.lat,
