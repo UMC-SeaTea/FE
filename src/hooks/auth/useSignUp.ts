@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { signUp, type SignUpRequest } from '../../apis/auth/auth';
+import { signUp } from '../../apis/auth/auth';
+import type { SignUpRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
 
 export const useSignUp = () => {

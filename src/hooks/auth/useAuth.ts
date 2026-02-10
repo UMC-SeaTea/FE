@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { login, getMyInfo, type LoginRequest } from '../../apis/auth/auth';
+import { login, getMyInfo } from '../../apis/auth/auth';
+import type { LoginRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
 
 export const useAuth = () => {

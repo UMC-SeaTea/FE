@@ -1,43 +1,16 @@
 import { axiosInstance } from '../axios';
 
-export interface CommonResponse<T> {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: T;
-}
+import type { CommonResponse } from '../../types/common';
 
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
+import type {
+  LoginRequest,
+  SignUpRequest,
+  SignUpResult,
+  UserInfoResult,
+} from '../../types/auth/auth';
 
-export interface LoginResult {
-  id: number;
-  email: string;
-  role: string;
-  accessToken: string;
-  refreshToken: string;
-}
-
-export interface SignUpRequest {
-  email: string;
-  password: string;
-  passwordConfirm: string;
-  nickname: string;
-  profile_url: string;
-}
-
-export interface SignUpResult {
-  id: number;
-  createdAt: string;
-}
-
-export interface UserInfoResult {
-  role: string;
-  nickname: string;
-  email: string;
-}
+export type SignUpResponse = CommonResponse<SignUpResult>;
+export type UserInfoResponse = CommonResponse<UserInfoResult>;
 
 export const login = async (data: LoginRequest) => {
   const response = await axiosInstance.post('/api/login', null, {
@@ -46,7 +19,19 @@ export const login = async (data: LoginRequest) => {
       password: data.password,
     },
   });
+  return response.data;
+};
 
+export const signUp = async (data: SignUpRequest) => {
+  const response = await axiosInstance.post<SignUpResponse>(
+    '/api/sign-up',
+    data
+  );
+  return response.data;
+};
+
+export const getMyInfo = async () => {
+  const response = await axiosInstance.get<UserInfoResponse>('/api/users/me');
   return response.data;
 };
 
@@ -60,19 +45,5 @@ export const uploadImage = async (formData: FormData) => {
       headers: { 'Content-Type': 'multipart/form-data' },
     }
   );
-  return response.data;
-};
-
-export const signUp = async (data: SignUpRequest) => {
-  const response = await axiosInstance.post<CommonResponse<SignUpResult>>(
-    '/api/sign-up',
-    data
-  );
-  return response.data;
-};
-
-export const getMyInfo = async () => {
-  const response =
-    await axiosInstance.get<CommonResponse<UserInfoResult>>('/api/users/me');
   return response.data;
 };
