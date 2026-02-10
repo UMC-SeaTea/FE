@@ -57,29 +57,25 @@ const Map = ({ center, onBoundsChange, pins = [] }: Propse) => {
       });
 
       // 지도 움직임 끝났을 때 bounds -> params
-      const listener = window.naver.maps.Event.addListener(
-        mapRef.current,
-        'idle',
-        () => {
-          const bounds = mapRef.current.getBounds();
-          const southWest = bounds.getSW();
-          const northEast = bounds.getNE();
+      window.naver.maps.Event.addListener(mapRef.current, 'idle', () => {
+        const bounds = mapRef.current.getBounds();
+        const southWest = bounds.getSW();
+        const northEast = bounds.getNE();
 
-          onBoundsChange?.({
-            southWestLat: southWest.lat(),
-            southWestLng: southWest.lng(),
-            northEastLat: northEast.lat(),
-            northEastLng: northEast.lng(),
-          });
-          const c = mapRef.current.getCenter();
-          const z = mapRef.current.getZoom();
+        onBoundsChange?.({
+          southWestLat: southWest.lat(),
+          southWestLng: southWest.lng(),
+          northEastLat: northEast.lat(),
+          northEastLng: northEast.lng(),
+        });
+        const c = mapRef.current.getCenter();
+        const z = mapRef.current.getZoom();
 
-          sessionStorage.setItem(
-            'mapView',
-            JSON.stringify({ lat: c.lat(), lng: c.lng(), zoom: z })
-          );
-        }
-      );
+        sessionStorage.setItem(
+          'mapView',
+          JSON.stringify({ lat: c.lat(), lng: c.lng(), zoom: z })
+        );
+      });
     };
 
     const mapScript = document.createElement('script');

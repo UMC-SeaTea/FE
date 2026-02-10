@@ -13,6 +13,7 @@ import { CHIP_LIST } from '../../constants/chip';
 import { type SpaceBoundParams } from '../../types/spaces/spaceBound';
 import useDebounce from '../../hooks/useDebounce';
 import { useSpaceBound } from '../../hooks/spaces/useSpaceBound';
+// import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const MapPage = () => {
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
@@ -22,7 +23,8 @@ const MapPage = () => {
   const [bounds, setBounds] = useState<SpaceBoundParams | null>(null);
   const debouncedBounds = useDebounce(bounds, 500);
 
-  const { data, isLoading, isError } = useSpaceBound(debouncedBounds);
+  const { data, isLoading, isError, isFetching } =
+    useSpaceBound(debouncedBounds);
 
   const pins = useMemo(() => {
     const items = data?.result?.items || [];
@@ -81,7 +83,23 @@ const MapPage = () => {
           </div>
           {error && <p>{error}</p>}
         </div>
-        <Map center={location} onBoundsChange={setBounds} pins={pins} />
+        <div className="relative">
+          <Map center={location} onBoundsChange={setBounds} pins={pins} />
+
+          {isLoading && (
+            <div className="absolute inset-0 z-[80] flex items-center justify-center bg-white/60">
+              {/* <LoadingSpinner /> */}
+            </div>
+          )}
+
+          {!isLoading && isFetching && (
+            <div className="absolute top-3 right-3 z-[80]">
+              {/* <LoadingSpinner /> */}
+            </div>
+          )}
+          {isError && <p>에러가 발생했습니다.</p>}
+        </div>
+
         <button
           type="button"
           onClick={setCurrentLocation}
