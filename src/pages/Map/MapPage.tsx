@@ -4,28 +4,45 @@ import SearchBarDefault from '../../components/SearchBar/SearchBarDefault';
 import Map from '../../components/common/Map';
 import Chip from '../../components/common/Chip';
 import Carousel from '../../components/common/Carousel';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import GPSIcon from '../../assets/RoundButton/gps_btn.svg';
 import useLocation from '../../hooks/useLocation';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';
 import useSideBar from '../../hooks/useSideBar';
-
-const CHIP_LIST = [
-  { label: 'Floral', value: 'Floral', textColor: 'floral' },
-  { label: 'Fruity', value: 'Fruity', textColor: 'fruity' },
-  { label: 'Smoky', value: 'Smoky', textColor: 'smoky' },
-  { label: 'Oceanic', value: 'Oceanic', textColor: 'oceanic' },
-  { label: 'Earthy', value: 'Earthy', textColor: 'earthy' },
-  { label: 'Sweet', value: 'Sweet', textColor: 'sweet' },
-  { label: 'Spices', value: 'Spices', textColor: 'spices' },
-  { label: 'Nutty', value: 'Nutty', textColor: 'nutty' },
-] as const;
+import { CHIP_LIST } from '../../constants/chip';
+import { type SpaceBoundParams } from '../../types/spaces/spaceBound';
+import useDebounce from '../../hooks/useDebounce';
+import { useSpaceBound } from '../../hooks/spaces/useSpaceBound';
+// import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const MapPage = () => {
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
     closeOnEsc: true,
   });
+  const [bounds, setBounds] = useState<SpaceBoundParams | null>(null);
+  const debouncedBounds = useDebounce(bounds, 500);
+
+  const { data, isLoading, isError, isFetching } =
+    useSpaceBound(debouncedBounds);
+
+  const pins = useMemo(() => {
+    const items = data?.result?.items || [];
+
+    const allPins = items.map((it: any) => ({
+      spaceId: it.spaceId,
+      name: it.name,
+      lat: it.lat,
+      lng: it.lng,
+      tastingTypeCode: it.tastingTypeCode,
+    }));
+
+    // 선택된 칩 없으면 전체 표시
+    if (!selectedChip) return allPins;
+
+    // 칩 선택 있으면 타입만 필터
+    return allPins.filter((p) => p.tastingTypeCode === selectedChip);
+  }, [data, selectedChip]);
 
   const { location, setCurrentLocation, loading, error } = useLocation();
 
@@ -33,6 +50,12 @@ const MapPage = () => {
     if (!location) return;
     console.log('현재 위치:', location.lat, location.lng);
   }, [location]);
+
+  useEffect(() => {
+    if (!debouncedBounds) return;
+
+    console.log('API params:', debouncedBounds);
+  }, [debouncedBounds]);
 
   return (
     <>
@@ -67,7 +90,23 @@ const MapPage = () => {
           </div>
           {error && <p>{error}</p>}
         </div>
-        <Map center={location} />
+        <div className="relative">
+          <Map center={location} onBoundsChange={setBounds} pins={pins} />
+
+          {isLoading && (
+            <div className="absolute inset-0 z-[80] flex items-center justify-center bg-white/60">
+              {/* <LoadingSpinner /> */}
+            </div>
+          )}
+
+          {!isLoading && isFetching && (
+            <div className="absolute top-3 right-3 z-[80]">
+              {/* <LoadingSpinner /> */}
+            </div>
+          )}
+          {isError && <p>에러가 발생했습니다.</p>}
+        </div>
+
         <button
           type="button"
           onClick={setCurrentLocation}
