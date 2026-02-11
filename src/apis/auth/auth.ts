@@ -13,12 +13,8 @@ export type SignUpResponse = CommonResponse<SignUpResult>;
 export type UserInfoResponse = CommonResponse<UserInfoResult>;
 
 export const login = async (data: LoginRequest) => {
-  const response = await axiosInstance.post('/api/login', null, {
-    params: {
-      email: data.email,
-      password: data.password,
-    },
-  });
+  const response = await axiosInstance.post('/api/login', data);
+
   return response.data;
 };
 
