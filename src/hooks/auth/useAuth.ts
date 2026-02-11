@@ -20,7 +20,7 @@ export const useAuth = () => {
         localStorage.setItem(LOCAL_STORAGE_KEYS.refreshToken, refreshToken);
 
         if (id) {
-          localStorage.setItem('memberId', String(id));
+          localStorage.setItem(LOCAL_STORAGE_KEYS.memberId, String(id));
         }
 
         alert(response.message || '로그인에 성공했습니다!');

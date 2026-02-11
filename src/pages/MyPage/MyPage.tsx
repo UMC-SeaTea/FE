@@ -9,6 +9,12 @@ import Footer from '../../components/common/Footer';
 import { useMemberProfile } from '../../hooks/useMember';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
+const FullScreenCenter = ({ children }: { children: React.ReactNode }) => (
+  <div className="w-full min-h-screen bg-[#0A0A0A] flex justify-center items-center">
+    {children}
+  </div>
+);
+
 const MyPage = () => {
   const navigate = useNavigate();
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
@@ -33,19 +39,19 @@ const MyPage = () => {
     }
   };
 
-  if (isError) {
+  if (isLoading) {
     return (
-      <div className="w-full min-h-screen bg-[#0A0A0A] flex justify-center items-center">
-        <p className="text-white font-body">정보를 불러오지 못했습니다.</p>
-      </div>
+      <FullScreenCenter>
+        <LoadingSpinner />
+      </FullScreenCenter>
     );
   }
 
-  if (isLoading) {
+  if (isError) {
     return (
-      <div className="w-full min-h-screen bg-[#0A0A0A] flex justify-center items-center">
-        <LoadingSpinner />
-      </div>
+      <FullScreenCenter>
+        <p className="text-white font-body">정보를 불러오지 못했습니다.</p>
+      </FullScreenCenter>
     );
   }
 
