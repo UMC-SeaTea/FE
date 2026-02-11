@@ -1,4 +1,4 @@
-//components/Diagnosis/QuestionRenderer.tsx
+// src/components/Diagnosis/QuestionRenderer.tsx
 import type { DiagnosisQuestion } from "../../constants/diagnosis/types";
 import TwoChoiceQuestion from "./questionTypes/TwoChoiceQuestion";
 import DialQuestion from "./questionTypes/DialQuestion";
@@ -11,8 +11,7 @@ type Props = {
 
   stepIndex: number;
 
-  onCommit?: () => void;
-
+  onCommit?: () => void; 
   onCtaClick?: () => void;
 };
 
@@ -37,7 +36,6 @@ export default function QuestionRenderer({
         stepIndex={stepIndex}
         onChange={(id: string) => {
           onChange(id);
-          onCommit?.();
         }}
       />
     );
@@ -69,10 +67,13 @@ export default function QuestionRenderer({
 
     return (
       <MultiSelectQuestion
+        key={q.id}
         options={q.options.map((o) => ({ id: o.id, label: o.label }))}
         selectedIds={selected}
-        maxSelect={2} 
-        onChange={(nextSelected: string[]) => onChange(nextSelected)}
+        maxSelect={2}
+        onChange={(nextSelected: string[]) => {
+          onChange(nextSelected);
+        }}
         theme={q.theme ?? "mint"}
         ctaText={q.ctaText}
         ctaDisabled={selected.length < (q.minSelect ?? 1)}

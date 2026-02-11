@@ -166,11 +166,11 @@ export default function SimpleDiagnosisPick() {
       const status = err?.response?.status;
 
       if (status === 401) {
-        alert('로그인이 필요해요. (로그인 연동 후 다시 시도해줘)');
+        alert('로그인이 필요해요. )');
       } else if (status === 403) {
         alert('접근 권한이 없어요.');
       } else {
-        alert('서버 요청에 실패했어요. 네트워크/서버 상태를 확인해줘.');
+        alert('서버 요청에 실패했어요. ');
       }
 
       console.error('Quick diagnosis API error:', err);
