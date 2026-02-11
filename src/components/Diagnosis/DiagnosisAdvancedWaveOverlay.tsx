@@ -2,11 +2,18 @@ import WaveLayerImg from "./WaveLayerImg";
 import { advancedStackWaves } from "./DiagnosisWaveLayers";
 
 type Props = {
-  count: number;   
+  count: number;
   height?: number;
+  color: string;         
+  globalOpacity?: number; 
 };
 
-export default function DiagnosisAdvancedWaveOverlay({ count, height = 520 }: Props) {
+export default function DiagnosisAdvancedWaveOverlay({
+  count,
+  height = 520,
+  color,
+  globalOpacity = 1,
+}: Props) {
   const safeCount = Math.max(0, Math.min(count, advancedStackWaves.length));
   const waves = advancedStackWaves.slice(0, safeCount);
 
@@ -23,7 +30,6 @@ export default function DiagnosisAdvancedWaveOverlay({ count, height = 520 }: Pr
           "linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)",
       }}
     >
-
       <style>{`
         @keyframes wave-x {
           0%   { transform: translateX(0px); }
@@ -40,7 +46,12 @@ export default function DiagnosisAdvancedWaveOverlay({ count, height = 520 }: Pr
       `}</style>
 
       {waves.map((w, idx) => (
-        <WaveLayerImg key={`${w.src}-${idx}`} {...w} />
+        <WaveLayerImg
+          key={`wave-${idx}`}
+          {...w}
+          color={color}
+          globalOpacity={globalOpacity}
+        />
       ))}
     </div>
   );

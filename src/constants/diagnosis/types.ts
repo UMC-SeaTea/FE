@@ -1,3 +1,4 @@
+//src/constants/diagnosis/types.ts
 export type TastingNote =
   | "smoky"
   | "oceanic"
