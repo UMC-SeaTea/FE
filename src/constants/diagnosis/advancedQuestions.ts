@@ -1,3 +1,4 @@
+//src/constants/diagnosis/advancedQuestions.ts
 import type { DiagnosisQuestion } from "./types";
 
 export const ADVANCED_DIAGNOSIS_QUESTIONS: DiagnosisQuestion[] = [

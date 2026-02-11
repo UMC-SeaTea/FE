@@ -1,21 +1,79 @@
-//src/pages/Diagnosis/DiagnosisResultLoading.tsx
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+// src/pages/Diagnosis/DiagnosisResultLoading.tsx
+import { useEffect, useMemo, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import waveBack from "../../assets/Waves/diagnosis_result/wave_back.png";
+import waveMiddle from "../../assets/Waves/diagnosis_result/wave_middle.png";
+import waveFront from "../../assets/Waves/diagnosis_result/wave_front.png";
+import { useDiagnosisResult } from "../../hooks/diagnosis/useDiagnosisResult";
 
-import waveBack from '../../assets/Waves/diagnosis_result/wave_back.png';
-import waveMiddle from '../../assets/Waves/diagnosis_result/wave_middle.png';
-import waveFront from '../../assets/Waves/diagnosis_result/wave_front.png';
+
+type ResultLoadingState = {
+  source?: "detail" | "simple";
+  mode?: "basic" | "advanced";
+  resultTypeCode?: string;
+};
 
 export default function DiagnosisResultLoading() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const state = (location.state ?? {}) as ResultLoadingState;
+
+  
+  const safeState = useMemo<ResultLoadingState>(() => {
+    return {
+      source: state.source ?? "detail",
+      mode: state.mode ?? "basic",
+    };
+  }, [state.mode, state.source]);
+
+  
+  const { data, isError } = useDiagnosisResult();
+
+  
+  const timerDoneRef = useRef(false);
+  const lastTypeCodeRef = useRef<string>("");
+
+  
   useEffect(() => {
     const t = window.setTimeout(() => {
-      navigate('/diagnosis/complete', { replace: true, state: location.state });
+      timerDoneRef.current = true;
+
+      
+      if (lastTypeCodeRef.current) {
+        navigate("/diagnosis/complete", {
+          replace: true,
+          state: { ...safeState, resultTypeCode: lastTypeCodeRef.current },
+        });
+      }
     }, 6000);
+
     return () => window.clearTimeout(t);
-  }, [navigate, location.state]);
+  }, [navigate, safeState]);
+
+  
+  useEffect(() => {
+    const code = data?.result?.typeCode ? String(data.result.typeCode).toUpperCase() : "";
+
+    if (!code) return;
+
+    lastTypeCodeRef.current = code;
+
+    
+    if (timerDoneRef.current) {
+      navigate("/diagnosis/complete", {
+        replace: true,
+        state: { ...safeState, resultTypeCode: code },
+      });
+    }
+  }, [data, navigate, safeState]);
+
+  
+  useEffect(() => {
+    if (!isError) return;
+    alert("결과를 불러오는데 실패했습니다. 다시 시도해주세요.");
+    navigate(-1);
+  }, [isError, navigate]);
 
   return (
     <div className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-[#0A0A0A]">
@@ -39,7 +97,7 @@ export default function DiagnosisResultLoading() {
           src={waveBack}
           alt=""
           className="block w-full h-auto opacity-90"
-          style={{ animation: 'floatSlow 10s ease-in-out infinite' }}
+          style={{ animation: "floatSlow 10s ease-in-out infinite" }}
         />
       </div>
 
@@ -48,7 +106,7 @@ export default function DiagnosisResultLoading() {
           src={waveMiddle}
           alt=""
           className="block w-full h-auto opacity-95"
-          style={{ animation: 'floatMid 8s ease-in-out infinite' }}
+          style={{ animation: "floatMid 8s ease-in-out infinite" }}
         />
       </div>
 
@@ -57,7 +115,7 @@ export default function DiagnosisResultLoading() {
           src={waveFront}
           alt=""
           className="block w-full h-auto"
-          style={{ animation: 'floatFast 6.5s ease-in-out infinite' }}
+          style={{ animation: "floatFast 6.5s ease-in-out infinite" }}
         />
       </div>
 
