@@ -3,7 +3,18 @@ import profileDefault from '../../assets/profile_default.png';
 import NoteSearch from '../common/NoteSearch';
 import { useNavigate } from 'react-router-dom';
 
-const MyPageProfile = () => {
+interface MyPageProfileProps {
+  profile?: {
+    email: string;
+    profileImageUrl: string;
+    currentType: {
+      name: string;
+    };
+    savedSpaceCount?: number;
+  };
+}
+
+const MyPageProfile = ({ profile }: MyPageProfileProps) => {
   const navigate = useNavigate();
 
   const handleEditClick = () => {
@@ -18,26 +29,32 @@ const MyPageProfile = () => {
             {/* 프로필 이미지 */}
             <div className="w-[64px] h-[64px] rounded-full overflow-hidden">
               <img
-                src={profileDefault}
-                alt="profile default img"
+                src={profile?.profileImageUrl || profileDefault}
+                alt="profile img"
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = profileDefault;
+                }}
               />
             </div>
             <div className="flex flex-col gap-[4px]">
               {/* 이메일 */}
               <div className="font-body text-body-5 text-white">
-                hongdandan@gmail.com
+                {profile?.email || '이메일 정보 없음'}
               </div>
+
               {/* 휴식 유형 */}
               <div className="flex gap-[8px] items-center">
                 <p className="font-body text-body-4 text-gray-400">휴식 유형</p>
-                <NoteSearch text="Floral" />
+                <NoteSearch text={profile?.currentType?.name || 'none'} />
               </div>
+
               {/* 저장한 공간 */}
               <div className="flex gap-[8px] font-body text-body-4">
                 <p className="text-gray-400">저장한 공간</p>
                 <div className="flex">
-                  <p className="text-white">22</p>
+                  {/* 추후 저장 공간 개수 연동 예정 */}
+                  <p className="text-white">{profile?.savedSpaceCount ?? 0}</p>
                   <p className="text-gray-400">개</p>
                 </div>
               </div>
