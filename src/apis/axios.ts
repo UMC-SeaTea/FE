@@ -8,13 +8,12 @@ interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
-  withCredentials: true, // ✅ 추가: 세션(JSESSIONID) 쿠키도 같이 보내기
+  withCredentials: true,
 });
 
 export const refreshInstance = (refresh: string): AxiosInstance =>
   axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
-    withCredentials: true, // ✅ 추가: 재발급 요청도 쿠키 필요할 수 있음
     headers: {
       refreshToken: refresh,
     },
@@ -51,51 +50,50 @@ axiosInstance.interceptors.response.use(
     const status = error.response?.status;
     const originalRequest: CustomInternalAxiosRequestConfig = error.config;
 
+    if (originalRequest.url?.includes('/api/login')) {
+      return Promise.reject(error);
+    }
+
     if (!status) {
       console.error('Request failed without a status', error);
       return Promise.reject(error);
     }
 
-    // ✅ (선택) 서버가 인증 실패를 302로 /login 리다이렉트 할 때가 있어서 방어
-    // axios는 보통 브라우저에서 302를 "응답"으로 받기 때문에 status===302로 들어올 수 있음
-    // 이 경우도 로그인 필요로 처리
-    if (status === 302) {
-      return handleTokenError(error);
-    }
-
     // 401 에러면서, 아직 재시도 하지 않은 요청 경우 처리
     if (status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const refreshToken = localStorage.getItem(
-        LOCAL_STORAGE_KEYS.refreshToken
-      );
-
-      // refreshToken이 없으면 로그인 페이지로 이동
-      if (!refreshToken) {
-        return handleTokenError(error);
-      }
-
-      // refreshToken으로 새 accessToken 발급
       try {
-        const { data } =
+        const refreshToken = localStorage.getItem(
+          LOCAL_STORAGE_KEYS.refreshToken
+        );
+        if (!refreshToken) {
+          throw new Error('토큰이 없습니다.');
+        }
+
+        const response =
           await refreshInstance(refreshToken).post('/api/auth/reissue');
 
-        // 새 토큰 반환
-        const newAccessToken = data?.result?.accessToken;
-        const newRefreshToken = data?.result?.refreshToken;
+        const result = response.data.result || response.data;
+        const newAccessToken = result?.accessToken;
 
-        if (!newAccessToken || !newRefreshToken)
-          throw new Error('토큰 재발급 실패');
+        if (!newAccessToken) {
+          throw new Error('새로운 토큰을 받지 못했습니다.');
+        }
 
         localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, newAccessToken);
-        localStorage.setItem(LOCAL_STORAGE_KEYS.refreshToken, newRefreshToken);
 
-        originalRequest.headers = originalRequest.headers ?? {};
+        const newRefreshToken = result?.refreshToken;
+        if (newRefreshToken) {
+          localStorage.setItem(
+            LOCAL_STORAGE_KEYS.refreshToken,
+            newRefreshToken
+          );
+        }
+
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
-      } catch (error) {
-        // 에러 발생 시 로그인 페이지로 이동
-        return handleTokenError(error);
+      } catch (reissueError) {
+        return handleTokenError(reissueError);
       }
     }
 

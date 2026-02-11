@@ -1,18 +1,26 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormInput from '../../components/common/FormInput';
-
+import { useAuth } from '../../hooks/auth/useAuth';
 import backMoveButton from '../../assets/backButton_brand.svg';
 import kakaoLoginButton from '../../assets/kakao_login.svg';
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
+  const { login, isLoggingIn } = useAuth();
+
   const [emailAdress, setEmailAdress] = useState('');
   const [password, setPassword] = useState('');
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isFormValid = emailRegex.test(emailAdress) && password.length >= 8;
+
+  const handleLoginClick = () => {
+    if (!isFormValid) return;
+
+    login({ email: emailAdress, password: password });
+  };
 
   return (
     <div className="w-full min-h-screen flex flex-col">
@@ -21,7 +29,7 @@ const LoginPage = () => {
           src={backMoveButton}
           alt="back move button"
           className="w-[10px] h-5 cursor-pointer"
-          onClick={() => navigate('/loginstart', { replace: true })}
+          onClick={() => navigate('/login/start', { replace: true })}
         />
         <div className="text-center font-title text-title-3 text-brand">
           로그인
@@ -46,10 +54,13 @@ const LoginPage = () => {
       </div>
 
       <button
-        disabled={!isFormValid}
-        className={`flex flex-col justify-center items-center self-stretch mx-auto w-[335px] h-[50px] mt-[32px] rounded-[25px] font-body text-body-title shrink-0 transition-colors ${isFormValid ? 'bg-brand text-white' : 'bg-gray-400 text-gray-200'}`}
+        disabled={!isFormValid || isLoggingIn}
+        onClick={handleLoginClick}
+        className={`flex flex-col justify-center items-center self-stretch mx-auto w-[335px] h-[50px] mt-[32px] rounded-[25px] font-body text-body-title shrink-0 transition-colors ${
+          isFormValid ? 'bg-brand text-white' : 'bg-gray-400 text-gray-200'
+        }`}
       >
-        로그인
+        {isLoggingIn ? '로그인 중...' : '로그인'}
       </button>
 
       <div className="flex mt-[9px] w-[75px] h-[21px] text-gray-300 font-body text-body-5 mx-auto cursor-pointer">

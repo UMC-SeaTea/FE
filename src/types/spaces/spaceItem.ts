@@ -1,20 +1,9 @@
-export type SpaceItem = {
+export type SpaceBase = {
   spaceId: number;
   name: string;
   tastingTypeCode: string;
   lat: number;
   lng: number;
-  thumbnailImageUrl?: string;
-  distanceMeters: number;
-  address?: string;
-  roadAddress?: string;
-  phone?: string;
-  openingHours?: string;
-  description?: string;
-  note?: boolean;
-  savedCount?: number;
-  sameTypeSavedCount?: number;
-  isSaved?: boolean;
 };
 
 export type CursorInfo = {

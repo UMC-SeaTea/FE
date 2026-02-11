@@ -1,20 +1,23 @@
-import NavBar from '../components/common/NavBar';
-import menuIcon from '../assets/menu_black.svg';
-import HomeTestType from '../components/common/HomeTestType';
-import PastResult from '../components/common/PastResult';
-import Footer from '../components/common/Footer';
+import NavBar from '../../components/common/NavBar';
+import menuIcon from '../../assets/menu_black.svg';
+import HomeTestType from '../../components/common/HomeTestType';
+import PastResult from '../../components/common/PastResult';
+import Footer from '../../components/common/Footer';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { useState } from 'react';
-import TastingNote from '../components/common/TastingNote';
-import PlaceTestCard from '../components/PlaceTest/PlaceTestCard';
-import SideBarContainer from '../components/SideBar/SideBarContainer';
-import useSideBar from '../hooks/useSideBar';
+import TastingNote from '../../components/common/TastingNote';
+import PlaceTestCard from '../../components/PlaceTest/PlaceTestCard';
+import SideBarContainer from '../../components/SideBar/SideBarContainer';
+import useSideBar from '../../hooks/useSideBar';
+import moreButton from '../../assets/moreButton_rounded.svg';
+import { useNavigate } from 'react-router-dom';
 
 const MyTastingPage = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
     closeOnEsc: true,
   });
+  const navigate = useNavigate();
 
   return (
     <>
@@ -75,6 +78,17 @@ const MyTastingPage = () => {
             <PastResult type="Floral" date="2025.10.09" />
             <PastResult type="Nutty" date="2025.09.09" />
           </div>
+          {/* 임의 버튼 UI */}
+          <button
+            className="flex justify-center cursor-pointer"
+            onClick={() => navigate('/mytasting/past')}
+          >
+            <img
+              src={moreButton}
+              alt="더보기버튼"
+              className="w-[76px] h-[34px]"
+            />
+          </button>
         </div>
       </div>
       <Footer />
