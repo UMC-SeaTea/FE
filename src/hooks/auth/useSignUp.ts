@@ -4,7 +4,11 @@ import { useMutation } from '@tanstack/react-query';
 import type { SignUpRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
 import { checkEmailDuplicate } from '../../apis/auth/auth';
-import { signUp, uploadProfileImage } from '../../apis/auth/auth';
+import {
+  signUp,
+  uploadProfileImage,
+  checkNicknameDuplicate,
+} from '../../apis/auth/auth';
 
 export const useSignUp = () => {
   const navigate = useNavigate();
@@ -147,9 +151,23 @@ export const useSignUp = () => {
     setStep(3);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isNicknameValid) return;
-    signUpMutation.mutate();
+
+    try {
+      const checkResponse = await checkNicknameDuplicate(nickname);
+
+      if (checkResponse.isSuccess) {
+        signUpMutation.mutate();
+      } else {
+        alert(checkResponse.message || '이미 사용 중인 닉네임입니다.');
+      }
+    } catch (error: any) {
+      const errorMsg =
+        error.response?.data?.message ||
+        '닉네임 중복 확인 중 오류가 발생했습니다.';
+      alert(errorMsg);
+    }
   };
 
   return {

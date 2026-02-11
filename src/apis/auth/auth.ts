@@ -63,3 +63,13 @@ export const checkEmailDuplicate = async (email: string) => {
   );
   return response.data;
 };
+
+export const checkNicknameDuplicate = async (nickname: string) => {
+  const response = await axiosInstance.get<CheckEmailResponse>(
+    '/api/check/nickname',
+    {
+      params: { nickname },
+    }
+  );
+  return response.data;
+};
