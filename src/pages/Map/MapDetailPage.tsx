@@ -58,7 +58,7 @@ const MapDetailPage = () => {
     const mutation = isSaved ? deleteMutate : postMutate;
     mutation(spaceId, {
       onSuccess: () => {
-        console.log('저장 성공');
+        console.log(isSaved ? '삭제 성공' : '저장 성공');
       },
       onError: () => {
         console.log('저장 실패');
