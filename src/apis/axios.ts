@@ -50,6 +50,10 @@ axiosInstance.interceptors.response.use(
     const status = error.response?.status;
     const originalRequest: CustomInternalAxiosRequestConfig = error.config;
 
+    if (originalRequest.url?.includes('/api/login')) {
+      return Promise.reject(error);
+    }
+
     if (!status) {
       console.error('Request failed without a status', error);
       return Promise.reject(error);
@@ -59,10 +63,38 @@ axiosInstance.interceptors.response.use(
     if (status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        await axiosInstance.post('/api/auth/reissue');
+        const refreshToken = localStorage.getItem(
+          LOCAL_STORAGE_KEYS.refreshToken
+        );
+        if (!refreshToken) {
+          throw new Error('토큰이 없습니다.');
+        }
+
+        const response =
+          await refreshInstance(refreshToken).post('/api/auth/reissue');
+
+        const newAccessToken =
+          response.data.result?.accessToken || response.data.accessToken;
+
+        if (!newAccessToken) {
+          throw new Error('새로운 토큰을 받지 못했습니다.');
+        }
+
+        localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, newAccessToken);
+
+        const newRefreshToken =
+          response.data.result?.refreshToken || response.data.refreshToken;
+        if (newRefreshToken) {
+          localStorage.setItem(
+            LOCAL_STORAGE_KEYS.refreshToken,
+            newRefreshToken
+          );
+        }
+
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
-      } catch (error) {
-        return handleTokenError(error);
+      } catch (reissueError) {
+        return handleTokenError(reissueError);
       }
     }
 

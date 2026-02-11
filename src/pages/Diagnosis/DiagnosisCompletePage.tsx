@@ -1,3 +1,4 @@
+//DiagnosisCompletePage.tsx
 import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeTestType from "../../components/common/HomeTestType";

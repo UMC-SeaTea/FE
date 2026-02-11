@@ -1,3 +1,4 @@
+//src/types/diagnosis/detailDiagnosis.ts
 export type DetailDiagnosisRequest = {
   step: 1 | 2;
   sessionId?: number;
@@ -24,3 +25,13 @@ export type DetailDiagnosisResponse = {
     sessionId: number;
   };
 };
+
+export type DiagnosisTypeCode =
+  | "FLORAL"
+  | "FRUITY"
+  | "OCEANIC"
+  | "EARTHY"
+  | "NUTTY"
+  | "SMOKY"
+  | "SPICES"
+  | "SWEET";

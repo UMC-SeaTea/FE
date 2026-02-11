@@ -1,15 +1,16 @@
 // src/pages/Diagnosis/DiagnosisResultLoading.tsx
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import waveBack from "../../assets/Waves/diagnosis_result/wave_back.png";
 import waveMiddle from "../../assets/Waves/diagnosis_result/wave_middle.png";
 import waveFront from "../../assets/Waves/diagnosis_result/wave_front.png";
+import { useDiagnosisResult } from "../../hooks/diagnosis/useDiagnosisResult";
+
 
 type ResultLoadingState = {
   source?: "detail" | "simple";
   mode?: "basic" | "advanced";
-  resultTypeCode?: string; // ✅ API에서 받은 타입코드
+  resultTypeCode?: string;
 };
 
 export default function DiagnosisResultLoading() {
@@ -18,23 +19,60 @@ export default function DiagnosisResultLoading() {
 
   const state = (location.state ?? {}) as ResultLoadingState;
 
-  // ✅ 혹시 direct access 대비 (state 없으면 detail로 돌려보내거나 기본값)
+  
   const safeState = useMemo<ResultLoadingState>(() => {
     return {
       source: state.source ?? "detail",
       mode: state.mode ?? "basic",
-      resultTypeCode: state.resultTypeCode ?? "", // 없으면 빈값
     };
-  }, [state.mode, state.resultTypeCode, state.source]);
+  }, [state.mode, state.source]);
 
+  
+  const { data, isError } = useDiagnosisResult();
+
+  
+  const timerDoneRef = useRef(false);
+  const lastTypeCodeRef = useRef<string>("");
+
+  
   useEffect(() => {
     const t = window.setTimeout(() => {
-      // ✅ complete로 state 그대로 carry
-      navigate("/diagnosis/complete", { replace: true, state: safeState });
+      timerDoneRef.current = true;
+
+      
+      if (lastTypeCodeRef.current) {
+        navigate("/diagnosis/complete", {
+          replace: true,
+          state: { ...safeState, resultTypeCode: lastTypeCodeRef.current },
+        });
+      }
     }, 6000);
 
     return () => window.clearTimeout(t);
   }, [navigate, safeState]);
+
+  
+  useEffect(() => {
+    const code = data?.result?.typeCode ? String(data.result.typeCode).toUpperCase() : "";
+
+    if (!code) return;
+
+    lastTypeCodeRef.current = code;
+
+    
+    if (timerDoneRef.current) {
+      navigate("/diagnosis/complete", {
+        replace: true,
+        state: { ...safeState, resultTypeCode: code },
+      });
+    }
+  }, [data, navigate, safeState]);
+
+  
+  useEffect(() => {
+    if (!isError) return;
+
+  }, [isError]);
 
   return (
     <div className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-[#0A0A0A]">
