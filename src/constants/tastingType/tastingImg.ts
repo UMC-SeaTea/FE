@@ -49,7 +49,7 @@ export const typeConfig: Record<TastingKey, TastingImg> = {
     img: FruityImg,
     width: '350px',
     rotate: '0deg',
-    bottom: '-0px',
+    bottom: '0px',
     right: '0px',
   },
   oceanic: {

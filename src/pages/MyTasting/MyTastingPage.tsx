@@ -82,7 +82,7 @@ const MyTastingPage = () => {
               onClick={() => navigate('/mytasting/past')}
             >
               <p className="font-body text-body-4 text-gray-100">더보기</p>
-              <img src={moveButton} alt="더보기 아이콘" className="" />
+              <img src={moveButton} alt="더보기 아이콘" />
             </button>
           </div>
           <div className="flex flex-col gap-[8px]">
