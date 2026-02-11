@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { login, getMyInfo } from '../../apis/auth/auth';
 import type { LoginRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
+import { LOCAL_STORAGE_KEYS } from '../../constants/key';
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -12,7 +13,12 @@ export const useAuth = () => {
     mutationFn: (data: LoginRequest) => login(data),
 
     onSuccess: (response) => {
-      if (response.isSuccess) {
+      if (response.isSuccess && response.result) {
+        const { accessToken, refreshToken } = response.result;
+
+        localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, accessToken);
+        localStorage.setItem(LOCAL_STORAGE_KEYS.refreshToken, refreshToken);
+
         alert(response.message || '로그인에 성공했습니다!');
         navigate('/', { replace: true });
       } else {
