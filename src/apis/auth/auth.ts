@@ -43,3 +43,20 @@ export const uploadImage = async (formData: FormData) => {
   );
   return response.data;
 };
+
+export interface CheckEmailResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: string;
+}
+
+export const checkEmailDuplicate = async (email: string) => {
+  const response = await axiosInstance.get<CheckEmailResponse>(
+    '/api/check/email',
+    {
+      params: { email },
+    }
+  );
+  return response.data;
+};

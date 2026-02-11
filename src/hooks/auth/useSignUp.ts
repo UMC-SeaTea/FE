@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { signUp } from '../../apis/auth/auth';
 import type { SignUpRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
+import { checkEmailDuplicate } from '../../apis/auth/auth';
 
 export const useSignUp = () => {
   const navigate = useNavigate();
@@ -66,14 +67,32 @@ export const useSignUp = () => {
     },
   });
 
-  /* 중복확인API가 없어 일단 무조건 성공 처리 */
-  const handleCheckEmail = () => {
+  const handleCheckEmail = async () => {
+    if (!email) {
+      setEmailEmptyError('이메일을 입력해주세요.');
+      return;
+    }
     if (!isEmailValid) {
       alert('이메일 형식이 올바르지 않습니다.');
       return;
     }
-    setIsEmailChecked(true);
-    alert('사용 가능한 이메일입니다.');
+
+    try {
+      const response = await checkEmailDuplicate(email);
+
+      if (response.isSuccess) {
+        setIsEmailChecked(true);
+        alert(response.message || '사용 가능한 이메일입니다.');
+      } else {
+        setIsEmailChecked(false);
+        alert(response.message || '이미 사용 중인 이메일입니다.');
+      }
+    } catch (error: any) {
+      setIsEmailChecked(false);
+      const errorMsg =
+        error.response?.data?.message || '중복 확인 중 오류가 발생했습니다.';
+      alert(errorMsg);
+    }
   };
 
   const handleNextStep1 = () => {
