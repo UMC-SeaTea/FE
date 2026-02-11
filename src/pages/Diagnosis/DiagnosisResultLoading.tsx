@@ -71,8 +71,9 @@ export default function DiagnosisResultLoading() {
   
   useEffect(() => {
     if (!isError) return;
-
-  }, [isError]);
+    alert("결과를 불러오는데 실패했습니다. 다시 시도해주세요.");
+    navigate(-1);
+  }, [isError, navigate]);
 
   return (
     <div className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-[#0A0A0A]">

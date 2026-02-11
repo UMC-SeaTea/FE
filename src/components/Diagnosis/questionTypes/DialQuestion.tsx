@@ -185,7 +185,7 @@ export default function DialQuestion({
     const up = () => dragging && endDrag();
     window.addEventListener("pointerup", up);
     return () => window.removeEventListener("pointerup", up);
-  }, [dragging, value]);
+  }, [dragging, value, onCommit]);
 
   useEffect(() => () => clearCommitTimer(), []);
 
