@@ -1,3 +1,5 @@
+import type { CommonResponse } from '../common';
+
 export interface LoginRequest {
   email: string;
   password: string;
@@ -7,6 +9,7 @@ export interface LoginResult {
   id: number;
   email: string;
   role: string;
+  profile_image: string | null;
   accessToken: string;
   refreshToken: string;
 }
@@ -29,3 +32,5 @@ export interface UserInfoResult {
   nickname: string;
   email: string;
 }
+
+export type LoginResponse = CommonResponse<LoginResult>;
