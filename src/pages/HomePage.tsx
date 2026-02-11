@@ -27,7 +27,7 @@ const HomePage = () => {
             onClick={toggleSideBar}
           />
           <SideBarContainer open={open} onClose={closeSideBar} />
-          <HomeTestType type="oceanic" />
+          <HomeTestType type="earthy" />
         </div>
         <div className="flex flex-col pl-[20px] gap-[29px]">
           <div className="flex flex-col gap-[10px]">
