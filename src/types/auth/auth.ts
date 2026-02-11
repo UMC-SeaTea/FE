@@ -29,3 +29,17 @@ export interface UserInfoResult {
   nickname: string;
   email: string;
 }
+
+export interface LoginResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    id: number;
+    email: string;
+    role: string;
+    profile_image: string | null;
+    accessToken: string;
+    refreshToken: string;
+  };
+}

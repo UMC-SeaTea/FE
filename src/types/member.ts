@@ -6,14 +6,18 @@ export interface MemberProfileResponse {
     userId: number;
     email: string;
     nickname: string;
-    profileImageUrl: string;
+    profileImageUrl: string | null;
+    role: string;
+    savedSpaceCount: number;
     currentType: {
       id: number;
-      name: string;
+      code: string;
+      displayName: string;
+      subtitle: string;
       description: string;
-      iconUrl: string;
-      colorCode: string;
-    };
-    /* 저장 공간 개수 관련 추후 수정*/
+      imageUrl: string;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   };
 }

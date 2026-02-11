@@ -14,9 +14,8 @@ const MyPage = () => {
     closeOnEsc: true,
   });
 
-  // 추후 수정
-  // const memberId = Number(localStorage.getItem('memberId'));
-  const memberId = 1; // 임시 테스트용 ID
+  const storedId = localStorage.getItem('memberId');
+  const memberId = storedId ? Number(storedId) : 1;
 
   const { data } = useMemberProfile(memberId);
   const userProfile = data?.result;

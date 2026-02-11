@@ -14,10 +14,14 @@ export const useAuth = () => {
 
     onSuccess: (response) => {
       if (response.isSuccess && response.result) {
-        const { accessToken, refreshToken } = response.result;
+        const { accessToken, refreshToken, id } = response.result;
 
         localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, accessToken);
         localStorage.setItem(LOCAL_STORAGE_KEYS.refreshToken, refreshToken);
+
+        if (id) {
+          localStorage.setItem('memberId', String(id));
+        }
 
         alert(response.message || '로그인에 성공했습니다!');
         navigate('/', { replace: true });
@@ -36,9 +40,14 @@ export const useAuth = () => {
     queryKey: ['user', 'me'],
     queryFn: getMyInfo,
     retry: false,
+    enabled: !!localStorage.getItem(LOCAL_STORAGE_KEYS.accessToken),
   });
 
   const logout = () => {
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.refreshToken);
+    localStorage.removeItem('memberId');
+
     queryClient.removeQueries({ queryKey: ['user'] });
     queryClient.clear();
     navigate('/login/start');

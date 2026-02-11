@@ -2,16 +2,10 @@ import backButton from '../../assets/backButton_white.svg';
 import profileDefault from '../../assets/profile_default.png';
 import NoteSearch from '../common/NoteSearch';
 import { useNavigate } from 'react-router-dom';
+import type { MemberProfileResponse } from '../../types/member';
 
 interface MyPageProfileProps {
-  profile?: {
-    email: string;
-    profileImageUrl: string;
-    currentType: {
-      name: string;
-    };
-    savedSpaceCount?: number;
-  };
+  profile?: MemberProfileResponse['result'];
 }
 
 const MyPageProfile = ({ profile }: MyPageProfileProps) => {
@@ -40,20 +34,21 @@ const MyPageProfile = ({ profile }: MyPageProfileProps) => {
             <div className="flex flex-col gap-[4px]">
               {/* 이메일 */}
               <div className="font-body text-body-5 text-white">
-                {profile?.email || '이메일 정보 없음'}
+                {profile?.email || '-'}
               </div>
 
-              {/* 휴식 유형 */}
+              {/* 휴식 유형 (null일 경우 진단 전으로 표시) */}
               <div className="flex gap-[8px] items-center">
                 <p className="font-body text-body-4 text-gray-400">휴식 유형</p>
-                <NoteSearch text={profile?.currentType?.name || 'none'} />
+                <NoteSearch
+                  text={profile?.currentType?.displayName || '진단 전'}
+                />
               </div>
 
               {/* 저장한 공간 */}
               <div className="flex gap-[8px] font-body text-body-4">
                 <p className="text-gray-400">저장한 공간</p>
                 <div className="flex">
-                  {/* 추후 저장 공간 개수 연동 예정 */}
                   <p className="text-white">{profile?.savedSpaceCount ?? 0}</p>
                   <p className="text-gray-400">개</p>
                 </div>
