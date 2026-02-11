@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import type {
   DetailDiagnosisRequest,
   DetailDiagnosisResponse,
-} from "../../types/diagnosis/detailDiagnosis";
+} from "../../types/diagnosis/diagnosis";
 import { postDetailDiagnosis } from "../../apis/diagnosis/diagnosis";
 
 

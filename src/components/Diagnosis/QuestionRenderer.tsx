@@ -1,3 +1,4 @@
+//components/Diagnosis/QuestionRenderer.tsx
 import type { DiagnosisQuestion } from "../../constants/diagnosis/types";
 import TwoChoiceQuestion from "./questionTypes/TwoChoiceQuestion";
 import DialQuestion from "./questionTypes/DialQuestion";
@@ -70,7 +71,7 @@ export default function QuestionRenderer({
       <MultiSelectQuestion
         options={q.options.map((o) => ({ id: o.id, label: o.label }))}
         selectedIds={selected}
-        maxSelect={q.maxSelect ?? 999}
+        maxSelect={2} 
         onChange={(nextSelected: string[]) => onChange(nextSelected)}
         theme={q.theme ?? "mint"}
         ctaText={q.ctaText}

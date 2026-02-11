@@ -1,12 +1,10 @@
 // src/components/Diagnosis/useDiagnosisDetail.ts
 import { useMemo, useState } from "react";
-
 import type { DiagnosisQuestion } from "../../constants/diagnosis/types";
 import { BASIC_DIAGNOSIS_QUESTIONS } from "../../constants/diagnosis/basicQuestions";
 import { ADVANCED_DIAGNOSIS_QUESTIONS } from "../../constants/diagnosis/advancedQuestions";
-
 import { useDetailDiagnosis } from "../../hooks/diagnosis/useDetailDiagnosis";
-import type { DetailDiagnosisRequest } from "../../types/diagnosis/detailDiagnosis";
+import type { DetailDiagnosisRequest } from "../../types/diagnosis/diagnosis";
 
 type Answers = Record<string, unknown>;
 
@@ -118,6 +116,7 @@ export function useDiagnosisDetail(params: Params = {}) {
     if (!isAdvanced && current?.id === "q4") {
   const res = await mutateAsync(buildStep1Body());
   if (!res.isSuccess) throw new Error(res.message);
+  if (!res.result) throw new Error("result is null");
 
   const status = res.result.status;
 
@@ -142,6 +141,7 @@ export function useDiagnosisDetail(params: Params = {}) {
 
       const res = await mutateAsync(buildStep2Body());
       if (!res.isSuccess) throw new Error(res.message);
+      if (!res.result) throw new Error("result is null");
 
       const code = res.result.resultTypeCode ?? "";
       if (!code) throw new Error("resultTypeCode is missing");

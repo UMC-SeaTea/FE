@@ -3,25 +3,12 @@ import { axiosInstance } from "../axios";
 import type {
   DetailDiagnosisRequest,
   DetailDiagnosisResponse,
-  DiagnosisTypeCode,
-} from "../../types/diagnosis/detailDiagnosis";
+  DiagnosisResult,
+} from "../../types/diagnosis/diagnosis";
+import type { CommonResponse } from "../../types/common";
 
 
-// 결과조회
-export type DiagnosisResult = {
-  typeCode: DiagnosisTypeCode;
-  displayName: string;
-  subtitle: string;
-  description: string;
-  imageUrl: string | null;
-};
-
-export type DiagnosisResultResponse = {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: DiagnosisResult;
-};
+export type DiagnosisResultResponse = CommonResponse<DiagnosisResult>;
 
 
 export const postDetailDiagnosis = async (
