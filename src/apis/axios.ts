@@ -73,8 +73,8 @@ axiosInstance.interceptors.response.use(
         const response =
           await refreshInstance(refreshToken).post('/api/auth/reissue');
 
-        const newAccessToken =
-          response.data.result?.accessToken || response.data.accessToken;
+        const result = response.data.result || response.data;
+        const newAccessToken = result?.accessToken;
 
         if (!newAccessToken) {
           throw new Error('새로운 토큰을 받지 못했습니다.');
@@ -82,8 +82,7 @@ axiosInstance.interceptors.response.use(
 
         localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, newAccessToken);
 
-        const newRefreshToken =
-          response.data.result?.refreshToken || response.data.refreshToken;
+        const newRefreshToken = result?.refreshToken;
         if (newRefreshToken) {
           localStorage.setItem(
             LOCAL_STORAGE_KEYS.refreshToken,

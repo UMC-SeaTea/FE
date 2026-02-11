@@ -13,7 +13,7 @@ export const useAuth = () => {
     mutationFn: (data: LoginRequest) => login(data),
 
     onSuccess: (response) => {
-      if (response.isSuccess) {
+      if (response.isSuccess && response.result) {
         const { accessToken, refreshToken } = response.result;
 
         localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, accessToken);
