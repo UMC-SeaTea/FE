@@ -31,14 +31,17 @@ export const getMyInfo = async () => {
   return response.data;
 };
 
-/*이미지 업로드 전용  API구현 시 연동 예정 */
-export const uploadImage = async (formData: FormData) => {
-  // 임시 URL
+export const uploadProfileImage = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
   const response = await axiosInstance.post<CommonResponse<string>>(
-    '/api/uploadPfp',
+    '/api/upload/profile/image',
     formData,
     {
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     }
   );
   return response.data;

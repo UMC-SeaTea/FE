@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { signUp } from '../../apis/auth/auth';
 import type { SignUpRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
 import { checkEmailDuplicate } from '../../apis/auth/auth';
+import { signUp, uploadProfileImage } from '../../apis/auth/auth';
 
 export const useSignUp = () => {
   const navigate = useNavigate();
@@ -38,9 +38,21 @@ export const useSignUp = () => {
 
   const signUpMutation = useMutation({
     mutationFn: async () => {
-      const finalProfileUrl = '';
+      let finalProfileUrl = '';
 
-      /* 추후 이미지 업로드 전용 api 연결 시 */
+      if (profileImage) {
+        try {
+          const uploadResponse = await uploadProfileImage(profileImage);
+          if (uploadResponse.isSuccess && uploadResponse.result) {
+            finalProfileUrl = uploadResponse.result;
+          } else {
+            throw new Error(uploadResponse.message || '이미지 업로드 실패');
+          }
+        } catch (error) {
+          console.error('Profile upload failed:', error);
+          throw error;
+        }
+      }
 
       const requestData: SignUpRequest = {
         email,
