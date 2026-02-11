@@ -8,6 +8,23 @@ interface MyPageProfileProps {
   profile?: MemberProfileResponse['result'];
 }
 
+const getProfileImageUrl = (url: string | null | undefined) => {
+  if (!url) return profileDefault;
+
+  if (url.startsWith('http') || url.startsWith('https')) {
+    return url;
+  }
+
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  if (!baseUrl) return url;
+
+  const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+
+  return `${cleanBase}${cleanUrl}`;
+};
+
 const MyPageProfile = ({ profile }: MyPageProfileProps) => {
   const navigate = useNavigate();
 
@@ -15,37 +32,36 @@ const MyPageProfile = ({ profile }: MyPageProfileProps) => {
     navigate('/mypage/profile-edit');
   };
 
+  const imageUrl = getProfileImageUrl(profile?.profileImageUrl);
+
   return (
     <>
       <div className="w-[335px] h-[116px] rounded-md bg-[rgba(255,255,255,0.1)] px-[16px] py-[24px]">
         <div className="flex w-[303px] items-center justify-between">
           <div className="flex gap-[12px]">
-            {/* 프로필 이미지 */}
             <div className="w-[64px] h-[64px] rounded-full overflow-hidden">
               <img
-                src={profile?.profileImageUrl || profileDefault}
+                src={imageUrl}
                 alt="profile img"
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.currentTarget.src = profileDefault;
+                  const target = e.target as HTMLImageElement;
+                  if (target.src !== profileDefault) {
+                    target.src = profileDefault;
+                  }
                 }}
               />
             </div>
             <div className="flex flex-col gap-[4px]">
-              {/* 이메일 */}
               <div className="font-body text-body-5 text-white">
                 {profile?.email || '-'}
               </div>
-
-              {/* 휴식 유형 (null일 경우 진단 전으로 표시) */}
               <div className="flex gap-[8px] items-center">
                 <p className="font-body text-body-4 text-gray-400">휴식 유형</p>
                 <NoteSearch
                   text={profile?.currentType?.displayName || '진단 전'}
                 />
               </div>
-
-              {/* 저장한 공간 */}
               <div className="flex gap-[8px] font-body text-body-4">
                 <p className="text-gray-400">저장한 공간</p>
                 <div className="flex">
