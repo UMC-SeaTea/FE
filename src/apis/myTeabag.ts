@@ -8,7 +8,7 @@ export const getMyTeabagList = async (
   size: number = 20,
   cursor?: string | null
 ) => {
-  const params: any = { size };
+  const params: { size: number; cursor?: string } = { size };
 
   if (cursor) {
     params.cursor = cursor;

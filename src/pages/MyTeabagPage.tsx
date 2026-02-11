@@ -98,11 +98,11 @@ const MyTeabagPage = () => {
       const res = await deleteMyTeabag(id);
       if (res.isSuccess) {
         setItems((prev) => prev.filter((item) => item.spaceId !== id));
-        if (selectedIds.has(id)) {
-          const newSet = new Set(selectedIds);
+        setSelectedIds((prev) => {
+          const newSet = new Set(prev);
           newSet.delete(id);
-          setSelectedIds(newSet);
-        }
+          return newSet;
+        });
       }
     } catch (error) {
       console.error('개별 삭제 실패:', error);
@@ -131,6 +131,8 @@ const MyTeabagPage = () => {
     } catch (error) {
       console.error('일괄 삭제 실패:', error);
       fetchTeabagList(true);
+      setSelectedIds(new Set());
+      setIsEditMode(false);
       alert('삭제 처리 중 오류가 발생했습니다.');
     }
   };
@@ -150,9 +152,7 @@ const MyTeabagPage = () => {
 
           <div className="flex items-center gap-[4px]">
             {!isEditMode ? (
-              <div onClick={handleToggleSort}>
-                <SortButton />
-              </div>
+              <SortButton onClick={handleToggleSort} />
             ) : (
               <button
                 onClick={handleBulkDelete}
@@ -168,9 +168,7 @@ const MyTeabagPage = () => {
               </button>
             )}
 
-            <div onClick={handleToggleEditMode}>
-              <EditButton />
-            </div>
+            <EditButton onClick={handleToggleEditMode} />
           </div>
         </div>
 

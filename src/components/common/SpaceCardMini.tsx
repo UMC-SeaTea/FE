@@ -56,7 +56,7 @@ const SpaceCardMini = ({
       onClick={handleCardClick}
     >
       <img
-        src={thumbnailImageUrl}
+        src={thumbnailImageUrl?.startsWith('http') ? thumbnailImageUrl : ''}
         alt={name}
         className="absolute inset-0 w-full h-full object-cover"
       />
@@ -69,12 +69,13 @@ const SpaceCardMini = ({
       </div>
 
       {isEditMode && (
-        <div
+        <button
+          type="button"
           onClick={handleDeleteClick}
           className="absolute top-2 right-2 z-10 p-1 cursor-pointer hover:opacity-80"
         >
           <img className="w-6 h-6" src={DeleteIcon} alt="저장 취소" />
-        </div>
+        </button>
       )}
     </div>
   );
