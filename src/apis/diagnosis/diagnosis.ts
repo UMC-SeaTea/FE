@@ -29,12 +29,11 @@ export const getDiagnosisResultMe = async (): Promise<DiagnosisResultResponse> =
 
 
 export const postQuickDiagnosis = async (
-  body: QuickDiagnosisRequest
+  payload: QuickDiagnosisRequest
 ): Promise<QuickDiagnosisResponse> => {
   const { data } = await axiosInstance.post<QuickDiagnosisResponse>(
-    "/api/diagnosis/quick/test",
-    body
+    "/api/diagnosis/quick",
+    payload
   );
-
   return data;
 };
