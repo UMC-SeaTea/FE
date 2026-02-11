@@ -9,7 +9,7 @@ import TastingNote from '../../components/common/TastingNote';
 import PlaceTestCard from '../../components/PlaceTest/PlaceTestCard';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';
 import useSideBar from '../../hooks/useSideBar';
-import moreButton from '../../assets/moreButton_rounded.svg';
+import moveButton from '../../assets/moveButton_gray.svg';
 import { useNavigate } from 'react-router-dom';
 
 const MyTastingPage = () => {
@@ -73,22 +73,22 @@ const MyTastingPage = () => {
         </div>
         {/* 과거 진단내역 */}
         <div className="flex flex-col gap-[20px]">
-          <p className="font-body text-body-title text-black">과거 진단내역</p>
+          <div className="flex items-center justify-between">
+            <p className="font-body text-body-title text-black">
+              과거 진단내역
+            </p>
+            <button
+              className="flex items-center gap-[2px] cursor-pointer"
+              onClick={() => navigate('/mytasting/past')}
+            >
+              <p className="font-body text-body-4 text-gray-100">더보기</p>
+              <img src={moveButton} alt="더보기 아이콘" className="" />
+            </button>
+          </div>
           <div className="flex flex-col gap-[8px]">
             <PastResult type="Floral" date="2025.10.09" />
             <PastResult type="Nutty" date="2025.09.09" />
           </div>
-          {/* 임의 버튼 UI */}
-          <button
-            className="flex justify-center cursor-pointer"
-            onClick={() => navigate('/mytasting/past')}
-          >
-            <img
-              src={moreButton}
-              alt="더보기버튼"
-              className="w-[76px] h-[34px]"
-            />
-          </button>
         </div>
       </div>
       <Footer />
