@@ -17,15 +17,18 @@ import {
   useDeleteMyTeabag,
   usePostMyTeabag,
 } from '../../hooks/myteabag/useMyTeabag';
+import { useAuth } from '../../hooks/auth/useAuth';
 
 const MapDetailPage = () => {
   const { sid } = useParams<{ sid: string }>();
   const spaceId = Number(sid);
 
+  const { user } = useAuth();
+  const isLoggedIn = Boolean(user);
+
   const { data, isLoading, isError } = useSpaceDetail(spaceId);
-  const { mutate: postMutate, isPending: isPostPending } = usePostMyTeabag();
-  const { mutate: deleteMutate, isPending: isDeletePending } =
-    useDeleteMyTeabag();
+  const { mutate: postMutate } = usePostMyTeabag();
+  const { mutate: deleteMutate } = useDeleteMyTeabag();
 
   const isSaved = data?.result?.isSaved;
 
@@ -81,13 +84,15 @@ const MapDetailPage = () => {
             <p className="text-black font-body text-[20px] font-semibold">
               {data?.result?.name}
             </p>
-            <button className="cursor-pointer" onClick={handleTeabagClick}>
-              <img
-                src={isSaved ? teaBag : unteaBag}
-                alt="tea bag"
-                className="w-[28px] h-[28px]"
-              />
-            </button>
+            {isLoggedIn && (
+              <button className="cursor-pointer" onClick={handleTeabagClick}>
+                <img
+                  src={isSaved ? teaBag : unteaBag}
+                  alt="tea bag"
+                  className="w-[28px] h-[28px]"
+                />
+              </button>
+            )}
           </div>
           <NoteSearch text={`${data?.result?.tastingTypeCode}`} />
         </div>
@@ -110,21 +115,19 @@ const MapDetailPage = () => {
                 </div>
                 <p>의 SeaTea 사용자가 저장했어요.</p>
               </div>
-              <div className="flex gap-[4px] font-medium">
-                <p>나와 동일한 유형</p>
-                <p className=" text-[#B4ABFF] font-bold">
-                  {data?.result?.sameTypeSavedCount}명
+              {isLoggedIn ? (
+                <div className="flex gap-[4px] font-medium">
+                  <p>나와 동일한 유형</p>
+                  <p className=" text-[#B4ABFF] font-bold">
+                    {data?.result?.sameTypeSavedCount}명
+                  </p>
+                </div>
+              ) : (
+                <p className="text-gray-300 text-detail-4 font-body whitespace-nowrap">
+                  로그인하면 나와 같은 사용자가 얼마나 저장했는지 확인할 수
+                  있어요.
                 </p>
-              </div>
-              {/* 유저토큰 X의 경우 */}
-              {/* (accessToken &&{' '}
-            {
-              <p className="text-gray-300 text-detail-4 font-body whitespace-nowrap">
-                로그인하면 나와 같은 사용자가 얼마나 저장했는지 확인할 수
-                있어요.
-              </p>
-            }
-            ) */}
+              )}
             </div>
           </div>
         </div>
