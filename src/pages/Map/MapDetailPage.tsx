@@ -11,12 +11,23 @@ import { useNavigate } from 'react-router-dom';
 import { showToast } from '../../components/Toast/ToastHost';
 import { useSpaceDetail } from '../../hooks/spaces/useSpaceDetail';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-// import teaBag from '../../assets/teaBag.svg';
+import teaBag from '../../assets/teaBag.svg';
+import unteaBag from '../../assets/teaBag_gray.svg';
+import {
+  useDeleteMyTeabag,
+  usePostMyTeabag,
+} from '../../hooks/myteabag/useMyTeabag';
 
 const MapDetailPage = () => {
   const { sid } = useParams<{ sid: string }>();
   const spaceId = Number(sid);
+
   const { data, isLoading, isError } = useSpaceDetail(spaceId);
+  const { mutate: postMutate, isPending: isPostPending } = usePostMyTeabag();
+  const { mutate: deleteMutate, isPending: isDeletePending } =
+    useDeleteMyTeabag();
+
+  const isSaved = data?.result?.isSaved;
 
   const handleShare = async () => {
     try {
@@ -43,6 +54,18 @@ const MapDetailPage = () => {
     return <p>오류가 발생했습니다.</p>;
   }
 
+  const handleTeabagClick = () => {
+    const mutation = isSaved ? deleteMutate : postMutate;
+    mutation(spaceId, {
+      onSuccess: () => {
+        console.log('저장 성공');
+      },
+      onError: () => {
+        console.log('저장 실패');
+      },
+    });
+  };
+
   return (
     <>
       <NavBar
@@ -58,10 +81,13 @@ const MapDetailPage = () => {
             <p className="text-black font-body text-[20px] font-semibold">
               {data?.result?.name}
             </p>
-            {/* 유저토큰 있는 경우에만 */}
-            {/* (accessToken && (
-            <img src={teaBag} alt="tea bag" className="w-[28px] h-[28px]" />
-            )) */}
+            <button className="cursor-pointer" onClick={handleTeabagClick}>
+              <img
+                src={isSaved ? teaBag : unteaBag}
+                alt="tea bag"
+                className="w-[28px] h-[28px]"
+              />
+            </button>
           </div>
           <NoteSearch text={`${data?.result?.tastingTypeCode}`} />
         </div>
