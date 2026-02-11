@@ -116,19 +116,26 @@ export function useDiagnosisDetail(params: Params = {}) {
     if (isPending) return;
 
     if (!isAdvanced && current?.id === "q4") {
-      const res = await mutateAsync(buildStep1Body());
-      if (!res.isSuccess) throw new Error(res.message);
+  const res = await mutateAsync(buildStep1Body());
+  if (!res.isSuccess) throw new Error(res.message);
 
-      if (res.result.status === "DONE") {
-        const code = res.result.resultTypeCode ?? "";
-        if (!code) throw new Error("resultTypeCode is missing");
-        return { status: "DONE", resultTypeCode: code };
-      }
+  const status = res.result.status;
 
-      const sid = res.result.sessionId;
-      setSessionId(sid);
-      return { status: "NEED_MORE", sessionId: sid };
-    }
+  if (status === "DONE") {
+    const code = res.result.resultTypeCode ?? "";
+    if (!code) throw new Error("resultTypeCode is missing");
+    return { status: "DONE", resultTypeCode: code };
+  }
+
+  if (status === "NEED_MORE") {
+    const sid = res.result.sessionId;
+    if (!sid) throw new Error("sessionId is missing");
+    setSessionId(sid);
+    return { status: "NEED_MORE", sessionId: sid };
+  }
+
+  throw new Error(`Unexpected status: ${status}`);
+}
 
     if (isAdvanced && current?.id === "q8") {
       if (!sessionId) throw new Error("sessionId is missing for step2");
@@ -158,7 +165,6 @@ export function useDiagnosisDetail(params: Params = {}) {
   };
 
   return {
-    // ✅ 추가 반환
     questions,
     answers,
 
