@@ -15,7 +15,7 @@ interface HomeTestTypeProps {
 // variant에 따른 스타일
 const variantStyle: Record<Variant, { wrapper: string; content: string }> = {
   home: {
-    wrapper: 'h-[446px] pt-[80px]',
+    wrapper: 'h-[335px] pt-[80px]',
     content: 'gap-[42px]',
   },
   recommend: {
