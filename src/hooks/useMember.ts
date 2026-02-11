@@ -60,8 +60,6 @@ export const useUpdateProfile = () => {
         (oldData) => {
           if (!oldData || !oldData.result) return oldData;
 
-          console.log('이미지 캐시 업데이트:', data.result?.profileImageUrl);
-
           return {
             ...oldData,
             result: {

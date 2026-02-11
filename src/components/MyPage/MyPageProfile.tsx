@@ -3,27 +3,11 @@ import profileDefault from '../../assets/profile_default.png';
 import NoteSearch from '../common/NoteSearch';
 import { useNavigate } from 'react-router-dom';
 import type { MemberProfileResponse } from '../../types/member';
+import { getProfileImageUrl } from '../../lib/utils';
 
 interface MyPageProfileProps {
   profile?: MemberProfileResponse['result'];
 }
-
-const getProfileImageUrl = (url: string | null | undefined) => {
-  if (!url) return profileDefault;
-
-  if (url.startsWith('http') || url.startsWith('https')) {
-    return url;
-  }
-
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
-  if (!baseUrl) return url;
-
-  const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-  const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-
-  return `${cleanBase}${cleanUrl}`;
-};
 
 const MyPageProfile = ({ profile }: MyPageProfileProps) => {
   const navigate = useNavigate();
@@ -32,8 +16,7 @@ const MyPageProfile = ({ profile }: MyPageProfileProps) => {
     navigate('/mypage/profile-edit');
   };
 
-  const imageUrl = getProfileImageUrl(profile?.profileImageUrl);
-
+  const imageUrl = getProfileImageUrl(profile?.profileImageUrl, profileDefault);
   return (
     <>
       <div className="w-[335px] h-[116px] rounded-md bg-[rgba(255,255,255,0.1)] px-[16px] py-[24px]">

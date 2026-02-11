@@ -9,28 +9,9 @@ import defaultProfile from '../../assets/profile_default.png';
 import ProfileEditInput from '../../components/MyPage/MyPageProfileEditInput';
 import ProfileReadOnly from '../../components/MyPage/MyPageProfileReadOnly';
 import { useMemberProfile, useUpdateProfile } from '../../hooks/useMember';
+import { getProfileImageUrl } from '../../lib/utils';
 
 const NAME_VALIDATION_REGEX = /^[a-zA-Z0-9가-힣]{4,}$/;
-
-const getProfileImageUrl = (url: string | null | undefined) => {
-  if (!url) return defaultProfile;
-
-  if (
-    url.startsWith('http') ||
-    url.startsWith('https') ||
-    url.startsWith('data:')
-  ) {
-    return url;
-  }
-
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
-  if (!baseUrl) return url;
-
-  const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-  const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-
-  return `${cleanBase}${cleanUrl}`;
-};
 
 const MyPageProfileEdit = () => {
   const navigate = useNavigate();
@@ -57,7 +38,7 @@ const MyPageProfileEdit = () => {
       const { nickname, email, currentType, profileImageUrl } =
         profileData.result;
 
-      const fullImageUrl = getProfileImageUrl(profileImageUrl);
+      const fullImageUrl = getProfileImageUrl(profileImageUrl, defaultProfile);
 
       const initial = {
         name: nickname,
