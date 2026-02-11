@@ -1,34 +1,20 @@
-export interface MyTeabagItem {
-  spaceId: number;
-  name: string;
-  tastingTypeCode: string;
-  lat: number;
-  lng: number;
-  thumbnailImageUrl: string;
-  address: string;
-  distanceMeters: number | null;
-}
+import type { CursorInfo } from '../types/spaces/spaceItem';
+import type { SpaceList } from '../types/spaces/spaceList';
 
-export interface CursorInfo {
-  nextCursor: string | null;
-  hasNext: boolean;
-}
+export type MyTeabagItem = SpaceList;
 
-export interface MyTeabagResponse {
+export interface CommonResponse<T> {
   isSuccess: boolean;
   code: string;
   message: string;
-  result: {
-    items: MyTeabagItem[];
-    cursorInfo: CursorInfo;
-  };
+  result: T;
 }
 
-export interface MyTeabagDeleteResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: {
-    saved: boolean;
-  };
-}
+export type MyTeabagResponse = CommonResponse<{
+  items: MyTeabagItem[];
+  cursorInfo: CursorInfo;
+}>;
+
+export type MyTeabagDeleteResponse = CommonResponse<{
+  saved: boolean;
+}>;
