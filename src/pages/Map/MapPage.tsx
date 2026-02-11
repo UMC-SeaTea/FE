@@ -32,7 +32,7 @@ const MapPage = () => {
     const allPins = items.map((it: any) => ({
       spaceId: it.spaceId,
       name: it.name,
-      lat: it.latm,
+      lat: it.lat,
       lng: it.lng,
       tastingTypeCode: it.tastingTypeCode,
     }));
