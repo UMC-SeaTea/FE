@@ -29,63 +29,33 @@ const setSavedInCache = (spaceId: number, nextSaved: boolean) => {
   );
 };
 
-export const usePostMyTeabag = () => {
+const createMyTeabagMutation = (
+  mutationFn: (spaceId: number) => Promise<MyTeaBagResponse>,
+  optimisticSavedValue: boolean
+) => {
   return useMutation<
     MyTeaBagResponse,
     Error,
     number,
     { prev?: SpaceDetailResponse; key: ReturnType<typeof spaceDetailKey> }
   >({
-    mutationFn: (spaceId) => postMyTeabag(spaceId),
-
+    mutationFn,
     onMutate: async (spaceId) => {
       const key = spaceDetailKey(spaceId);
-
       await queryClient.cancelQueries({ queryKey: key });
-
       const prev = queryClient.getQueryData<SpaceDetailResponse>(key);
-
-      setSavedInCache(spaceId, true);
-
+      setSavedInCache(spaceId, optimisticSavedValue);
       return { prev, key };
     },
-
     onError: (_err, _spaceId, ctx) => {
       if (ctx?.prev && ctx?.key) queryClient.setQueryData(ctx.key, ctx.prev);
     },
-
     onSettled: (_data, _err, spaceId) => {
       queryClient.invalidateQueries({ queryKey: spaceDetailKey(spaceId) });
     },
   });
 };
 
-export const useDeleteMyTeabag = () => {
-  return useMutation<
-    MyTeaBagResponse,
-    Error,
-    number,
-    { prev?: SpaceDetailResponse; key: ReturnType<typeof spaceDetailKey> }
-  >({
-    mutationFn: (spaceId) => deleteMyTeabag(spaceId),
-
-    onMutate: async (spaceId) => {
-      const key = spaceDetailKey(spaceId);
-
-      await queryClient.cancelQueries({ queryKey: key });
-      const prev = queryClient.getQueryData<SpaceDetailResponse>(key);
-
-      setSavedInCache(spaceId, false);
-
-      return { prev, key };
-    },
-
-    onError: (_err, _spaceId, ctx) => {
-      if (ctx?.prev && ctx?.key) queryClient.setQueryData(ctx.key, ctx.prev);
-    },
-
-    onSettled: (_data, _err, spaceId) => {
-      queryClient.invalidateQueries({ queryKey: spaceDetailKey(spaceId) });
-    },
-  });
-};
+export const usePostMyTeabag = () => createMyTeabagMutation(postMyTeabag, true);
+export const useDeleteMyTeabag = () =>
+  createMyTeabagMutation(deleteMyTeabag, false);
