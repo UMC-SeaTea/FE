@@ -22,6 +22,7 @@ import MyTastingPage from '../pages/MyTasting/MyTastingPage';
 import SpaceRecommend from '../pages/SpaceRecommendPage';
 import MyPageProfileEdit from '../pages/MyPage/MyPageProfileEdit';
 import PastResultPage from '../pages/MyTasting/PastResultPage';
+import OAuthCallbackPage from '../pages/OAuthCallbackPage';
 
 export const publicRoutes = [
   {
@@ -58,6 +59,7 @@ export const publicRoutes = [
       { path: '/login', element: <LoginPage /> },
       { path: '/login/start', element: <LoginStartPage /> },
       { path: '/signup', element: <SignUpPage /> },
+      { path: '/oauth/callback', element: <OAuthCallbackPage /> },
       { path: '/myteabag', element: <MyTeabag /> },
       { path: '/mypage/profile-edit', element: <MyPageProfileEdit /> },
     ],

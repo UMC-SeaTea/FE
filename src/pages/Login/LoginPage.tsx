@@ -16,6 +16,18 @@ const LoginPage = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isFormValid = emailRegex.test(emailAdress) && password.length >= 8;
 
+  const handleKakaoLogin = () => {
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+    if (!baseUrl) {
+      console.error('API 주소(VITE_API_BASE_URL)가 설정되지 않았습니다!');
+      alert('서버 연결 설정 오류입니다.');
+      return;
+    }
+
+    window.location.href = `${baseUrl}/oauth2/authorization/kakao`;
+  };
+
   const handleLoginClick = () => {
     if (!isFormValid) return;
 
@@ -69,11 +81,15 @@ const LoginPage = () => {
 
       <img
         src={kakaoLoginButton}
+        onClick={handleKakaoLogin}
         alt="kakao login button"
         className="w-[41px] h-[41px] mt-[22px] cursor-pointer mx-auto"
       />
 
-      <div className="mt-[12px] w-[110px] h-[21px] font-body text-body-3 text-gray-200 text-center mx-auto ">
+      <div
+        onClick={handleKakaoLogin}
+        className="mt-[12px] w-[110px] h-[21px] font-body text-body-3 text-gray-200 text-center mx-auto "
+      >
         카카오톡으로 로그인
       </div>
     </div>

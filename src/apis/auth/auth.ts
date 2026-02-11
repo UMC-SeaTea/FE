@@ -47,3 +47,17 @@ export const uploadImage = async (formData: FormData) => {
   );
   return response.data;
 };
+
+export const changeNickname = async (newNickname: string) => {
+  const response = await axiosInstance.patch('/api/users/me/change/nickname', {
+    newNickname,
+  });
+  return response.data;
+};
+
+export const checkNickname = async (nickname: string) => {
+  const response = await axiosInstance.get('/api/check/nickname', {
+    params: { nickname },
+  });
+  return response.data;
+};

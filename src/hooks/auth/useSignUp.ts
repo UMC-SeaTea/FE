@@ -1,12 +1,13 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { signUp } from '../../apis/auth/auth';
+import { signUp, changeNickname } from '../../apis/auth/auth';
 import type { SignUpRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
 
 export const useSignUp = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -28,6 +29,20 @@ export const useSignUp = () => {
   const [confirmPasswordEmptyError, setConfirmPasswordEmptyError] =
     useState('');
 
+  const isSocial = location.state?.isSocial;
+
+  useEffect(() => {
+    if (isSocial && location.state.socialData) {
+      const { nickname: socialNick, profileImage: socialImg } =
+        location.state.socialData;
+
+      if (socialNick) setNickname(socialNick);
+      if (socialImg) setPreviewUrl(socialImg);
+
+      setStep(3);
+    }
+  }, [isSocial, location.state]);
+
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isPwValid =
     /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+|~={}\[\]:;<>?,./]).{8,20}$/.test(
@@ -37,9 +52,8 @@ export const useSignUp = () => {
 
   const signUpMutation = useMutation({
     mutationFn: async () => {
-      const finalProfileUrl = '';
-
-      /* 추후 이미지 업로드 전용 api 연결 시 */
+      /*추후 확인 필요 */
+      const finalProfileUrl = isSocial && previewUrl ? previewUrl : '';
 
       const requestData: SignUpRequest = {
         email,
@@ -53,8 +67,13 @@ export const useSignUp = () => {
     },
     onSuccess: (response) => {
       if (response.isSuccess) {
-        alert('회원가입이 완료되었습니다! 로그인해주세요.');
-        navigate('/login/start');
+        if (isSocial) {
+          alert('회원가입이 완료되었습니다!');
+          navigate('/', { replace: true });
+        } else {
+          alert('회원가입이 완료되었습니다! 로그인해주세요.');
+          navigate('/login/start');
+        }
       } else {
         alert(response.message || '회원가입에 실패했습니다.');
       }
@@ -66,7 +85,23 @@ export const useSignUp = () => {
     },
   });
 
-  /* 중복확인API가 없어 일단 무조건 성공 처리 */
+  const socialCompleteMutation = useMutation({
+    mutationFn: async () => {
+      return await changeNickname(nickname);
+    },
+    onSuccess: (response) => {
+      if (response.isSuccess) {
+        alert('가입이 완료되었습니다! 환영합니다.');
+        navigate('/', { replace: true });
+      } else {
+        alert(response.message || '정보 설정에 실패했습니다.');
+      }
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      alert(error.response?.data?.message || '오류가 발생했습니다.');
+    },
+  });
+
   const handleCheckEmail = () => {
     if (!isEmailValid) {
       alert('이메일 형식이 올바르지 않습니다.');
@@ -116,9 +151,24 @@ export const useSignUp = () => {
     setStep(3);
   };
 
+  const handleBack = () => {
+    if (isSocial) {
+      if (step === 2) {
+        navigate('/login/start');
+        return;
+      }
+    }
+    step === 1 ? navigate(-1) : setStep(step - 1);
+  };
+
   const handleSubmit = () => {
     if (!isNicknameValid) return;
-    signUpMutation.mutate();
+
+    if (isSocial) {
+      socialCompleteMutation.mutate();
+    } else {
+      signUpMutation.mutate();
+    }
   };
 
   return {
@@ -135,7 +185,7 @@ export const useSignUp = () => {
       emailEmptyError,
       passwordEmptyError,
       confirmPasswordEmptyError,
-      isPending: signUpMutation.isPending,
+      isPending: signUpMutation.isPending || socialCompleteMutation.isPending,
     },
     refs: { fileInputRef, cameraInputRef },
     computed: {
@@ -174,7 +224,7 @@ export const useSignUp = () => {
       },
       handleCheckEmail,
       handleNextStep1,
-      handleBack: () => (step === 1 ? navigate(-1) : setStep(step - 1)),
+      handleBack,
       setShowImgOption,
       setNickname,
       handleImageUpload,

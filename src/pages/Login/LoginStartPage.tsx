@@ -5,6 +5,18 @@ import kakaoLogo from '../../assets/kakao_logo.svg';
 const LoginStartPage = () => {
   const navigate = useNavigate();
 
+  const handleKakaoLogin = () => {
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+    if (!baseUrl) {
+      console.error('API 주소(VITE_API_BASE_URL)가 설정되지 않았습니다!');
+      alert('서버 연결 설정 오류입니다.');
+      return;
+    }
+
+    window.location.href = `${baseUrl}/oauth2/authorization/kakao`;
+  };
+
   return (
     <>
       <div
@@ -41,7 +53,10 @@ const LoginStartPage = () => {
               회원가입
             </div>
           </div>
-          <div className="flex justify-center items-center w-full h-[50px] pt-[12px] pb-[13px] bg-[#F4DD02] rounded-[25px] gap-[9px] cursor-pointer">
+          <div
+            onClick={handleKakaoLogin}
+            className="flex justify-center items-center w-full h-[50px] pt-[12px] pb-[13px] bg-[#F4DD02] rounded-[25px] gap-[9px] cursor-pointer"
+          >
             <img
               src={kakaoLogo}
               alt="kakao logo"
