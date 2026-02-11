@@ -47,15 +47,8 @@ export const uploadProfileImage = async (file: File) => {
   return response.data;
 };
 
-export interface CheckEmailResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: string;
-}
-
 export const checkEmailDuplicate = async (email: string) => {
-  const response = await axiosInstance.get<CheckEmailResponse>(
+  const response = await axiosInstance.get<CommonResponse<string>>(
     '/api/check/email',
     {
       params: { email },
@@ -65,7 +58,7 @@ export const checkEmailDuplicate = async (email: string) => {
 };
 
 export const checkNicknameDuplicate = async (nickname: string) => {
-  const response = await axiosInstance.get<CheckEmailResponse>(
+  const response = await axiosInstance.get<CommonResponse<string>>(
     '/api/check/nickname',
     {
       params: { nickname },

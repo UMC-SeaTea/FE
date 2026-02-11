@@ -103,10 +103,12 @@ export const useSignUp = () => {
         setIsEmailChecked(false);
         alert(response.message || '이미 사용 중인 이메일입니다.');
       }
-    } catch (error: any) {
+    } catch (error) {
       setIsEmailChecked(false);
+      const axiosError = error as AxiosError<{ message: string }>;
       const errorMsg =
-        error.response?.data?.message || '중복 확인 중 오류가 발생했습니다.';
+        axiosError.response?.data?.message ||
+        '중복 확인 중 오류가 발생했습니다.';
       alert(errorMsg);
     }
   };
