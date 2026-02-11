@@ -7,6 +7,7 @@ import MyPageProfile from '../../components/MyPage/MyPageProfile';
 import useSideBar from '../../hooks/useSideBar';
 import Footer from '../../components/common/Footer';
 import { useMemberProfile } from '../../hooks/useMember';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -14,10 +15,7 @@ const MyPage = () => {
     closeOnEsc: true,
   });
 
-  const storedId = localStorage.getItem('memberId');
-  const memberId = storedId ? Number(storedId) : 1;
-
-  const { data } = useMemberProfile(memberId);
+  const { data, isLoading, isError } = useMemberProfile();
   const userProfile = data?.result;
 
   const menuItems = [
@@ -34,6 +32,22 @@ const MyPage = () => {
       navigate(path);
     }
   };
+
+  if (isError) {
+    return (
+      <div className="w-full min-h-screen bg-[#0A0A0A] flex justify-center items-center">
+        <p className="text-white font-body">정보를 불러오지 못했습니다.</p>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="w-full min-h-screen bg-[#0A0A0A] flex justify-center items-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <>
