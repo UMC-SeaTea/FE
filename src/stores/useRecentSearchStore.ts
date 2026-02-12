@@ -11,7 +11,6 @@ type RecentSearchState = {
   recentItems: RecentItem[];
   addRecent: (keyword: string) => void;
   removeRecent: (id: string) => void;
-  clearRecent: () => void;
 };
 
 const MAX_RECENT = 10;
@@ -45,8 +44,6 @@ export const useRecentSearchStore = create<RecentSearchState>()(
           recentItems: state.recentItems.filter((item) => item.id !== id),
         }));
       },
-
-      clearRecent: () => set({ recentItems: [] }),
     }),
     {
       name: 'recent_searches',
