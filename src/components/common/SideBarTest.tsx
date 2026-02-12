@@ -20,7 +20,7 @@ const SideBarTest = ({ pastDiagnosisDate }: SideBarTestProps) => {
               </p>
               <p className="w-[212px] font-body text-detail-4 text-gray-100">
                 가장 마지막으로 진단받은 날짜는{' '}
-                {pastDiagnosisDate !== null
+                {pastDiagnosisDate != null
                   ? `${pastDiagnosisDate}일 전`
                   : '0일 전'}
                 이에요
