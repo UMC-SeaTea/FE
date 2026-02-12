@@ -11,12 +11,26 @@ import { useNavigate } from 'react-router-dom';
 import { showToast } from '../../components/Toast/ToastHost';
 import { useSpaceDetail } from '../../hooks/spaces/useSpaceDetail';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-// import teaBag from '../../assets/teaBag.svg';
+import teaBag from '../../assets/teaBag.svg';
+import unteaBag from '../../assets/teaBag_gray.svg';
+import {
+  useDeleteMyTeabag,
+  usePostMyTeabag,
+} from '../../hooks/myteabag/useMyTeabag';
+import { useAuth } from '../../hooks/auth/useAuth';
 
 const MapDetailPage = () => {
   const { sid } = useParams<{ sid: string }>();
   const spaceId = Number(sid);
+
+  const { user } = useAuth();
+  const isLoggedIn = Boolean(user);
+
   const { data, isLoading, isError } = useSpaceDetail(spaceId);
+  const { mutate: postMutate } = usePostMyTeabag();
+  const { mutate: deleteMutate } = useDeleteMyTeabag();
+
+  const isSaved = data?.result?.isSaved;
 
   const handleShare = async () => {
     try {
@@ -43,6 +57,18 @@ const MapDetailPage = () => {
     return <p>오류가 발생했습니다.</p>;
   }
 
+  const handleTeabagClick = () => {
+    const mutation = isSaved ? deleteMutate : postMutate;
+    mutation(spaceId, {
+      onSuccess: () => {
+        console.log(isSaved ? '삭제 성공' : '저장 성공');
+      },
+      onError: () => {
+        console.log('저장 실패');
+      },
+    });
+  };
+
   return (
     <>
       <NavBar
@@ -58,10 +84,15 @@ const MapDetailPage = () => {
             <p className="text-black font-body text-[20px] font-semibold">
               {data?.result?.name}
             </p>
-            {/* 유저토큰 있는 경우에만 */}
-            {/* (accessToken && (
-            <img src={teaBag} alt="tea bag" className="w-[28px] h-[28px]" />
-            )) */}
+            {isLoggedIn && (
+              <button className="cursor-pointer" onClick={handleTeabagClick}>
+                <img
+                  src={isSaved ? teaBag : unteaBag}
+                  alt="tea bag"
+                  className="w-[28px] h-[28px]"
+                />
+              </button>
+            )}
           </div>
           <NoteSearch text={`${data?.result?.tastingTypeCode}`} />
         </div>
@@ -84,21 +115,19 @@ const MapDetailPage = () => {
                 </div>
                 <p>의 SeaTea 사용자가 저장했어요.</p>
               </div>
-              <div className="flex gap-[4px] font-medium">
-                <p>나와 동일한 유형</p>
-                <p className=" text-[#B4ABFF] font-bold">
-                  {data?.result?.sameTypeSavedCount}명
+              {isLoggedIn ? (
+                <div className="flex gap-[4px] font-medium">
+                  <p>나와 동일한 유형</p>
+                  <p className=" text-[#B4ABFF] font-bold">
+                    {data?.result?.sameTypeSavedCount}명
+                  </p>
+                </div>
+              ) : (
+                <p className="text-gray-300 text-detail-4 font-body whitespace-nowrap">
+                  로그인하면 나와 같은 사용자가 얼마나 저장했는지 확인할 수
+                  있어요.
                 </p>
-              </div>
-              {/* 유저토큰 X의 경우 */}
-              {/* (accessToken &&{' '}
-            {
-              <p className="text-gray-300 text-detail-4 font-body whitespace-nowrap">
-                로그인하면 나와 같은 사용자가 얼마나 저장했는지 확인할 수
-                있어요.
-              </p>
-            }
-            ) */}
+              )}
             </div>
           </div>
         </div>

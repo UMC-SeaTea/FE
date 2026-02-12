@@ -19,4 +19,28 @@ export interface MemberProfileResult {
   updatedAt: string;
 }
 
+export interface ChangeNicknameRequest {
+  newNickname: string;
+}
+
+export interface ChangeNicknameResult {
+  id: number;
+  nickname: string;
+  updatedAt: string;
+}
+
+export interface ChangeProfileImageRequest {
+  profileImageUrl: string;
+}
+
+export interface ChangeProfileImageResult {
+  id: number;
+  profileImageUrl: string;
+  updatedAt: string;
+}
+
 export type MemberProfileResponse = CommonResponse<MemberProfileResult>;
+export type ChangeNicknameResponse = CommonResponse<ChangeNicknameResult>;
+export type ChangeProfileImageResponse =
+  CommonResponse<ChangeProfileImageResult>;
+export type UploadImageResponse = CommonResponse<string>;
