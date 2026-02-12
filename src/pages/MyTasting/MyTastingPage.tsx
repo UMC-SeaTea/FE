@@ -16,6 +16,22 @@ import { useNavigate } from "react-router-dom";
 import { useDiagnosisHistory } from "../../hooks/diagnosis/useDiagnosisHistory";
 import { formatDate } from "../../lib/formatDate";
 import type { DiagnosisHistoryItem } from "../../types/diagnosis/history";
+import NavBar from '../../components/common/NavBar';
+import menuIcon from '../../assets/menu_black.svg';
+import HomeTestType from '../../components/common/HomeTestType';
+import PastResult from '../../components/common/PastResult';
+import Footer from '../../components/common/Footer';
+import { AiOutlineQuestionCircle } from 'react-icons/ai';
+import { useState } from 'react';
+import TastingNote from '../../components/common/TastingNote';
+import PlaceTestCard from '../../components/PlaceTest/PlaceTestCard';
+import SideBarContainer from '../../components/SideBar/SideBarContainer';
+import useSideBar from '../../hooks/useSideBar';
+import moveButton from '../../assets/moveButton_gray.svg';
+import { useNavigate } from 'react-router-dom';
+import { useMemberStore } from '../../stores/useMemberStore';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { toTastingKey } from '../../utils/tastingType';
 
 const MyTastingPage = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
@@ -34,6 +50,17 @@ const MyTastingPage = () => {
   const recentThree: DiagnosisHistoryItem[] = useMemo(() => {
     return historyData?.result?.content ?? [];
   }, [historyData]);
+  const isLoading = useMemberStore((s) => s.isLoading);
+  const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
+  const safeCode = toTastingKey(rawCode);
+
+  if (isLoading) {
+    return (
+      <div className="pt-[204px]">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -61,7 +88,7 @@ const MyTastingPage = () => {
 
         <div>
           <div className="border-t text-black" />
-          <HomeTestType variant="recommend" type="smoky" />
+          <HomeTestType variant="recommend" type={safeCode} />
         </div>
       </div>
 

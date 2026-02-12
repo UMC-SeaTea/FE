@@ -13,12 +13,17 @@ export const postMyTeabag = async (spaceId: number) => {
 
 export const getMyTeabagList = async (
   size: number = 20,
-  cursor?: string | null
+  cursor?: string | null,
+  sort?: 'latest' | 'saved'
 ) => {
-  const params: { size: number; cursor?: string } = { size };
+  const params: { size: number; cursor?: string; sort?: string } = { size };
 
   if (cursor) {
     params.cursor = cursor;
+  }
+
+  if (sort) {
+    params.sort = sort;
   }
 
   const { data } = await axiosInstance.get<MyTeabagListResponse>(
