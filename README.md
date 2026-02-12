@@ -13,37 +13,12 @@
 
 
 ## 👥 Contributors
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/cchaeyoon">
-        <img src="https://avatars.githubusercontent.com/cchaeyoon?v=4" width="120px;" alt="profile"/>
-        <br />
-        <sub><b>이채윤</b></sub>
-      </a>
-      <br />
-      <span>Lead · Web</span>
-    </td>
-    <td align="center">
-      <a href="https://github.com/jimiiiy">
-        <img src="https://avatars.githubusercontent.com/jimiiiy?v=4" width="120px;" alt="profile"/>
-        <br />
-        <sub><b>이지민</b></sub>
-      </a>
-      <br />
-      <span>Web</span>
-    </td>
-    <td align="center">
-      <a href="https://github.com/Hyobee02">
-        <img src="https://avatars.githubusercontent.com/Hyobee02?v=4" width="120px;" alt="profile"/>
-        <br />
-        <sub><b>최효비</b></sub>
-      </a>
-      <br />
-      <span>Web</span>
-    </td>
-  </tr>
-</table>
+
+| Contributor | Role | Description |
+| :---: | :---: | :--- |
+| <a href="https://github.com/cchaeyoon"><img src="https://avatars.githubusercontent.com/cchaeyoon?v=4" width="100px;" alt=""/><br /><sub><b>이채윤</b></sub><br /><sub>@cchaeyoon</sub></a> | **Lead**<br>Web | • **Architecture**: React 프로젝트 기본 세팅 및 라우팅 구조 구축<br>• **Core Module**: Axios Interceptor 및 공통 인증/인가 로직 구현<br>• **Feature**: 홈 화면, 지도(공간 조회·검색·상세) 페이지, 사이드바·404·로딩 페이지 담당 |
+| <a href="https://github.com/Hyobee02"><img src="https://avatars.githubusercontent.com/Hyobee02?v=4" width="100px;" alt=""/><br /><sub><b>최효비</b></sub><br /><sub>@Hyobee02</sub></a> | Web | • **Design System**: Figma 기반 디자인 토큰 정의 및 글로벌 스타일 시스템 구축<br>• **Feature**: 진단(간단·상세) 페이지, 진단 결과 페이지 담당<br>• **Infra**: 프로젝트 배포 및 운영 환경 설정 |
+| <a href="https://github.com/jimiiiy"><img src="https://avatars.githubusercontent.com/jimiiiy?v=4" width="100px;" alt=""/><br /><sub><b>이지민</b></sub><br /><sub>@jimiiiy</sub></a> | Web | • **Feature**: 로그인(일반/소셜) 및 회원가입 페이지, 마이페이지(프로필 수정) 및 마이 티백(북마크) 페이지 담당<br>• **Docs**: README 작성 |
 
 ---
 
