@@ -11,6 +11,9 @@ import SideBarContainer from '../../components/SideBar/SideBarContainer';
 import useSideBar from '../../hooks/useSideBar';
 import moveButton from '../../assets/moveButton_gray.svg';
 import { useNavigate } from 'react-router-dom';
+import { useMemberStore } from '../../stores/useMemberStore';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { toTastingKey } from '../../utils/tastingType';
 
 const MyTastingPage = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
@@ -18,6 +21,18 @@ const MyTastingPage = () => {
     closeOnEsc: true,
   });
   const navigate = useNavigate();
+
+  const isLoading = useMemberStore((s) => s.isLoading);
+  const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
+  const safeCode = toTastingKey(rawCode);
+
+  if (isLoading) {
+    return (
+      <div className="pt-[204px]">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -43,7 +58,7 @@ const MyTastingPage = () => {
         </div>
         <div>
           <div className="border-t text-black" />
-          <HomeTestType variant="recommend" type="smoky" />
+          <HomeTestType variant="recommend" type={safeCode} />
         </div>
       </div>
 
