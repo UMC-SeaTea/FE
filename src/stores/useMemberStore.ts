@@ -22,15 +22,22 @@ export const useMemberStore = create<MemberState>((set) => ({
 
   setCurrentTypeCode: (code) =>
     set((state) => {
-      if (!state.profile) return {};
+      if (!state.profile) {
+        return {};
+      }
+      const base = state.profile.currentType;
 
       return {
         profile: {
           ...state.profile,
           currentType: {
-            ...state.profile.currentType,
+            id: base?.id ?? 0,
+            displayName: base?.displayName ?? '',
+            subtitle: base?.subtitle ?? '',
+            description: base?.description ?? '',
+            imageUrl: base?.imageUrl ?? '',
             code,
-          } as typeof state.profile.currentType,
+          },
         },
       };
     }),
