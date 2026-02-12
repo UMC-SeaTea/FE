@@ -24,7 +24,7 @@ const MyTastingPage = () => {
   });
   const navigate = useNavigate();
 
-  
+
   const {
     data: historyData,
     isLoading: isHistoryLoading,
