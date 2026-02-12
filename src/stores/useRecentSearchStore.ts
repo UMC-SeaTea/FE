@@ -31,7 +31,7 @@ export const useRecentSearchStore = create<RecentSearchState>()(
         const filtered = prev.filter((item) => item.name !== name);
 
         const newItem: RecentItem = {
-          id: String(now),
+          id: `${now}-${Math.random()}`,
           name,
           createdAt: now,
         };
