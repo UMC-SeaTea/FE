@@ -11,6 +11,5 @@ export const useSpaceRecent = (params: SpaceRecentParams) => {
     queryFn: () => getSpaceRecent(params),
     staleTime: 0,
     refetchOnMount: 'always',
-    // retfetchOnWindowFocus: true,
   });
 };
