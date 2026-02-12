@@ -9,6 +9,7 @@ import { useSpaceList } from '../../hooks/spaces/useSpaceList';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { useRecentSearchStore } from '../../stores/useRecentSearchStore';
 import { formatTimeText } from '../../utils/time';
+import brokenIcon from '../../assets/broken.svg';
 
 const MapSearchPage = () => {
   const navigate = useNavigate();
@@ -95,9 +96,16 @@ const MapSearchPage = () => {
               검색 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.
             </p>
           ) : items.length === 0 ? (
-            <p className="font-body text-body-4 py-4 text-center text-gray-100">
-              검색 결과가 없습니다.
-            </p>
+            <div className="flex flex-col gap-[16px] items-center pt-[140px]">
+              <img
+                src={brokenIcon}
+                alt="BrokenIcon"
+                className="w-[68px] h-[41px]"
+              />
+              <p className="font-body text-body-2 text-center text-gray-200">
+                검색 결과가 없습니다.
+              </p>
+            </div>
           ) : (
             <div className="flex flex-col gap-[8px]">
               {items.map((item) => (
