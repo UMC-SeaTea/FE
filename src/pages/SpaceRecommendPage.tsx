@@ -4,13 +4,18 @@ import HomeTestType from '../components/common/HomeTestType';
 import tea from '../assets/images/teaIcon.png';
 import refresh from '../assets/refresh.svg';
 // import PlaceList from '../components/common/PlaceList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FeedbackButton from '../components/Feedback/FeedbackButton';
 import { showToast } from '../components/Toast/ToastHost';
 import { useSpaceRecommend } from '../hooks/spaces/useSpaceRecommend';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import PlaceList from '../components/common/PlaceList';
+import { useMemberStore } from '../stores/useMemberStore';
+import {
+  isTastingKey,
+  type TastingKey,
+} from '../types/tastingType/tastingType';
 
 const SpaceRecommend = () => {
   // const { data, isLoading } = useSpaceDetail();
@@ -18,8 +23,19 @@ const SpaceRecommend = () => {
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
+  const { fetchProfile } = useMemberStore();
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
+
+  const nickname = useMemberStore((s) => s.profile?.nickname);
+  const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
+  const normalized =
+    typeof rawCode === 'string' ? rawCode.toLowerCase() : undefined;
+  const safeCode: TastingKey = isTastingKey(normalized) ? normalized : 'floral';
+
   const { data, isLoading, isError, refetch } = useSpaceRecommend({
-    tastingTypeCode: 'SMOKY',
+    tastingTypeCode: rawCode || 'FLORAL',
   });
 
   const onSubmit = (value: 'good' | 'bad') => {
@@ -42,14 +58,14 @@ const SpaceRecommend = () => {
             icon={backIcon}
             onClick={() => navigate(-1)}
           />
-          <HomeTestType type="smoky" variant="recommend" />
+          <HomeTestType type={safeCode} variant="recommend" />
         </div>
         <div className="flex flex-col gap-[19px] pl-[20px]">
           {/* 텍스트 + refresh아이콘 */}
           <div className="w-[335px] flex items-center justify-between">
             <div className="flex items-center gap-[6px]">
               <p className="font-body text-body-title text-black">
-                OO님의 취향저격 예상!
+                {nickname}님의 취향저격 예상!
               </p>
               <img src={tea} alt="tea icon" className="w-[22px] h-[22px]" />
             </div>
