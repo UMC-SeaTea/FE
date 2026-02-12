@@ -1,20 +1,12 @@
 import type { CursorInfo } from '../types/spaces/spaceItem';
 import type { SpaceList } from '../types/spaces/spaceList';
+import type { CommonResponse } from './common';
 
 export type MyTeabagItem = SpaceList;
 
-export interface CommonResponse<T> {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: T;
-}
-
-export type MyTeabagResponse = CommonResponse<{
+export type MyTeabagListResponse = CommonResponse<{
   items: MyTeabagItem[];
   cursorInfo: CursorInfo;
 }>;
 
-export type MyTeabagDeleteResponse = CommonResponse<{
-  saved: boolean;
-}>;
+export type MyTeaBagResponse = CommonResponse<{ saved: boolean }>;

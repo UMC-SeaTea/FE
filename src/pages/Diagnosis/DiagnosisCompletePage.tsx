@@ -10,6 +10,7 @@ type CompleteState = {
   
 };
 
+
 const CODE_TO_KEY: Record<string, TastingKey> = {
   FLORAL: "floral",
   FRUITY: "fruity",

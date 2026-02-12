@@ -8,27 +8,53 @@ import editCameraIcon from '../../assets/profileEdit_cameraIcon.svg';
 import defaultProfile from '../../assets/profile_default.png';
 import ProfileEditInput from '../../components/MyPage/MyPageProfileEditInput';
 import ProfileReadOnly from '../../components/MyPage/MyPageProfileReadOnly';
+import { useMemberProfile, useUpdateProfile } from '../../hooks/useMember';
+import { getProfileImageUrl } from '../../lib/utils';
 
 const NAME_VALIDATION_REGEX = /^[a-zA-Z0-9가-힣]{4,}$/;
 
 const MyPageProfileEdit = () => {
   const navigate = useNavigate();
 
+  const { data: profileData, isLoading } = useMemberProfile();
+  const { updateNickname, updateImage, isPending } = useUpdateProfile();
+
   const [initialData, setInitialData] = useState({
-    name: 'UMC',
-    email: 'hongdandan@gmail.com',
-    restType: 'floral',
+    name: '',
+    email: '',
+    restType: '',
     profileImage: defaultProfile,
   });
 
-  const [name, setName] = useState(initialData.name);
-  const [previewImage, setPreviewImage] = useState(initialData.profileImage);
+  const [name, setName] = useState('');
+  const [previewImage, setPreviewImage] = useState<string>(defaultProfile);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const [isChanged, setIsChanged] = useState(false);
   const [showImgOption, setShowImgOption] = useState(false);
 
-  const isValidName = NAME_VALIDATION_REGEX.test(name);
+  useEffect(() => {
+    if (profileData?.result) {
+      const { nickname, email, currentType, profileImageUrl } =
+        profileData.result;
 
-  const canSave = isChanged && isValidName;
+      const fullImageUrl = getProfileImageUrl(profileImageUrl, defaultProfile);
+
+      const initial = {
+        name: nickname,
+        email: email,
+        restType: currentType?.displayName || '진단 정보 없음',
+        profileImage: fullImageUrl,
+      };
+
+      setInitialData(initial);
+
+      if (!isChanged) {
+        setName(initial.name);
+        setPreviewImage(initial.profileImage);
+      }
+    }
+  }, [profileData]);
 
   useEffect(() => {
     const isNameChanged = name !== initialData.name;
@@ -36,24 +62,38 @@ const MyPageProfileEdit = () => {
     setIsChanged(isNameChanged || isImageChanged);
   }, [name, previewImage, initialData]);
 
+  const isValidName = NAME_VALIDATION_REGEX.test(name);
+  const canSave = isChanged && isValidName && !isPending;
+
   const handleBack = () => {
     navigate('/mypage');
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!canSave) return;
 
-    setInitialData((prev) => ({
-      ...prev,
-      name: name,
-      profileImage: previewImage,
-    }));
+    try {
+      if (name !== initialData.name) {
+        await updateNickname({ newNickname: name });
+      }
+
+      if (previewImage !== initialData.profileImage && selectedFile) {
+        await updateImage(selectedFile);
+      }
+
+      alert('프로필이 수정되었습니다.');
+      navigate('/mypage');
+    } catch (error) {
+      console.error(error);
+      alert('프로필 수정 중 오류가 발생했습니다.');
+    }
     setShowImgOption(false);
   };
 
   const handleImageSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
@@ -64,6 +104,9 @@ const MyPageProfileEdit = () => {
     }
     setShowImgOption(false);
   };
+
+  if (isLoading)
+    return <div className="text-white text-center mt-10">Loading...</div>;
 
   return (
     <div className="w-full min-h-screen bg-[#0A0A0A] flex flex-col items-center">
@@ -96,6 +139,12 @@ const MyPageProfileEdit = () => {
             src={previewImage}
             alt="ProfileImage"
             className="w-full h-full rounded-[119px] object-cover"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (target.src !== defaultProfile) {
+                target.src = defaultProfile;
+              }
+            }}
           />
           <button
             className="absolute bottom-0 right-0 flex cursor-pointer"

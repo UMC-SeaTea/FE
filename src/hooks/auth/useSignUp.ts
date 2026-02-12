@@ -1,9 +1,14 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { signUp } from '../../apis/auth/auth';
 import type { SignUpRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
+import { checkEmailDuplicate } from '../../apis/auth/auth';
+import {
+  signUp,
+  uploadProfileImage,
+  checkNicknameDuplicate,
+} from '../../apis/auth/auth';
 
 export const useSignUp = () => {
   const navigate = useNavigate();
@@ -37,9 +42,21 @@ export const useSignUp = () => {
 
   const signUpMutation = useMutation({
     mutationFn: async () => {
-      const finalProfileUrl = '';
+      let finalProfileUrl = '';
 
-      /* 추후 이미지 업로드 전용 api 연결 시 */
+      if (profileImage) {
+        try {
+          const uploadResponse = await uploadProfileImage(profileImage);
+          if (uploadResponse.isSuccess && uploadResponse.result) {
+            finalProfileUrl = uploadResponse.result;
+          } else {
+            throw new Error(uploadResponse.message || '이미지 업로드 실패');
+          }
+        } catch (error) {
+          console.error('Profile upload failed:', error);
+          throw error;
+        }
+      }
 
       const requestData: SignUpRequest = {
         email,
@@ -66,14 +83,34 @@ export const useSignUp = () => {
     },
   });
 
-  /* 중복확인API가 없어 일단 무조건 성공 처리 */
-  const handleCheckEmail = () => {
+  const handleCheckEmail = async () => {
+    if (!email) {
+      setEmailEmptyError('이메일을 입력해주세요.');
+      return;
+    }
     if (!isEmailValid) {
       alert('이메일 형식이 올바르지 않습니다.');
       return;
     }
-    setIsEmailChecked(true);
-    alert('사용 가능한 이메일입니다.');
+
+    try {
+      const response = await checkEmailDuplicate(email);
+
+      if (response.isSuccess) {
+        setIsEmailChecked(true);
+        alert(response.message || '사용 가능한 이메일입니다.');
+      } else {
+        setIsEmailChecked(false);
+        alert(response.message || '이미 사용 중인 이메일입니다.');
+      }
+    } catch (error) {
+      setIsEmailChecked(false);
+      const axiosError = error as AxiosError<{ message: string }>;
+      const errorMsg =
+        axiosError.response?.data?.message ||
+        '중복 확인 중 오류가 발생했습니다.';
+      alert(errorMsg);
+    }
   };
 
   const handleNextStep1 = () => {
@@ -116,9 +153,23 @@ export const useSignUp = () => {
     setStep(3);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isNicknameValid) return;
-    signUpMutation.mutate();
+
+    try {
+      const checkResponse = await checkNicknameDuplicate(nickname);
+
+      if (checkResponse.isSuccess) {
+        signUpMutation.mutate();
+      } else {
+        alert(checkResponse.message || '이미 사용 중인 닉네임입니다.');
+      }
+    } catch (error: any) {
+      const errorMsg =
+        error.response?.data?.message ||
+        '닉네임 중복 확인 중 오류가 발생했습니다.';
+      alert(errorMsg);
+    }
   };
 
   return {
