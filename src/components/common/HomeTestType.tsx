@@ -43,14 +43,14 @@ const HomeTestType = ({ type, variant = 'home' }: HomeTestTypeProps) => {
       )}
     >
       <img
-        src={config.img}
+        src={config?.img}
         alt={type}
         className="absolute z-0 pointer-events-none opacity-90 max-w-none"
         style={{
-          width: config.width,
-          transform: `rotate(${config.rotate})`,
-          bottom: config.bottom,
-          right: config.right,
+          width: config?.width,
+          transform: `rotate(${config?.rotate})`,
+          bottom: config?.bottom,
+          right: config?.right,
           height: 'auto',
         }}
       />
