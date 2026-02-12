@@ -7,29 +7,13 @@ import SearchResult from '../../components/Search/SearchResult';
 import useDebounce from '../../hooks/useDebounce';
 import { useSpaceList } from '../../hooks/spaces/useSpaceList';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import {
-  getRecentSearches,
-  saveRecentSearches,
-} from '../../utils/recentSearch';
+import { useRecentSearchStore } from '../../stores/useRecentSearchStore';
+import { formatTimeText } from '../../utils/time';
 
 type RecentItem = {
   id: string;
   name: string;
   timeText: string;
-};
-
-const formatTimeText = (createdAt: number) => {
-  const diffMs = Date.now() - createdAt;
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 1) return '방금 전';
-  if (diffMin < 60) return `${diffMin}분 전`;
-  const diffHrs = Math.floor(diffMin / 60);
-  if (diffHrs < 24) return `${diffHrs}시간 전`;
-
-  const d = new Date(createdAt);
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${mm}.${dd}`;
 };
 
 const MapSearchPage = () => {
@@ -44,11 +28,9 @@ const MapSearchPage = () => {
   const deBouncedValue = useDebounce(inputValue, 300);
 
   // 최근 검색어
-  const [recentItems, setRecentItems] = useState<RecentItem[]>([]);
-
-  useEffect(() => {
-    setRecentItems(getRecentSearches());
-  }, []);
+  const recentItems = useRecentSearchStore((s) => s.recentItems);
+  const addRecent = useRecentSearchStore((s) => s.addRecent);
+  const removeRecent = useRecentSearchStore((s) => s.removeRecent);
 
   useEffect(() => {
     setInputValue(q);
@@ -71,21 +53,8 @@ const MapSearchPage = () => {
       setParams({}, { replace: true });
       return;
     }
-    setRecentItems((prev) => {
-      const filtered = prev.filter((item) => item.name !== next);
-
-      const newItem: RecentItem = {
-        id: Date.now().toString(),
-        name: next,
-        timeText: formatTimeText(Date.now()),
-      };
-
-      const updated = [newItem, ...filtered].slice(0, 10);
-
-      saveRecentSearches(updated);
-
-      return updated;
-    });
+    // persist로 localStorage에 저장
+    addRecent(next);
 
     setParams({ q: next }, { replace: true });
   };
@@ -106,11 +75,7 @@ const MapSearchPage = () => {
   };
 
   const handleRemoveRecent = (id: string) => {
-    setRecentItems((prev) => {
-      const updated = prev.filter((item) => item.id !== id);
-      saveRecentSearches(updated);
-      return updated;
-    });
+    removeRecent(id);
   };
 
   return (
@@ -164,7 +129,7 @@ const MapSearchPage = () => {
                   <SearchList
                     key={item.id}
                     name={item.name}
-                    timeText={item.timeText}
+                    timeText={formatTimeText(item.createdAt)}
                     onClick={() => handleClickRecent(item.name)}
                     onRemove={() => handleRemoveRecent(item.id)}
                   />
