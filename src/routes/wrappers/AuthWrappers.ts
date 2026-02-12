@@ -9,7 +9,7 @@ export const ProtectedWrapper = () => {
   return token
     ? React.createElement(Outlet)
     : React.createElement(Navigate, {
-        to: '/login',
+        to: '/login/start',
         replace: true,
         state: { from: location },
       });
