@@ -11,7 +11,7 @@ type CompleteState = {
   // mode?: "basic" | "advanced";
 };
 
-// ✅ 백 코드 -> 프론트 키 매핑
+
 const CODE_TO_KEY: Record<string, TastingKey> = {
   FLORAL: "floral",
   FRUITY: "fruity",
@@ -35,7 +35,7 @@ export default function DiagnosisCompletePage() {
 
   const state = (location.state ?? {}) as CompleteState;
 
-  // ✅ ResultLoading에서 넘겨준 resultTypeCode 사용
+  
   const resultType: TastingKey = useMemo(
     () => toTastingKey(state.resultTypeCode),
     [state.resultTypeCode]

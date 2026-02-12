@@ -44,3 +44,16 @@ export type DiagnosisResult = {
   imageUrl: string | null;
 };
 
+export type QuickDiagnosisRequest = {
+  keywords: string[];
+};
+
+
+export type QuickDiagnosisResult = {
+  resultTypeCode: string;
+  keywords: string[];
+  scores: Record<string, number>;
+};
+
+
+export type QuickDiagnosisResponse = CommonResponse<QuickDiagnosisResult>;
