@@ -1,4 +1,4 @@
-import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import type { InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import { LOCAL_STORAGE_KEYS } from '../constants/key';
 
@@ -11,13 +11,13 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-export const refreshInstance = (refresh: string): AxiosInstance =>
-  axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
-    headers: {
-      refreshToken: refresh,
-    },
-  });
+export const refreshInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 // 토큰 오류시 토큰 제거 후 로그인 페이지로 리다이렉트 로직
 const handleTokenError = (error: any) => {
@@ -43,35 +43,16 @@ axiosInstance.interceptors.request.use(
 );
 
 // Response Interceptor
-// axiosInstance의 response를 가로채어 401 에러 발생 시 refresh 토큰으로 accessToken을 재발급.
 axiosInstance.interceptors.response.use(
-  (response) => response, // 성공 시 응답 반환
+  (response) => response,
   async (error) => {
-    const status = error.response?.status;
-    const originalRequest: CustomInternalAxiosRequestConfig = error.config;
+    const originalRequest = error.config as CustomInternalAxiosRequestConfig;
+    const { status } = error.response || {};
 
-    if (originalRequest.url?.includes('/api/login')) {
-      return Promise.reject(error);
-    }
-
-    if (!status) {
-      console.error('Request failed without a status', error);
-      return Promise.reject(error);
-    }
-
-    // 401 에러면서, 아직 재시도 하지 않은 요청 경우 처리
     if (status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const refreshToken = localStorage.getItem(
-          LOCAL_STORAGE_KEYS.refreshToken
-        );
-        if (!refreshToken) {
-          throw new Error('토큰이 없습니다.');
-        }
-
-        const response =
-          await refreshInstance(refreshToken).post('/api/auth/reissue');
+        const response = await refreshInstance.post('/api/auth/reissue');
 
         const result = response.data.result || response.data;
         const newAccessToken = result?.accessToken;
@@ -82,14 +63,6 @@ axiosInstance.interceptors.response.use(
 
         localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, newAccessToken);
 
-        const newRefreshToken = result?.refreshToken;
-        if (newRefreshToken) {
-          localStorage.setItem(
-            LOCAL_STORAGE_KEYS.refreshToken,
-            newRefreshToken
-          );
-        }
-
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (reissueError) {
@@ -97,11 +70,8 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    // 403 에러, 접근 권한이 없는 경우
     if (status === 403) {
-      alert('접근 권한이 없습니다. 관리자에게 문의하세요.');
-      window.location.href = '/';
-      return Promise.reject(error);
+      alert('접근 권한이 없습니다.');
     }
 
     return Promise.reject(error);

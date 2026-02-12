@@ -11,8 +11,17 @@ const OAuthCallbackPage = () => {
     const accessToken = searchParams.get('accessToken');
     const isNewUser = searchParams.get('isNewUser') === 'true';
 
-    const kakaoNickname = searchParams.get('nickname');
-    const kakaoProfileImg = searchParams.get('profileImage');
+    const rawNickname = searchParams.get('nickname');
+    const rawProfileImg = searchParams.get('profileImage');
+
+    const kakaoNickname =
+      rawNickname && rawNickname !== 'null'
+        ? decodeURIComponent(rawNickname)
+        : '';
+    const kakaoProfileImg =
+      rawProfileImg && rawProfileImg !== 'null'
+        ? decodeURIComponent(rawProfileImg)
+        : '';
 
     if (accessToken) {
       localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, accessToken);

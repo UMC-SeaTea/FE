@@ -18,7 +18,9 @@ export const useSignUp = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  const [step, setStep] = useState<number>(1);
+  const isSocial = location.state?.isSocial;
+  const [step, setStep] = useState<number>(isSocial ? 3 : 1);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -34,8 +36,6 @@ export const useSignUp = () => {
   const [passwordEmptyError, setPasswordEmptyError] = useState('');
   const [confirmPasswordEmptyError, setConfirmPasswordEmptyError] =
     useState('');
-
-  const isSocial = location.state?.isSocial;
 
   useEffect(() => {
     if (isSocial && location.state.socialData) {
@@ -203,14 +203,10 @@ export const useSignUp = () => {
 
   const handleSubmit = async () => {
     if (!isNicknameValid) return;
-
-    // 1. 소셜 로그인인 경우: 중복 체크 없이 바로 완료 처리 (HEAD 로직)
     if (isSocial) {
       socialCompleteMutation.mutate();
       return;
     }
-
-    // 2. 일반 회원가입인 경우: 닉네임 중복 체크 후 가입 (Develop 로직)
     try {
       const checkResponse = await checkNicknameDuplicate(nickname);
 
