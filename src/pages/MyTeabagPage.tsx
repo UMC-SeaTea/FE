@@ -6,7 +6,7 @@ import EditButton from '../components/common/EditButton';
 import MoveupButton from '../assets/RoundButton/moveup_btn.svg';
 import Footer from '../components/common/Footer';
 
-import { getMyTeabagList, deleteMyTeabag } from '../apis/myTeabag';
+import { getMyTeabagList, deleteMyTeabag } from '../apis/teabag/myTeabag';
 import type { MyTeabagItem } from '../types/myTeabag';
 
 const MyTeabagPage = () => {
@@ -33,9 +33,9 @@ const MyTeabagPage = () => {
       // 추후 정렬 관련 api 연동
       const data = await getMyTeabagList(20, cursor);
 
-      if (data.isSuccess) {
+      if (data.isSuccess && data.result) {
         setItems((prev) =>
-          reset ? data.result.items : [...prev, ...data.result.items]
+          reset ? data.result!.items : [...prev, ...data.result!.items]
         );
         setNextCursor(data.result.cursorInfo.nextCursor);
         setHasNext(data.result.cursorInfo.hasNext);
