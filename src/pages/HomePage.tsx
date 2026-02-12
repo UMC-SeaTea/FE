@@ -1,7 +1,7 @@
 import NavBar from '../components/common/NavBar';
 import menu from '../assets/menu_black.svg';
 import HomeTestType from '../components/common/HomeTestType';
-// import SideBarTest from '../components/common/SideBarTest';
+import SideBarTest from '../components/common/SideBarTest';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
 import useSideBar from '../hooks/useSideBar';
@@ -12,6 +12,7 @@ import SpaceCardMini from '../components/common/SpaceCardMini';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import { useMemberStore } from '../stores/useMemberStore';
 import { toTastingKey } from '../utils/tastingType';
+import { getDaysAgo } from '../utils/date';
 
 const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
@@ -23,6 +24,11 @@ const HomePage = () => {
 
   const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
   const safeCode = toTastingKey(rawCode);
+
+  const pastDiagnosisDate = useMemberStore(
+    (s) => s.profile?.currentType?.createdAt
+  );
+  const daysAgo = getDaysAgo(pastDiagnosisDate);
 
   if (isLoading) {
     return (
@@ -80,7 +86,7 @@ const HomePage = () => {
             )}
           </div>
           <HomeComponent />
-          {/* <SideBarTest lastDiagnosisDate={} /> */}
+          <SideBarTest pastDiagnosisDate={daysAgo} />
         </div>
       </div>
       <div className="pt-[52px]">

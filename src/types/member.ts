@@ -14,6 +14,7 @@ export interface MemberProfileResult {
     subtitle: string;
     description: string;
     imageUrl: string;
+    createdAt: string;
   } | null;
   createdAt: string;
   updatedAt: string;

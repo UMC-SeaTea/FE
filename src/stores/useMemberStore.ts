@@ -37,6 +37,7 @@ export const useMemberStore = create<MemberState>((set) => ({
             description: base?.description ?? '',
             imageUrl: base?.imageUrl ?? '',
             code,
+            createdAt: base?.createdAt ?? '',
           },
         },
       };
