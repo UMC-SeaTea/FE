@@ -74,7 +74,7 @@
 
 ---
 ## 📂 Project Structure
-
+```text
 FE/
 ├── public/
 ├── src/
@@ -89,21 +89,21 @@ FE/
 │   ├── components/             # 재사용 가능한 UI 컴포넌트
 │   │   ├── Button/             # 공통 버튼 컴포넌트
 │   │   ├── common/             # 기타 공통 컴포넌트
-│   │   ├── Diagnosis/          # 진단 질문 및 진행바 컴포넌트
+│   │   ├── Diagnosis/          # 진단 컴포넌트
 │   │   ├── Feedback/           # 피드백 UI 컴포넌트
-│   │   ├── LoadingSpinner/     # 로딩 인디케이터
+│   │   ├── LoadingSpinner/     # 로딩스피너
 │   │   ├── MyPage/             # 프로필 카드 및 설정 컴포넌트
 │   │   ├── PlaceTest/          # 공간 테스트 관련 컴포넌트
 │   │   ├── Search/             # 검색 결과 리스트 컴포넌트
 │   │   ├── SearchBar/          # 검색 입력바 컴포넌트
-│   │   ├── SideBar/            # 네비게이션 사이드바
+│   │   ├── SideBar/            # 사이드바
 │   │   ├── SignUp/             # 회원가입 폼 컴포넌트
 │   │   └── Toast/              # 토스트 메시지 컴포넌트
 │   ├── constants/              # 상수 데이터
 │   ├── hooks/                  # 커스텀 훅
 │   ├── layouts/                # 레이아웃
 │   ├── lib/                    # 라이브러리 설정
-│   ├── pages/                  # 페이지 컴포넌트 (라우팅 단위)
+│   ├── pages/                  # 페이지 컴포넌트
 │   │   ├── Diagnosis/          # 진단
 │   │   ├── Login/              # 로그인
 │   │   ├── Map/                # 지도 및 공간 탐색
@@ -117,7 +117,7 @@ FE/
 │   │   └── SpaceRecommendPage.tsx # 맞춤 공간 추천 페이지
 │   ├── routes/                 # 라우팅 설정
 │   │   ├── ProtectedRoutes.tsx 
-│   │   ├── PublicRoutes.tsx   
+│   │   ├── PublicRoutes.tsx    
 │   │   └── index.ts          
 │   ├── styles/                 # 스타일
 │   ├── types/                  # 타입 정의
@@ -130,7 +130,7 @@ FE/
 ├── tailwind.config.js
 ├── tsconfig.json
 └── vite.config.ts
-
+```
 
 ---
 
