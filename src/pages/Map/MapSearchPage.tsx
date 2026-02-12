@@ -10,12 +10,6 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { useRecentSearchStore } from '../../stores/useRecentSearchStore';
 import { formatTimeText } from '../../utils/time';
 
-type RecentItem = {
-  id: string;
-  name: string;
-  timeText: string;
-};
-
 const MapSearchPage = () => {
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
