@@ -33,8 +33,7 @@ const MyTeabagPage = () => {
     try {
       if (reset) setLoading(true);
 
-      // 추후 정렬 관련 api 연동
-      const data = await getMyTeabagList(20, cursor);
+      const data = await getMyTeabagList(20, cursor, sortOrder);
 
       if (data.isSuccess && data.result) {
         setItems((prev) =>
