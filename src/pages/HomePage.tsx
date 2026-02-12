@@ -8,11 +8,19 @@ import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
 import useSideBar from '../hooks/useSideBar';
 import Footer from '../components/common/Footer';
+import { useMemberStore } from '../stores/useMemberStore';
+import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
+import { toTastingKey } from '../utils/tastingType';
 
 const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
     closeOnEsc: true,
   });
+
+  const isLoading = useMemberStore((s) => s.isLoading);
+  const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
+  const safeCode = toTastingKey(rawCode);
+
   // const { data, isLoading } = useSpaceDetail();
 
   return (
@@ -27,7 +35,13 @@ const HomePage = () => {
             onClick={toggleSideBar}
           />
           <SideBarContainer open={open} onClose={closeSideBar} />
-          <HomeTestType type="earthy" />
+          {isLoading ? (
+            <div className="w-[375px] h-[375px] pt-[150px]">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <HomeTestType type={safeCode} />
+          )}
         </div>
         <div className="flex flex-col pl-[20px] gap-[29px]">
           <div className="flex flex-col gap-[10px]">
