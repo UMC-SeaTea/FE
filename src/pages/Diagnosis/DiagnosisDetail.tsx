@@ -26,18 +26,26 @@ function hasMeaningfulAnswer(v: unknown, qType: string) {
 
   if (typeof v === "string") return v.trim().length > 0;
 
-  
   return true;
+}
+
+
+function toResultTypeCode(key: string) {
+  return String(key).toUpperCase();
 }
 
 export default function DiagnosisDetail() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const params = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
   const isAdvanced = params.get("mode") === "advanced";
 
-  const initialSessionId = (location.state?.sessionId as number | undefined) ?? undefined;
+  const initialSessionId =
+    (location.state?.sessionId as number | undefined) ?? undefined;
 
   const {
     questions,
@@ -53,7 +61,7 @@ export default function DiagnosisDetail() {
     goBack,
     reset,
     isSubmitting,
-  } = useDiagnosisDetail({ isAdvanced, initialSessionId });
+  } = useDiagnosisDetail({ isAdvanced, initialSessionId, autoAdvanceDelayMs: 800 });
 
   const [picked, setPicked] = useState(false);
 
@@ -64,13 +72,11 @@ export default function DiagnosisDetail() {
     setAnswersShadow(answers);
   }, [answers]);
 
-  
   useEffect(() => {
     reset();
     
   }, [isAdvanced]);
 
-  
   useEffect(() => {
     setPicked(false);
   }, [stepIndex]);
@@ -78,7 +84,6 @@ export default function DiagnosisDetail() {
   if (!current) return null;
 
   const isLastStep = stepIndex === total - 1;
-  const isMulti = current.type === "multi_select";
 
   const selectedIds =
     current.type === "multi_select"
@@ -89,6 +94,41 @@ export default function DiagnosisDetail() {
         : []
       : [];
 
+  
+  const showAdvancedConfirm =
+    isAdvanced && isLastStep && current.type === "two_choice";
+
+  
+  const showBasicConfirm =
+    !isAdvanced && isLastStep && current.type === "multi_select";
+
+  
+  const canAdvancedConfirm =
+    showAdvancedConfirm &&
+    typeof value === "string" &&
+    value.trim().length > 0;
+
+  
+  const fallbackResultTypeCode = useMemo(() => {
+    const hasAnyAnswer = Object.keys(answersShadow).length > 0;
+    if (!hasAnyAnswer) return "FLORAL";
+
+    const visibleQuestions = questions.slice(0, stepIndex + 1);
+    const visibleIds = new Set(visibleQuestions.map((q) => q.id));
+
+    const visibleAnswers: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(answersShadow)) {
+      if (visibleIds.has(k)) visibleAnswers[k] = v;
+    }
+
+    const leading = calcLeadingTypeFromAnswers(
+      visibleQuestions,
+      visibleAnswers,
+      "floral"
+    ) as unknown as TastingKey;
+
+    return toResultTypeCode(leading);
+  }, [answersShadow, questions, stepIndex]);
 
   const waveColor = useMemo(() => {
     const hasAnyAnswer = Object.keys(answersShadow).length > 0;
@@ -111,24 +151,21 @@ export default function DiagnosisDetail() {
     return getWaveColor(leading);
   }, [answersShadow, questions, stepIndex]);
 
-  
   const startWaveColor =
     (location.state?.startWaveColor as string | undefined) ?? undefined;
 
   const startWaveColorRef = useRef<string | undefined>(undefined);
 
-  
   useEffect(() => {
     if (isAdvanced && startWaveColor && !startWaveColorRef.current) {
       startWaveColorRef.current = startWaveColor;
     }
   }, [isAdvanced, startWaveColor]);
 
-
   const isFirstAdvancedStep = isAdvanced && stepIndex === 0;
 
   const firstStepAnswered = useMemo(() => {
-    if (!isFirstAdvancedStep) return true; 
+    if (!isFirstAdvancedStep) return true;
     const v = answersShadow[current.id];
     return hasMeaningfulAnswer(v, current.type);
   }, [answersShadow, current.id, current.type, isFirstAdvancedStep]);
@@ -136,7 +173,6 @@ export default function DiagnosisDetail() {
   const finalWaveColor = useMemo(() => {
     if (!isAdvanced) return waveColor;
 
-    
     if (isFirstAdvancedStep && !firstStepAnswered && startWaveColorRef.current) {
       return startWaveColorRef.current;
     }
@@ -159,7 +195,6 @@ export default function DiagnosisDetail() {
     });
   };
 
-  
   const goAdvancedLoading = (sessionId: number) => {
     navigate("/diagnosis/advanced-loading", {
       state: { sessionId, startWaveColor: waveColor },
@@ -181,10 +216,21 @@ export default function DiagnosisDetail() {
         return;
       }
     } catch (e) {
-      console.error(e);
+      
+      console.error("[Diagnosis] goNext failed:", e);
+
+      
+      goResultLoading(fallbackResultTypeCode);
     }
   };
 
+  
+  const triggerPickedOnly = (durationMs: number) => {
+    setPicked(true);
+    window.setTimeout(() => setPicked(false), durationMs);
+  };
+
+  
   const triggerPickedThenNext = (delayMs: number) => {
     setPicked(true);
     window.setTimeout(() => {
@@ -209,7 +255,7 @@ export default function DiagnosisDetail() {
         {isAdvanced && (
           <DiagnosisAdvancedWaveOverlay
             count={advancedCount}
-            color={finalWaveColor} 
+            color={finalWaveColor}
           />
         )}
       </div>
@@ -228,15 +274,12 @@ export default function DiagnosisDetail() {
               value={value}
               stepIndex={stepIndex}
               onChange={(v) => {
-                
                 setAnswersShadow((prev) => ({ ...prev, [current.id]: v }));
-
-                
                 setAnswer(v);
 
                 
                 if (current.type === "two_choice") {
-                  triggerPickedThenNext(120);
+                  triggerPickedOnly(120);
                 }
               }}
               onCommit={() => {
@@ -246,6 +289,7 @@ export default function DiagnosisDetail() {
           </div>
         </div>
 
+        
         {!isLastStep && current.type === "multi_select" && (
           <div className="mt-[28px] px-[20px]">
             <div className="mx-auto w-[335px]">
@@ -268,12 +312,13 @@ export default function DiagnosisDetail() {
         )}
       </div>
 
-      {isLastStep && isMulti && (
-        <div className="fixed left-0 right-0 bottom-0 z-20 px-[20px] pb-[34px]">
+      
+      {showBasicConfirm && (
+        <div className="fixed left-0 right-0 bottom-0 z-20 px-[20px] pb-[34px] pointer-events-auto">
           <div className="mx-auto w-[335px]">
             <button
               type="button"
-              onClick={() => void handleNextFlow()}
+              onClick={() => triggerPickedThenNext(140)}
               disabled={!isNextEnabled || isSubmitting}
               className={clsx(
                 "w-full h-[50px] rounded-[25px] p-[14px] text-center",
@@ -283,7 +328,29 @@ export default function DiagnosisDetail() {
                   : "bg-brand text-white cursor-pointer"
               )}
             >
-              {isSubmitting ? "처리 중..." : "결과 확인하기"}
+              {isSubmitting ? "진단 중..." : "결과 확인하기"}
+            </button>
+          </div>
+        </div>
+      )}
+
+    
+      {showAdvancedConfirm && (
+        <div className="fixed left-0 right-0 bottom-0 z-20 px-[20px] pb-[34px] pointer-events-auto">
+          <div className="mx-auto w-[335px]">
+            <button
+              type="button"
+              onClick={() => triggerPickedThenNext(140)}
+              disabled={!canAdvancedConfirm || isSubmitting}
+              className={clsx(
+                "w-full h-[50px] rounded-[25px] p-[14px] text-center",
+                "font-body text-body-title",
+                !canAdvancedConfirm || isSubmitting
+                  ? "bg-white text-light-blue border border-light-blue cursor-not-allowed"
+                  : "bg-brand text-white cursor-pointer"
+              )}
+            >
+              {isSubmitting ? "진단 중..." : "결과 확인하기"}
             </button>
           </div>
         </div>

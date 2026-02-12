@@ -6,12 +6,11 @@ import { type TastingKey } from "../../types/tastingType/tastingType";
 import { tastingTypeMap } from "../../constants/tastingType/tastingType";
 
 type CompleteState = {
-  resultTypeCode?: string; // "OCEANIC" | "FRUITY" ...
-  // source?: "detail" | "simple";
-  // mode?: "basic" | "advanced";
+  resultTypeCode?: string; 
+  
 };
 
-// ✅ 백 코드 -> 프론트 키 매핑
+
 const CODE_TO_KEY: Record<string, TastingKey> = {
   FLORAL: "floral",
   FRUITY: "fruity",
@@ -35,7 +34,7 @@ export default function DiagnosisCompletePage() {
 
   const state = (location.state ?? {}) as CompleteState;
 
-  // ✅ ResultLoading에서 넘겨준 resultTypeCode 사용
+  
   const resultType: TastingKey = useMemo(
     () => toTastingKey(state.resultTypeCode),
     [state.resultTypeCode]
@@ -64,7 +63,13 @@ export default function DiagnosisCompletePage() {
           <div className="pb-[28px] flex flex-col gap-[12px] items-center">
             <button
               type="button"
-              onClick={() => navigate("/diagnosis/recommend", { state: { resultType } })}
+              onClick={() =>
+                navigate("/diagnosis/recommend", {
+                  state: {
+                    resultTypeCode: (state.resultTypeCode ?? "FLORAL").toUpperCase(),
+                  },
+                })
+              }
               className="w-[334px] h-[50px] rounded-[25px] bg-brand text-white font-body font-weight-regular text-[18px] cursor-pointer"
             >
               공간 추천받기

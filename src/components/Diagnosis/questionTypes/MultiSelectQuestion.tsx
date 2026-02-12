@@ -7,7 +7,6 @@ type Theme = "purple" | "blue" | "mint";
 type Props = {
   options: Option[];
   selectedIds: string[];
-
   maxSelect?: number;
 
   onChange: (nextSelected: string[]) => void;
@@ -49,7 +48,7 @@ const THEME = {
 export default function MultiSelectQuestion({
   options,
   selectedIds,
-  maxSelect = 2, 
+  maxSelect = 2,
   onChange,
   theme = "mint",
   ctaText,

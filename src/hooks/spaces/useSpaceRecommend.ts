@@ -4,7 +4,7 @@ import { getSpaceRecommend } from '../../apis/spaces/spaceRecommend';
 
 export const useSpaceRecommend = (params: { tastingTypeCode: string }) => {
   return useQuery<SpaceRecommendResponse>({
-    queryKey: ['spaceRecommend', params],
+    queryKey: ['spaceRecommend', params.tastingTypeCode],
     queryFn: () => getSpaceRecommend(params),
   });
 };
