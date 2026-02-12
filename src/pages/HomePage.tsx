@@ -9,6 +9,7 @@ import Footer from '../components/common/Footer';
 import { useSpaceRecent } from '../hooks/spaces/useSpaceRecent';
 import Carousel from '../components/common/Carousel';
 import SpaceCardMini from '../components/common/SpaceCardMini';
+import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 
 const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
@@ -16,6 +17,14 @@ const HomePage = () => {
   });
 
   const { data, isLoading } = useSpaceRecent({ size: 10 });
+
+  if (isLoading) {
+    return (
+      <div className="pt-[204px]">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <>

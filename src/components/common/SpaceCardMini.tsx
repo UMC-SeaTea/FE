@@ -56,7 +56,9 @@ const SpaceCardMini = ({
       onClick={handleCardClick}
     >
       <img
-        src={thumbnailImageUrl?.startsWith('http') ? thumbnailImageUrl : ''}
+        src={
+          thumbnailImageUrl?.startsWith('http') ? thumbnailImageUrl : undefined
+        }
         alt={name}
         className="absolute inset-0 w-full h-full object-cover"
       />
