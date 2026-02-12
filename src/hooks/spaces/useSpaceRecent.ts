@@ -9,5 +9,8 @@ export const useSpaceRecent = (params: SpaceRecentParams) => {
   return useQuery<SpaceRecentResponse>({
     queryKey: ['spaceRecent', params],
     queryFn: () => getSpaceRecent(params),
+    staleTime: 0,
+    refetchOnMount: 'always',
+    // retfetchOnWindowFocus: true,
   });
 };
