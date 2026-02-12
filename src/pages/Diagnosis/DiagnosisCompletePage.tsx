@@ -1,14 +1,44 @@
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+//DiagnosisCompletePage.tsx
+import { useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import HomeTestType from "../../components/common/HomeTestType";
+import { type TastingKey } from "../../types/tastingType/tastingType";
+import { tastingTypeMap } from "../../constants/tastingType/tastingType";
 
-import HomeTestType from '../../components/common/HomeTestType';
-import { type TastingKey } from '../../types/tastingType/tastingType';
-import { tastingTypeMap } from '../../constants/tastingType/tastingType';
+type CompleteState = {
+  resultTypeCode?: string; 
+  
+};
+
+
+const CODE_TO_KEY: Record<string, TastingKey> = {
+  FLORAL: "floral",
+  FRUITY: "fruity",
+  OCEANIC: "oceanic",
+  EARTHY: "earthy",
+  NUTTY: "nutty",
+  SMOKY: "smoky",
+  SPICES: "spices",
+  SWEET: "sweet",
+};
+
+function toTastingKey(code?: string): TastingKey {
+  if (!code) return "floral"; // fallback
+  const upper = String(code).toUpperCase();
+  return CODE_TO_KEY[upper] ?? "floral";
+}
 
 export default function DiagnosisCompletePage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const resultType: TastingKey = 'floral';
+  const state = (location.state ?? {}) as CompleteState;
+
+  
+  const resultType: TastingKey = useMemo(
+    () => toTastingKey(state.resultTypeCode),
+    [state.resultTypeCode]
+  );
 
   const config = useMemo(() => tastingTypeMap[resultType], [resultType]);
 
@@ -16,7 +46,7 @@ export default function DiagnosisCompletePage() {
     <main className="min-h-dvh bg-[#F6F7FB] flex justify-center">
       <div className="w-full max-w-[375px] min-h-dvh bg-white flex flex-col">
         <header className="h-[56px] w-full border-b border-footer flex items-center px-[20px] shrink-0">
-          <span className="font-title text-[18px] font-weight-medium leading-none mt-[10px] text-footer">
+          <span className="font-title text-title-3 leading-none mt-[10px] text-footer">
             SeaTea
           </span>
         </header>
@@ -34,7 +64,11 @@ export default function DiagnosisCompletePage() {
             <button
               type="button"
               onClick={() =>
-                navigate('/diagnosis/recommend', { state: { resultType } })
+                navigate("/diagnosis/recommend", {
+                  state: {
+                    resultTypeCode: (state.resultTypeCode ?? "FLORAL").toUpperCase(),
+                  },
+                })
               }
               className="w-[334px] h-[50px] rounded-[25px] bg-brand text-white font-body font-weight-regular text-[18px] cursor-pointer"
             >
@@ -43,7 +77,7 @@ export default function DiagnosisCompletePage() {
 
             <button
               type="button"
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
               className="w-[334px] h-[50px] rounded-[25px] bg-white border border-brand text-brand font-body font-weight-regular text-[18px] cursor-pointer"
             >
               홈으로 이동

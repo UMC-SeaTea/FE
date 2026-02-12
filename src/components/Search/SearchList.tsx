@@ -10,7 +10,7 @@ type SearchListProps = {
 const SearchList = ({ name, timeText, onClick, onRemove }: SearchListProps) => {
   return (
     <>
-      <div className="w-[335px] h-[64px] bg-white">
+      <div className="w-[335px] h-[64px] bg-white border-b border-gray-500">
         <div className="flex items-center">
           <button
             type="button"

@@ -1,4 +1,4 @@
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import NavBar from '../../components/common/NavBar';
 import backIcon from '../../assets/backButton_black.svg';
 import NoteSearch from '../../components/common/NoteSearch';
@@ -9,14 +9,33 @@ import phoneIcon from '../../assets/phoneIcon.svg';
 import shareButton from '../../assets/RoundButton/share_btn.svg';
 import { useNavigate } from 'react-router-dom';
 import { showToast } from '../../components/Toast/ToastHost';
-// import teaBag from '../../assets/teaBag.svg';
+import { useSpaceDetail } from '../../hooks/spaces/useSpaceDetail';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { PiTeaBag } from 'react-icons/pi';
+import { PiTeaBagFill } from 'react-icons/pi';
+import {
+  useDeleteMyTeabag,
+  usePostMyTeabag,
+} from '../../hooks/myteabag/useMyTeabag';
+import { useAuth } from '../../hooks/auth/useAuth';
 
 const MapDetailPage = () => {
-  //   const { sid } = useParams<{ sid: string }>();
+  const { sid } = useParams<{ sid: string }>();
+  const spaceId = Number(sid);
+
+  const { user } = useAuth();
+  const isLoggedIn = Boolean(user);
+
+  const { data, isLoading, isError } = useSpaceDetail(spaceId);
+  const { mutate: postMutate } = usePostMyTeabag();
+  const { mutate: deleteMutate } = useDeleteMyTeabag();
+
+  const isSaved = data?.result?.isSaved;
+
   const handleShare = async () => {
     try {
       await navigator.share({
-        title: '국립현대미술관 서울',
+        title: data?.result?.name,
         url: window.location.href,
       });
       showToast({ text: '공유 링크가 복사되었습니다.', duration: 2000 });
@@ -26,6 +45,29 @@ const MapDetailPage = () => {
   };
 
   const navigate = useNavigate();
+
+  if (isLoading) {
+    return (
+      <div className="pt-[204px]">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+  if (isError || !data) {
+    return <p>오류가 발생했습니다.</p>;
+  }
+
+  const handleTeabagClick = () => {
+    const mutation = isSaved ? deleteMutate : postMutate;
+    mutation(spaceId, {
+      onSuccess: () => {
+        console.log(isSaved ? '삭제 성공' : '저장 성공');
+      },
+      onError: () => {
+        console.log('저장 실패');
+      },
+    });
+  };
 
   return (
     <>
@@ -40,19 +82,24 @@ const MapDetailPage = () => {
         <div className="flex flex-col gap-[12px] pt-[42px] pb-[23px]">
           <div className="flex items-start justify-between">
             <p className="text-black font-body text-[20px] font-semibold">
-              국립현대미술관 서울
+              {data?.result?.name}
             </p>
-            {/* 유저토큰 있는 경우에만 */}
-            {/* (accessToken && (
-            <img src={teaBag} alt="tea bag" className="w-[28px] h-[28px]" />
-            )) */}
+            {isLoggedIn && (
+              <button className="cursor-pointer" onClick={handleTeabagClick}>
+                {isSaved ? (
+                  <PiTeaBagFill className="w-[28px] h-[28px]" />
+                ) : (
+                  <PiTeaBag className="w-[28px] h-[28px]" />
+                )}
+              </button>
+            )}
           </div>
-          <NoteSearch text="Floral" />
+          <NoteSearch text={`${data?.result?.tastingTypeCode}`} />
         </div>
         {/* 이미지 */}
         <div className="relative w-[335px] h-[335px] overflow-hidden">
           <img
-            src={SampleImg}
+            src={data?.result?.thumbnailImageUrl || SampleImg}
             alt="Example Space"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -64,23 +111,23 @@ const MapDetailPage = () => {
               <div className="flex text-[#FBFBFB] font-regular">
                 <div className="flex gap-[4px]">
                   <p>총</p>
-                  <p className="text-white">42명</p>
+                  <p className="text-white">{data?.result?.savedCount}명</p>
                 </div>
                 <p>의 SeaTea 사용자가 저장했어요.</p>
               </div>
-              <div className="flex gap-[4px] font-medium">
-                <p>나와 동일한 유형</p>
-                <p className=" text-[#B4ABFF] font-bold">18명</p>
-              </div>
-              {/* 유저토큰 X의 경우 */}
-              {/* (accessToken &&{' '}
-            {
-              <p className="text-gray-300 text-detail-4 font-body whitespace-nowrap">
-                로그인하면 나와 같은 사용자가 얼마나 저장했는지 확인할 수
-                있어요.
-              </p>
-            }
-            ) */}
+              {isLoggedIn ? (
+                <div className="flex gap-[4px] font-medium">
+                  <p>나와 동일한 유형</p>
+                  <p className=" text-[#B4ABFF] font-bold">
+                    {data?.result?.sameTypeSavedCount}명
+                  </p>
+                </div>
+              ) : (
+                <p className="text-gray-300 text-detail-4 font-body whitespace-nowrap">
+                  로그인하면 나와 같은 사용자가 얼마나 저장했는지 확인할 수
+                  있어요.
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -96,10 +143,12 @@ const MapDetailPage = () => {
                 className="w-[20px] h-[20px]"
               />
               <div className="flex flex-col gap-[4px]">
-                <p className="text-body-4">서울특별시 종로구 삼청로 30</p>
+                <p className="text-body-4">{data?.result?.roadAddress}</p>
                 <div className="flex gap-[4px]">
                   <p className="text-gray-100">내 위치에서</p>
-                  <p className="text-brand">1.2km</p>
+                  <p className="text-brand">
+                    {((data?.result?.distanceMeters ?? 0) / 1000).toFixed(2)}km
+                  </p>
                 </div>
               </div>
             </div>
@@ -110,7 +159,9 @@ const MapDetailPage = () => {
                 alt="time icon"
                 className="w-[20px] h-[20px]"
               />
-              <p className="">오전 10:00 ~ 오후 6:00</p>
+              <p className="h-[20px] flex items-center">
+                {data?.result?.openingHours}
+              </p>
             </div>
             {/* 전화 번호 */}
             <div className="flex items-center gap-[4px]">
@@ -119,7 +170,9 @@ const MapDetailPage = () => {
                 alt="phone icon"
                 className="w-[20px] h-[20px]"
               />
-              <p>02-3701-9500</p>
+              <p className="h-[20px] flex items-center text-[14px]">
+                {data?.result?.phone}
+              </p>
             </div>
           </div>
         </div>

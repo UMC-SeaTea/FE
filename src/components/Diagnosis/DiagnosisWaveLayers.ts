@@ -1,10 +1,14 @@
-import wave9 from "../../assets/wave9.png";
-import wave8 from "../../assets/wave8.png";
-import wave7 from "../../assets/wave7.png";
-import wave6 from "../../assets/wave6.png";
+import type React from "react";
+import Wave6 from "../../assets/wave6.svg?react";
+import Wave7 from "../../assets/wave7.svg?react";
+import Wave8 from "../../assets/wave8.svg?react";
+import Wave9 from "../../assets/wave9.svg?react";
+
+export type WaveSvg = React.FC<React.SVGProps<SVGSVGElement>>;
 
 export type WaveLayer = {
-  src: string;
+  Svg: WaveSvg;
+
   widthPx: number;
   heightPx: number;
   leftPx: number;
@@ -15,60 +19,58 @@ export type WaveLayer = {
   travelPx?: number;
   floatPx?: number;
   floatDurationSec?: number;
+
+ 
   opacity?: number;
 };
 
-export const diagnosisWaves: readonly WaveLayer[] = [
+export const advancedStackWaves: readonly WaveLayer[] = [
   {
-    src: wave9,
-    widthPx: 1072,
-    heightPx: 431,
-    leftPx: -424,
-    bottomPx: -190,       
-    rotationDeg: 0,     
-    durationSec: 18,
-    travelPx: 140,
-    floatPx: 10,
-    floatDurationSec: 9,
-    opacity: 1,
-  },
-  {
-    src: wave8,
-    widthPx: 1072,
-    heightPx: 319,
-    leftPx: -392,
-    bottomPx: -75,       
-    rotationDeg: 0,
-    durationSec: 14,
-    travelPx: -180,
-    floatPx: 12,
-    floatDurationSec: 7.5,
-    opacity: 1,
-  },
-  {
-    src: wave7,
-    widthPx: 1072,
-    heightPx: 271,
-    leftPx: -245,
-    bottomPx: -135,      
-    rotationDeg: 0,
-    durationSec: 12,
-    travelPx: 220,
-    floatPx: 14,
-    floatDurationSec: 6.5,
-    opacity: 1,
-  },
-  {
-    src: wave6,
+    Svg: Wave6,
     widthPx: 1072,
     heightPx: 271,
     leftPx: -153,
-    bottomPx: -155,      
-    rotationDeg: 0,
-    durationSec: 10,
-    travelPx: -260,
-    floatPx: 16,
+    bottomPx: -185,
+    durationSec: 40,
+    travelPx: -240,
+    floatPx: 18,
     floatDurationSec: 6,
-    opacity: 1,
+    opacity: 0.55,
   },
-];
+  {
+    Svg: Wave7,
+    widthPx: 1072,
+    heightPx: 271,
+    leftPx: -245,
+    bottomPx: -165,
+    durationSec: 40,
+    travelPx: 200,
+    floatPx: 20,
+    floatDurationSec: 6.2,
+    opacity: 0.70,
+  },
+  {
+    Svg: Wave8,
+    widthPx: 1072,
+    heightPx: 319,
+    leftPx: -392,
+    bottomPx: -120,
+    durationSec: 40,
+    travelPx: -170,
+    floatPx: 22,
+    floatDurationSec: 6.6,
+    opacity: 0.80,
+  },
+  {
+    Svg: Wave9,
+    widthPx: 1072,
+    heightPx: 431,
+    leftPx: -424,
+    bottomPx: -210,
+    durationSec: 40,
+    travelPx: 120,
+    floatPx: 24,
+    floatDurationSec: 7,
+    opacity: 0.90,
+  },
+] as const;

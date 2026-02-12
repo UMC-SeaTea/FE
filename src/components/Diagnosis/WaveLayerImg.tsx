@@ -1,9 +1,13 @@
 import type { WaveLayer } from "./DiagnosisWaveLayers";
 
-type Props = WaveLayer;
+type Props = WaveLayer & {
+ 
+  color: string;
+  globalOpacity?: number;
+};
 
 export default function WaveLayerImg({
-  src,
+  Svg,
   widthPx,
   heightPx,
   leftPx,
@@ -14,7 +18,12 @@ export default function WaveLayerImg({
   floatPx = 16,
   floatDurationSec = 7,
   opacity = 1,
+
+  color,
+  globalOpacity = 1,
 }: Props) {
+  const finalOpacity = opacity * globalOpacity;
+
   return (
     <div
       className="absolute"
@@ -23,10 +32,10 @@ export default function WaveLayerImg({
         bottom: `${bottomPx}px`,
         width: `${widthPx}px`,
         height: `${heightPx}px`,
-        opacity,
+        opacity: finalOpacity,
+        color,
       }}
     >
-
       <div
         className="reduce-motion:no-anim"
         style={{
@@ -36,7 +45,6 @@ export default function WaveLayerImg({
           animation: `wave-x ${durationSec}s ease-in-out infinite alternate`,
         }}
       >
-
         <div
           className="reduce-motion:no-anim"
           style={{
@@ -46,16 +54,16 @@ export default function WaveLayerImg({
             animation: `wave-y ${floatDurationSec}s ease-in-out infinite alternate`,
           }}
         >
-          <img
-            src={src}
-            alt=""
-            draggable={false}
-            className="block select-none"
+          <Svg
+            aria-hidden
+            focusable={false}
             style={{
               width: "100%",
               height: "100%",
               transform: `rotate(${rotationDeg}deg)`,
               transformOrigin: "center",
+              display: "block",
+              color,
             }}
           />
         </div>

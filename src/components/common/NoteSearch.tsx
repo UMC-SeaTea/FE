@@ -8,7 +8,7 @@ const NoteSearch = ({ text }: Props) => {
       className="w-[56px] inline-flex items-center justify-center
         h-[22px] px-[12px] py-[2px] rounded-sm bg-[#F2F2F2]"
     >
-      <span className="font-body text-detail-1 text-black-2 text-center">
+      <span className="font-body text-detail-1 text-black-2 text-center whitespace-nowrap w-fit">
         {text}
       </span>
     </div>

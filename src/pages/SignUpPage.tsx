@@ -1,6 +1,5 @@
 import SignUpPageHeader from '../components/SignUp/SignUpPageHeader';
-import { useSignUp } from '../hooks/useSignUp';
-
+import { useSignUp } from '../hooks/auth/useSignUp';
 import SignUpAccount from '../components/SignUp/SignUpAccount';
 import SignUpProfile from '../components/SignUp/SignUpProfile';
 import SignUpNickname from '../components/SignUp/SignUpNickname';

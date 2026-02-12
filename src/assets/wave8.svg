@@ -1,0 +1,13 @@
+<svg viewBox="-392 0 1072 319" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M-55.0789 30.8248C-246.446 -18.7852 -343.233 30.1079 -392 48.5256L-383.422 319H644.497L680 105.764C652.551 34.6958 550.169 -45.204 353.087 30.8248C147.973 109.952 94.8234 69.6853 -55.0789 30.8248Z"
+    fill="url(#g8)"
+    fill-opacity="0.2"
+  />
+  <defs>
+    <linearGradient id="g8" x1="144" y1="17.9079" x2="144" y2="256.914" gradientUnits="userSpaceOnUse">
+      <stop stop-color="currentColor" stop-opacity="1" />
+      <stop offset="1" stop-color="currentColor" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+</svg>

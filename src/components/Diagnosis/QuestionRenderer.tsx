@@ -1,4 +1,5 @@
-import type { DiagnosisQuestion } from "./questions/types";
+// src/components/Diagnosis/QuestionRenderer.tsx
+import type { DiagnosisQuestion } from "../../constants/diagnosis/types";
 import TwoChoiceQuestion from "./questionTypes/TwoChoiceQuestion";
 import DialQuestion from "./questionTypes/DialQuestion";
 import MultiSelectQuestion from "./questionTypes/MultiSelectQuestion";
@@ -8,8 +9,9 @@ type Props = {
   value: unknown;
   onChange: (value: unknown) => void;
 
-  onCommit?: () => void;
+  stepIndex: number;
 
+  onCommit?: () => void; 
   onCtaClick?: () => void;
 };
 
@@ -17,24 +19,30 @@ export default function QuestionRenderer({
   q,
   value,
   onChange,
+  stepIndex,
   onCommit,
   onCtaClick,
 }: Props) {
   if (q.type === "two_choice") {
     return (
       <TwoChoiceQuestion
-        options={q.options}
+        options={
+          q.options.map((o) => ({ id: o.id, label: o.label })) as [
+            { id: string; label: string },
+            { id: string; label: string }
+          ]
+        }
         value={value as string | undefined}
+        stepIndex={stepIndex}
         onChange={(id: string) => {
           onChange(id);
-          onCommit?.(); 
         }}
       />
     );
   }
 
   if (q.type === "dial") {
-    const v = typeof value === "number" ? value : q.defaultValue ?? 0;
+    const v = typeof value === "number" ? value : undefined;
 
     return (
       <DialQuestion
@@ -43,7 +51,7 @@ export default function QuestionRenderer({
         step={q.step ?? 1}
         value={v}
         unit={q.unit ?? "%"}
-        label={q.labelByValue ? q.labelByValue(v) : ""}
+        label={q.title}
         onChange={(next: number) => onChange(next)}
         onCommit={onCommit}
       />
@@ -59,13 +67,16 @@ export default function QuestionRenderer({
 
     return (
       <MultiSelectQuestion
-        options={q.options}
+        key={q.id}
+        options={q.options.map((o) => ({ id: o.id, label: o.label }))}
         selectedIds={selected}
-        maxSelect={q.maxSelect ?? 999}
-        onChange={(nextSelected: string[]) => onChange(nextSelected)}
+        maxSelect={2}
+        onChange={(nextSelected: string[]) => {
+          onChange(nextSelected);
+        }}
         theme={q.theme ?? "mint"}
         ctaText={q.ctaText}
-        ctaDisabled={selected.length === 0}
+        ctaDisabled={selected.length < (q.minSelect ?? 1)}
         onCtaClick={onCtaClick}
       />
     );

@@ -1,40 +1,83 @@
 import { useNavigate } from 'react-router-dom';
-import exampleImage from '../../assets/images/exampleSpace.png';
 import clsx from 'clsx';
-// 추후 props로 변경 필요
-// type SpaceCardMiniProps = {
-//   name: string;
-//   roadAddress: string;
-//   img?: string;
-// };
+import type { MouseEvent } from 'react';
+import DeleteIcon from '../../assets/teaBag.svg';
+
+type SpaceCardMiniProps = {
+  className?: string;
+  name: string;
+  roadAddress: string;
+  thumbnailImageUrl: string;
+  spaceId: number;
+
+  isEditMode: boolean;
+  isSelected?: boolean;
+  onSelect?: (id: number) => void;
+  onDelete?: (id: number) => void;
+};
 
 const SpaceCardMini = ({
-  className = 'w-[120px] h-[120px]',
-}: {
-  className?: string;
-}) => {
+  className,
+  name,
+  roadAddress,
+  thumbnailImageUrl,
+  spaceId,
+  isEditMode,
+  isSelected,
+  onSelect,
+  onDelete,
+}: SpaceCardMiniProps) => {
   const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    if (isEditMode && onSelect) {
+      onSelect(spaceId);
+    } else {
+      navigate(`/map/${spaceId}`);
+    }
+  };
+
+  const handleDeleteClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    if (onDelete) {
+      onDelete(spaceId);
+    }
+  };
+
   return (
-    <>
-      <div
-        className={clsx('relative overflow-hidden cursor-pointer', className)}
-        onClick={() => navigate('/map/1')}
-      >
-        {/* 추후 이미지 API 연동 필요 */}
-        <img
-          src={exampleImage}
-          alt="Example Space"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        {/* 그라데이션 */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_55.8%,#000_92.93%)]" />
-        {/* 추후 장소 API 연동 필요 */}
-        <div className="absolute bottom-0 left-0 flex flex-col w-full px-[10px] pb-[11px] text-white">
-          <p className="font-body text-body-4">국립현대미술관</p>
-          <p className="font-body text-detail-4">서울</p>
-        </div>
+    <div
+      className={clsx(
+        'relative overflow-hidden cursor-pointer w-[120px] h-[120px] rounded-sm',
+        isEditMode && isSelected
+          ? 'border-[3px] border-brand'
+          : 'border border-transparent',
+        className
+      )}
+      onClick={handleCardClick}
+    >
+      <img
+        src={thumbnailImageUrl?.startsWith('http') ? thumbnailImageUrl : ''}
+        alt={name}
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_55.8%,#000_92.93%)]" />
+
+      <div className="absolute bottom-0 left-0 flex flex-col w-full px-[10px] pb-[11px] text-white">
+        <p className="font-body text-body-4 line-clamp-1">{name}</p>
+        <p className="font-body text-detail-4 line-clamp-1">{roadAddress}</p>
       </div>
-    </>
+
+      {isEditMode && (
+        <button
+          type="button"
+          onClick={handleDeleteClick}
+          className="absolute top-2 right-2 z-10 p-1 cursor-pointer hover:opacity-80"
+        >
+          <img className="w-6 h-6" src={DeleteIcon} alt="저장 취소" />
+        </button>
+      )}
+    </div>
   );
 };
 
