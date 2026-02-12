@@ -1,7 +1,7 @@
 import NavBar from '../components/common/NavBar';
 import menu from '../assets/menu_black.svg';
 import HomeTestType from '../components/common/HomeTestType';
-import SideBarTest from '../components/common/SideBarTest';
+// import SideBarTest from '../components/common/SideBarTest';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
 import useSideBar from '../hooks/useSideBar';
@@ -80,7 +80,7 @@ const HomePage = () => {
             )}
           </div>
           <HomeComponent />
-          <SideBarTest />
+          {/* <SideBarTest lastDiagnosisDate={} /> */}
         </div>
       </div>
       <div className="pt-[52px]">
