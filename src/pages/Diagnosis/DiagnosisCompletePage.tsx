@@ -1,31 +1,29 @@
-//DiagnosisCompletePage.tsx
-import { useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import HomeTestType from "../../components/common/HomeTestType";
-import { type TastingKey } from "../../types/tastingType/tastingType";
-import { tastingTypeMap } from "../../constants/tastingType/tastingType";
+import { useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import HomeTestType from '../../components/common/HomeTestType';
+import { type TastingKey } from '../../types/tastingType/tastingType';
+import { tastingTypeMap } from '../../constants/tastingType/tastingType';
+import { useMemberStore } from '../../stores/useMemberStore';
 
 type CompleteState = {
-  resultTypeCode?: string; 
-  
+  resultTypeCode?: string;
 };
 
-
 const CODE_TO_KEY: Record<string, TastingKey> = {
-  FLORAL: "floral",
-  FRUITY: "fruity",
-  OCEANIC: "oceanic",
-  EARTHY: "earthy",
-  NUTTY: "nutty",
-  SMOKY: "smoky",
-  SPICES: "spices",
-  SWEET: "sweet",
+  FLORAL: 'floral',
+  FRUITY: 'fruity',
+  OCEANIC: 'oceanic',
+  EARTHY: 'earthy',
+  NUTTY: 'nutty',
+  SMOKY: 'smoky',
+  SPICES: 'spices',
+  SWEET: 'sweet',
 };
 
 function toTastingKey(code?: string): TastingKey {
-  if (!code) return "floral"; // fallback
+  if (!code) return 'floral'; // fallback
   const upper = String(code).toUpperCase();
-  return CODE_TO_KEY[upper] ?? "floral";
+  return CODE_TO_KEY[upper] ?? 'floral';
 }
 
 export default function DiagnosisCompletePage() {
@@ -34,13 +32,18 @@ export default function DiagnosisCompletePage() {
 
   const state = (location.state ?? {}) as CompleteState;
 
-  
   const resultType: TastingKey = useMemo(
     () => toTastingKey(state.resultTypeCode),
     [state.resultTypeCode]
   );
 
   const config = useMemo(() => tastingTypeMap[resultType], [resultType]);
+
+  const updateCurrentTypeCode = useMemberStore((s) => s.setCurrentTypeCode);
+  useEffect(() => {
+    const code = (state.resultTypeCode ?? 'FLORAL').toUpperCase();
+    updateCurrentTypeCode(code);
+  }, [state.resultTypeCode, updateCurrentTypeCode]);
 
   return (
     <main className="min-h-dvh bg-[#F6F7FB] flex justify-center">
@@ -64,9 +67,11 @@ export default function DiagnosisCompletePage() {
             <button
               type="button"
               onClick={() =>
-                navigate("/diagnosis/recommend", {
+                navigate('/diagnosis/recommend', {
                   state: {
-                    resultTypeCode: (state.resultTypeCode ?? "FLORAL").toUpperCase(),
+                    resultTypeCode: (
+                      state.resultTypeCode ?? 'FLORAL'
+                    ).toUpperCase(),
                   },
                 })
               }
@@ -77,7 +82,7 @@ export default function DiagnosisCompletePage() {
 
             <button
               type="button"
-              onClick={() => navigate("/")}
+              onClick={() => navigate('/')}
               className="w-[334px] h-[50px] rounded-[25px] bg-white border border-brand text-brand font-body font-weight-regular text-[18px] cursor-pointer"
             >
               홈으로 이동

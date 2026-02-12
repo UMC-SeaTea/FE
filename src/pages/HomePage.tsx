@@ -10,6 +10,8 @@ import { useSpaceRecent } from '../hooks/spaces/useSpaceRecent';
 import Carousel from '../components/common/Carousel';
 import SpaceCardMini from '../components/common/SpaceCardMini';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
+import { useMemberStore } from '../stores/useMemberStore';
+import { toTastingKey } from '../utils/tastingType';
 
 const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
@@ -18,6 +20,9 @@ const HomePage = () => {
 
   const { data, isLoading, isError } = useSpaceRecent({ size: 10 });
   const items = data?.result?.items ?? [];
+
+  const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
+  const safeCode = toTastingKey(rawCode);
 
   if (isLoading) {
     return (
@@ -29,7 +34,6 @@ const HomePage = () => {
   if (isError) {
     return <div>에러가 발생했습니다. 다시 시도해주세요.</div>;
   }
-
   return (
     <>
       <div className="flex flex-col gap-[42px]">
@@ -42,7 +46,13 @@ const HomePage = () => {
             onClick={toggleSideBar}
           />
           <SideBarContainer open={open} onClose={closeSideBar} />
-          <HomeTestType type="earthy" />
+          {isLoading ? (
+            <div className="w-[375px] h-[375px] pt-[150px]">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <HomeTestType type={safeCode} />
+          )}
         </div>
         <div className="flex flex-col pl-[20px] gap-[29px]">
           <div className="flex flex-col gap-[10px]">
