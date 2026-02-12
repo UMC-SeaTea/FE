@@ -20,38 +20,44 @@ import DiagnosisCompletePage from '../pages/Diagnosis/DiagnosisCompletePage';
 import DiagnosisSpaceRecommendPage from '../pages/Diagnosis/DiagnosisSpaceRecommendPage';
 import DiagnosisAdvancedLoading from '../pages/Diagnosis/DiagnosisAdvancedLoading';
 
+import MainLayout from '../layouts/MainLayout';
+
 export const protectedRoutes = [
   {
     element: React.createElement(ProtectedWrapper),
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/mypage', element: <MyPage /> },
-      { path: '/myteabag', element: <MyTeabagPage /> },
-      { path: '/mypage/profile-edit', element: <MyPageProfileEdit /> },
-      { path: '/map', element: <MapPage /> },
-      { path: '/map/search', element: <MapSearchPage /> },
-      { path: '/map/:sid', element: <MapDetailPage /> },
-      { path: '/mytasting', element: <MyTastingPage /> },
-      { path: '/mytasting/past', element: <PastResultPage /> },
-      { path: '/recommend', element: <SpaceRecommend /> },
-      { path: '/diagnosis', element: <DiagnosisStart /> },
-      { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
-      { path: '/diagnosis/detail', element: <DiagnosisDetail /> },
-      { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
-      { path: '/diagnosis/simple', element: <SimpleDiagnosisIntro /> },
-      { path: '/diagnosis/simple/pick', element: <SimpleDiagnosisPick /> },
       {
-        path: '/diagnosis/result/loading',
-        element: <DiagnosisResultLoading />,
-      },
-      { path: '/diagnosis/complete', element: <DiagnosisCompletePage /> },
-      {
-        path: '/diagnosis/recommend',
-        element: <DiagnosisSpaceRecommendPage />,
-      },
-      {
-        path: '/diagnosis/advanced-loading',
-        element: <DiagnosisAdvancedLoading />,
+        element: <MainLayout />,
+        children: [
+          { path: '/', element: <HomePage /> },
+          { path: '/mypage', element: <MyPage /> },
+          { path: '/myteabag', element: <MyTeabagPage /> },
+          { path: '/mypage/profile-edit', element: <MyPageProfileEdit /> },
+          { path: '/map', element: <MapPage /> },
+          { path: '/map/search', element: <MapSearchPage /> },
+          { path: '/map/:sid', element: <MapDetailPage /> },
+          { path: '/mytasting', element: <MyTastingPage /> },
+          { path: '/mytasting/past', element: <PastResultPage /> },
+          { path: '/recommend', element: <SpaceRecommend /> },
+          { path: '/diagnosis', element: <DiagnosisStart /> },
+          { path: '/diagnosis/detail', element: <DiagnosisDetail /> },
+          { path: '/diagnosis/loading', element: <DiagnosisLoading /> },
+          { path: '/diagnosis/simple', element: <SimpleDiagnosisIntro /> },
+          { path: '/diagnosis/simple/pick', element: <SimpleDiagnosisPick /> },
+          {
+            path: '/diagnosis/result/loading',
+            element: <DiagnosisResultLoading />,
+          },
+          { path: '/diagnosis/complete', element: <DiagnosisCompletePage /> },
+          {
+            path: '/diagnosis/recommend',
+            element: <DiagnosisSpaceRecommendPage />,
+          },
+          {
+            path: '/diagnosis/advanced-loading',
+            element: <DiagnosisAdvancedLoading />,
+          },
+        ],
       },
     ],
   },
