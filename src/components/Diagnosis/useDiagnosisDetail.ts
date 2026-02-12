@@ -77,7 +77,7 @@ export function useDiagnosisDetail(params: Params = {}) {
     if (current.type === "multi_select") {
       if (Array.isArray(value)) {
         const min = current.minSelect ?? 1;
-        const max = 2;
+        const max = current.maxSelect ?? 2;
         return value.length >= min && value.length <= max;
       }
       if (typeof value === "string") return value.length > 0;
