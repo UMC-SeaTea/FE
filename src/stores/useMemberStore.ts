@@ -8,6 +8,7 @@ type MemberState = {
   error: string | null;
 
   setProfile: (profile: MemberProfileResult | null) => void;
+  updateProfile: (currentType: MemberProfileResult['currentType']) => void;
   fetchProfile: () => Promise<void>;
   clearProfile: () => void;
 };
@@ -18,6 +19,11 @@ export const useMemberStore = create<MemberState>((set) => ({
   error: null,
 
   setProfile: (profile) => set({ profile }),
+
+  updateProfile: (currentType) =>
+    set((state) => ({
+      profile: state.profile ? { ...state.profile, currentType } : null,
+    })),
 
   fetchProfile: async () => {
     set({ isLoading: true, error: null });

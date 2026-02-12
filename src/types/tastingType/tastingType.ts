@@ -17,6 +17,11 @@ export function isTastingKey(v: unknown): v is TastingKey {
   );
 }
 
+export function toTastingKey(code?: string | null): TastingKey {
+  const normalized = typeof code === 'string' ? code.toLowerCase() : undefined;
+  return isTastingKey(normalized) ? normalized : 'floral';
+}
+
 export type TastingType = {
   type: TastingKey;
   description: string;

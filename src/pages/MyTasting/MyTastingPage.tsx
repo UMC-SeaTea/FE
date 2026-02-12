@@ -17,6 +17,7 @@ import {
   type TastingKey,
 } from '../../types/tastingType/tastingType';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { toTastingKey } from '../../utils/tastingType';
 
 const MyTastingPage = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
@@ -25,17 +26,9 @@ const MyTastingPage = () => {
   });
   const navigate = useNavigate();
 
-  const { fetchProfile } = useMemberStore();
   const isLoading = useMemberStore((s) => s.isLoading);
-
-  useEffect(() => {
-    fetchProfile();
-  }, [fetchProfile]);
-
   const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
-  const normalized =
-    typeof rawCode === 'string' ? rawCode.toLowerCase() : undefined;
-  const safeCode: TastingKey = isTastingKey(normalized) ? normalized : 'floral';
+  const safeCode = toTastingKey(rawCode);
 
   if (isLoading) {
     return (

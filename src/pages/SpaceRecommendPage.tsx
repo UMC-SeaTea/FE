@@ -12,10 +12,7 @@ import { useSpaceRecommend } from '../hooks/spaces/useSpaceRecommend';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import PlaceList from '../components/common/PlaceList';
 import { useMemberStore } from '../stores/useMemberStore';
-import {
-  isTastingKey,
-  type TastingKey,
-} from '../types/tastingType/tastingType';
+import { toTastingKey } from '../utils/tastingType';
 
 const SpaceRecommend = () => {
   // const { data, isLoading } = useSpaceDetail();
@@ -23,16 +20,9 @@ const SpaceRecommend = () => {
   const [feedback, setFeedback] = useState<'good' | 'bad' | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  const { fetchProfile } = useMemberStore();
-  useEffect(() => {
-    fetchProfile();
-  }, [fetchProfile]);
-
   const nickname = useMemberStore((s) => s.profile?.nickname);
   const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
-  const normalized =
-    typeof rawCode === 'string' ? rawCode.toLowerCase() : undefined;
-  const safeCode: TastingKey = isTastingKey(normalized) ? normalized : 'floral';
+  const safeCode = toTastingKey(rawCode);
 
   const { data, isLoading, isError, refetch } = useSpaceRecommend({
     tastingTypeCode: rawCode || 'FLORAL',
