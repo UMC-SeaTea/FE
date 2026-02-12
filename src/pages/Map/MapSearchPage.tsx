@@ -7,6 +7,10 @@ import SearchResult from '../../components/Search/SearchResult';
 import useDebounce from '../../hooks/useDebounce';
 import { useSpaceList } from '../../hooks/spaces/useSpaceList';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import {
+  getRecentSearches,
+  saveRecentSearches,
+} from '../../utils/recentSearch';
 
 type RecentItem = {
   id: string;
@@ -26,12 +30,11 @@ const MapSearchPage = () => {
   const deBouncedValue = useDebounce(inputValue, 300);
 
   // 최근 검색어
-  const [recentItems, setRecentItems] = useState<RecentItem[]>([
-    { id: '1', name: '국립현대미술관', timeText: '1시간전' },
-    { id: '2', name: 'LCDC', timeText: '어제' },
-    { id: '3', name: '덕수궁', timeText: '10.04' },
-    { id: '4', name: '그랑핸드', timeText: '09.21' },
-  ]);
+  const [recentItems, setRecentItems] = useState<RecentItem[]>([]);
+
+  useEffect(() => {
+    setRecentItems(getRecentSearches());
+  }, []);
 
   useEffect(() => {
     setInputValue(q);
@@ -54,6 +57,22 @@ const MapSearchPage = () => {
       setParams({}, { replace: true });
       return;
     }
+    setRecentItems((prev) => {
+      const filtered = prev.filter((item) => item.name !== next);
+
+      const newItem: RecentItem = {
+        id: Date.now().toString(),
+        name: next,
+        timeText: new Date().toLocaleDateString(),
+      };
+
+      const updated = [newItem, ...filtered].slice(0, 10);
+
+      saveRecentSearches(updated);
+
+      return updated;
+    });
+
     setParams({ q: next }, { replace: true });
   };
 
@@ -73,7 +92,11 @@ const MapSearchPage = () => {
   };
 
   const handleRemoveRecent = (id: string) => {
-    setRecentItems((prev) => prev.filter((item) => item.id !== id));
+    setRecentItems((prev) => {
+      const updated = prev.filter((item) => item.id !== id);
+      saveRecentSearches(updated);
+      return updated;
+    });
   };
 
   return (
