@@ -17,6 +17,7 @@ const HomePage = () => {
   });
 
   const { data, isLoading, isError } = useSpaceRecent({ size: 10 });
+  const items = data?.result?.items ?? [];
 
   if (isLoading) {
     return (
@@ -48,17 +49,25 @@ const HomePage = () => {
             <p className="text-black font-body text-body-title">
               최근 확인한 공간
             </p>
-            <Carousel>
-              {data?.result?.items?.map((space) => (
-                <SpaceCardMini
-                  key={space.spaceId}
-                  spaceId={space.spaceId}
-                  name={space.name}
-                  roadAddress={space.address || '주소 미제공'}
-                  thumbnailImageUrl={space.thumbnailImageUrl}
-                />
-              ))}
-            </Carousel>
+            {items.length === 0 ? (
+              <div className="w-full py-6">
+                <p className="text-center text-body-4 font-body text-gray-300">
+                  최근 확인한 공간이 없습니다.
+                </p>
+              </div>
+            ) : (
+              <Carousel>
+                {items.map((space) => (
+                  <SpaceCardMini
+                    key={space.spaceId}
+                    spaceId={space.spaceId}
+                    name={space.name}
+                    roadAddress={space.address || '주소 미제공'}
+                    thumbnailImageUrl={space.thumbnailImageUrl}
+                  />
+                ))}
+              </Carousel>
+            )}
           </div>
           <HomeComponent />
           <SideBarTest />
