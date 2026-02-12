@@ -4,13 +4,19 @@ import HomeTestType from '../../components/common/HomeTestType';
 import PastResult from '../../components/common/PastResult';
 import Footer from '../../components/common/Footer';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TastingNote from '../../components/common/TastingNote';
 import PlaceTestCard from '../../components/PlaceTest/PlaceTestCard';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';
 import useSideBar from '../../hooks/useSideBar';
 import moveButton from '../../assets/moveButton_gray.svg';
 import { useNavigate } from 'react-router-dom';
+import { useMemberStore } from '../../stores/useMemberStore';
+import {
+  isTastingKey,
+  type TastingKey,
+} from '../../types/tastingType/tastingType';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const MyTastingPage = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
@@ -18,6 +24,26 @@ const MyTastingPage = () => {
     closeOnEsc: true,
   });
   const navigate = useNavigate();
+
+  const { fetchProfile } = useMemberStore();
+  const isLoading = useMemberStore((s) => s.isLoading);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
+
+  const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
+  const normalized =
+    typeof rawCode === 'string' ? rawCode.toLowerCase() : undefined;
+  const safeCode: TastingKey = isTastingKey(normalized) ? normalized : 'floral';
+
+  if (isLoading) {
+    return (
+      <div className="pt-[204px]">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -43,7 +69,7 @@ const MyTastingPage = () => {
         </div>
         <div>
           <div className="border-t text-black" />
-          <HomeTestType variant="recommend" type="smoky" />
+          <HomeTestType variant="recommend" type={safeCode} />
         </div>
       </div>
 
