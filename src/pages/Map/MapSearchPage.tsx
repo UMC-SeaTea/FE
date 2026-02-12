@@ -7,12 +7,9 @@ import SearchResult from '../../components/Search/SearchResult';
 import useDebounce from '../../hooks/useDebounce';
 import { useSpaceList } from '../../hooks/spaces/useSpaceList';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-
-type RecentItem = {
-  id: string;
-  name: string;
-  timeText: string;
-};
+import { useRecentSearchStore } from '../../stores/useRecentSearchStore';
+import { formatTimeText } from '../../utils/time';
+import brokenIcon from '../../assets/broken.svg';
 
 const MapSearchPage = () => {
   const navigate = useNavigate();
@@ -26,12 +23,9 @@ const MapSearchPage = () => {
   const deBouncedValue = useDebounce(inputValue, 300);
 
   // 최근 검색어
-  const [recentItems, setRecentItems] = useState<RecentItem[]>([
-    { id: '1', name: '국립현대미술관', timeText: '1시간전' },
-    { id: '2', name: 'LCDC', timeText: '어제' },
-    { id: '3', name: '덕수궁', timeText: '10.04' },
-    { id: '4', name: '그랑핸드', timeText: '09.21' },
-  ]);
+  const recentItems = useRecentSearchStore((s) => s.recentItems);
+  const addRecent = useRecentSearchStore((s) => s.addRecent);
+  const removeRecent = useRecentSearchStore((s) => s.removeRecent);
 
   useEffect(() => {
     setInputValue(q);
@@ -54,6 +48,9 @@ const MapSearchPage = () => {
       setParams({}, { replace: true });
       return;
     }
+    // persist로 localStorage에 저장
+    addRecent(next);
+
     setParams({ q: next }, { replace: true });
   };
 
@@ -73,7 +70,7 @@ const MapSearchPage = () => {
   };
 
   const handleRemoveRecent = (id: string) => {
-    setRecentItems((prev) => prev.filter((item) => item.id !== id));
+    removeRecent(id);
   };
 
   return (
@@ -99,9 +96,16 @@ const MapSearchPage = () => {
               검색 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.
             </p>
           ) : items.length === 0 ? (
-            <p className="font-body text-body-4 py-4 text-center text-gray-100">
-              검색 결과가 없습니다.
-            </p>
+            <div className="flex flex-col gap-[16px] items-center pt-[140px]">
+              <img
+                src={brokenIcon}
+                alt="BrokenIcon"
+                className="w-[68px] h-[41px]"
+              />
+              <p className="font-body text-body-2 text-center text-gray-200">
+                검색 결과가 없습니다.
+              </p>
+            </div>
           ) : (
             <div className="flex flex-col gap-[8px]">
               {items.map((item) => (
@@ -127,7 +131,7 @@ const MapSearchPage = () => {
                   <SearchList
                     key={item.id}
                     name={item.name}
-                    timeText={item.timeText}
+                    timeText={formatTimeText(item.createdAt)}
                     onClick={() => handleClickRecent(item.name)}
                     onRemove={() => handleRemoveRecent(item.id)}
                   />
