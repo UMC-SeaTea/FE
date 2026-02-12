@@ -16,7 +16,7 @@ const HomePage = () => {
     closeOnEsc: true,
   });
 
-  const { data, isLoading } = useSpaceRecent({ size: 10 });
+  const { data, isLoading, isError } = useSpaceRecent({ size: 10 });
 
   if (isLoading) {
     return (
@@ -24,6 +24,9 @@ const HomePage = () => {
         <LoadingSpinner />
       </div>
     );
+  }
+  if (isError) {
+    return <div>에러가 발생했습니다. 다시 시도해주세요.</div>;
   }
 
   return (
