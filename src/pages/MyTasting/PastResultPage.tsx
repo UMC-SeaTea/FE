@@ -17,7 +17,7 @@ const PastResultPage = () => {
           <PastResult type="Fruity" date="2025.11.09" />
           <PastResult type="Floral" date="2025.11.09" />
         </div>
-        <p className="pt-[37px] text-center font-body text-body-title text-gray-300">
+        <p className="pt-[48px] text-center font-body text-body-4 text-gray-300">
           목록의 끝입니다.
         </p>
       </div>

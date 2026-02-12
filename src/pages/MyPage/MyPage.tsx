@@ -6,12 +6,23 @@ import { useNavigate, type To } from 'react-router-dom';
 import MyPageProfile from '../../components/MyPage/MyPageProfile';
 import useSideBar from '../../hooks/useSideBar';
 import Footer from '../../components/common/Footer';
+import { useMemberProfile } from '../../hooks/useMember';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+
+const FullScreenCenter = ({ children }: { children: React.ReactNode }) => (
+  <div className="w-full min-h-screen bg-[#0A0A0A] flex justify-center items-center">
+    {children}
+  </div>
+);
 
 const MyPage = () => {
   const navigate = useNavigate();
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
     closeOnEsc: true,
   });
+
+  const { data, isLoading, isError } = useMemberProfile();
+  const userProfile = data?.result;
 
   const menuItems = [
     { id: 1, title: '나의 티백', path: '/myteabag' },
@@ -27,6 +38,22 @@ const MyPage = () => {
       navigate(path);
     }
   };
+
+  if (isLoading) {
+    return (
+      <FullScreenCenter>
+        <LoadingSpinner />
+      </FullScreenCenter>
+    );
+  }
+
+  if (isError) {
+    return (
+      <FullScreenCenter>
+        <p className="text-white font-body">정보를 불러오지 못했습니다.</p>
+      </FullScreenCenter>
+    );
+  }
 
   return (
     <>
@@ -50,13 +77,14 @@ const MyPage = () => {
                   오늘도 편안한 휴식을 경험하길 바라요
                 </div>
                 <div className="self-stretch text-white font-body text-2xl font-semibold leading-[140%] tracking-[-0.6px]">
-                  UMC님
+                  {userProfile?.nickname || ''}님
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col items-start gap-4 w-[335px]">
-              <MyPageProfile />
+              <MyPageProfile profile={userProfile} />
+
               <div className="flex flex-col items-start self-stretch rounded-[12px] py-[10px] bg-white/10">
                 {menuItems.map((item) => (
                   <div
