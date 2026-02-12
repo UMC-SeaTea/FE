@@ -1,18 +1,5 @@
 // src/pages/MyTasting/MyTastingPage.tsx
-import NavBar from "../../components/common/NavBar";
-import menuIcon from "../../assets/menu_black.svg";
-import HomeTestType from "../../components/common/HomeTestType";
-import PastResult from "../../components/common/PastResult";
-import Footer from "../../components/common/Footer";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useMemo, useState } from "react";
-import TastingNote from "../../components/common/TastingNote";
-import PlaceTestCard from "../../components/PlaceTest/PlaceTestCard";
-import SideBarContainer from "../../components/SideBar/SideBarContainer";
-import useSideBar from "../../hooks/useSideBar";
-import moveButton from "../../assets/moveButton_gray.svg";
-import { useNavigate } from "react-router-dom";
-
 import { useDiagnosisHistory } from "../../hooks/diagnosis/useDiagnosisHistory";
 import { formatDate } from "../../lib/formatDate";
 import type { DiagnosisHistoryItem } from "../../types/diagnosis/history";
@@ -22,7 +9,6 @@ import HomeTestType from '../../components/common/HomeTestType';
 import PastResult from '../../components/common/PastResult';
 import Footer from '../../components/common/Footer';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { useState } from 'react';
 import TastingNote from '../../components/common/TastingNote';
 import PlaceTestCard from '../../components/PlaceTest/PlaceTestCard';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';
