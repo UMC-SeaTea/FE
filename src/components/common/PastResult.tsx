@@ -8,14 +8,14 @@ import bgOceanic from '../../assets/images/pastResultBgImages/bgOceanic.jpg';
 import bgEarthy from '../../assets/images/pastResultBgImages/bgEarthy.jpg';
 
 const bgImageMap: Record<string, string> = {
-  Floral: bgFloral,
-  Nutty: bgNutty,
-  Sweet: bgSweet,
-  Spices: bgSpices,
-  Smoky: bgSmoky,
-  Fruity: bgFruity,
-  Oceanic: bgOceanic,
-  Earthy: bgEarthy,
+  floral: bgFloral,
+  nutty: bgNutty,
+  sweet: bgSweet,
+  spices: bgSpices,
+  smoky: bgSmoky,
+  fruity: bgFruity,
+  oceanic: bgOceanic,
+  earthy: bgEarthy,
 };
 
 interface PastResultProps {

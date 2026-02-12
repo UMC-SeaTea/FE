@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import NavBar from "../../components/common/NavBar";
-import backIcon from "../../assets/backButton_black.svg";
-import PastResult from "../../components/common/PastResult";
-import { useInfiniteDiagnosisHistory } from "../../hooks/diagnosis/useInfiniteDiagnosisHistory";
-import { formatDate } from "../../lib/formatDate";
-import type { DiagnosisHistoryItem } from "../../types/diagnosis/history";
+import { useEffect, useMemo, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import NavBar from '../../components/common/NavBar';
+import backIcon from '../../assets/backButton_black.svg';
+import PastResult from '../../components/common/PastResult';
+import { useInfiniteDiagnosisHistory } from '../../hooks/diagnosis/useInfiniteDiagnosisHistory';
+import { formatDate } from '../../lib/formatDate';
+import type { DiagnosisHistoryItem } from '../../types/diagnosis/history';
 
 const PastResultPage = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const PastResultPage = () => {
         if (isFetchingNextPage) return;
         fetchNextPage();
       },
-      { root: null, rootMargin: "200px", threshold: 0 }
+      { root: null, rootMargin: '200px', threshold: 0 }
     );
 
     observer.observe(el);
@@ -56,7 +56,9 @@ const PastResultPage = () => {
 
         <div className="flex flex-col gap-[8px]">
           {isLoading ? (
-            <p className="font-body text-body-4 text-gray-400">불러오는 중...</p>
+            <p className="font-body text-body-4 text-gray-400">
+              불러오는 중...
+            </p>
           ) : isError ? (
             <p className="font-body text-body-4 text-red-500">
               과거 진단내역을 불러오지 못했습니다.
@@ -87,7 +89,7 @@ const PastResultPage = () => {
         </div>
 
         {!isLoading && !isError && !hasNextPage && items.length > 0 && (
-          <p className="pt-[48px] text-center font-body text-body-4 text-gray-300">
+          <p className="pt-[40px] text-center font-body text-body-4 text-gray-300">
             목록의 끝입니다.
           </p>
         )}
