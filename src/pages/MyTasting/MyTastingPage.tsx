@@ -4,7 +4,7 @@ import HomeTestType from '../../components/common/HomeTestType';
 import PastResult from '../../components/common/PastResult';
 import Footer from '../../components/common/Footer';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import TastingNote from '../../components/common/TastingNote';
 import PlaceTestCard from '../../components/PlaceTest/PlaceTestCard';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';

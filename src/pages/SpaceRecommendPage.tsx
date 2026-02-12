@@ -4,7 +4,7 @@ import HomeTestType from '../components/common/HomeTestType';
 import tea from '../assets/images/teaIcon.png';
 import refresh from '../assets/refresh.svg';
 // import PlaceList from '../components/common/PlaceList';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FeedbackButton from '../components/Feedback/FeedbackButton';
 import { showToast } from '../components/Toast/ToastHost';
