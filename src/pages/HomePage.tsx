@@ -15,6 +15,8 @@ const HomePage = () => {
   });
   // const { data, isLoading } = useSpaceDetail();
 
+  // const lastDiagnosisDate =
+
   return (
     <>
       <div className="flex flex-col gap-[42px]">
@@ -41,7 +43,7 @@ const HomePage = () => {
             </Carousel> */}
           </div>
           <HomeComponent />
-          <SideBarTest />
+          {/* <SideBarTest lastDiagnosisDate={} /> */}
         </div>
       </div>
       <div className="pt-[52px]">

@@ -24,7 +24,7 @@ import MainLayout from '../layouts/MainLayout';
 
 export const protectedRoutes = [
   {
-    element: React.createElement(ProtectedWrapper),
+    element: <ProtectedWrapper />,
     children: [
       {
         element: <MainLayout />,
