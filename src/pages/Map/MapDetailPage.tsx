@@ -11,8 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { showToast } from '../../components/Toast/ToastHost';
 import { useSpaceDetail } from '../../hooks/spaces/useSpaceDetail';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import teaBag from '../../assets/teaBag.svg';
-import unteaBag from '../../assets/teaBag_gray.svg';
+import { PiTeaBag } from 'react-icons/pi';
+import { PiTeaBagFill } from 'react-icons/pi';
 import {
   useDeleteMyTeabag,
   usePostMyTeabag,
@@ -86,11 +86,11 @@ const MapDetailPage = () => {
             </p>
             {isLoggedIn && (
               <button className="cursor-pointer" onClick={handleTeabagClick}>
-                <img
-                  src={isSaved ? teaBag : unteaBag}
-                  alt="tea bag"
-                  className="w-[28px] h-[28px]"
-                />
+                {isSaved ? (
+                  <PiTeaBagFill className="w-[28px] h-[28px]" />
+                ) : (
+                  <PiTeaBag className="w-[28px] h-[28px]" />
+                )}
               </button>
             )}
           </div>
