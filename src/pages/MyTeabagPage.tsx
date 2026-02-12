@@ -5,7 +5,6 @@ import SortButton from '../components/common/SortButton';
 import EditButton from '../components/common/EditButton';
 import MoveupButton from '../assets/RoundButton/moveup_btn.svg';
 import Footer from '../components/common/Footer';
-
 import { getMyTeabagList, deleteMyTeabag } from '../apis/teabag/myTeabag';
 import type { MyTeabagItem } from '../types/myTeabag';
 

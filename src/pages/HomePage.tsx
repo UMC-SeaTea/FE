@@ -1,18 +1,21 @@
 import NavBar from '../components/common/NavBar';
 import menu from '../assets/menu_black.svg';
 import HomeTestType from '../components/common/HomeTestType';
-// import SpaceCardMini from '../components/common/SpaceCardMini';
 import SideBarTest from '../components/common/SideBarTest';
-// import Carousel from '../components/common/Carousel';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
 import useSideBar from '../hooks/useSideBar';
 import Footer from '../components/common/Footer';
+import { useSpaceRecent } from '../hooks/spaces/useSpaceRecent';
+import Carousel from '../components/common/Carousel';
+import SpaceCardMini from '../components/common/SpaceCardMini';
 
 const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
     closeOnEsc: true,
   });
+
+  const { data, isLoading } = useSpaceRecent({ size: 10 });
 
   return (
     <>
@@ -33,11 +36,17 @@ const HomePage = () => {
             <p className="text-black font-body text-body-title">
               최근 확인한 공간
             </p>
-            {/* <Carousel>
-              <SpaceCardMini name={data.name} roadAddress={data.roadAddress} thumbnailImageUrl={data.thumbnailImageUrl} />
-              <SpaceCardMini name={data.name} roadAddress={data.roadAddress} thumbnailImageUrl={data.thumbnailImageUrl} />
-              <SpaceCardMini name={data.name} roadAddress={data.roadAddress} thumbnailImageUrl={data.thumbnailImageUrl} />
-            </Carousel> */}
+            <Carousel>
+              {data?.result?.items?.map((space) => (
+                <SpaceCardMini
+                  key={space.spaceId}
+                  spaceId={space.spaceId}
+                  name={space.name}
+                  roadAddress={space.address || '주소 미제공'}
+                  thumbnailImageUrl={space.thumbnailImageUrl}
+                />
+              ))}
+            </Carousel>
           </div>
           <HomeComponent />
           <SideBarTest />
