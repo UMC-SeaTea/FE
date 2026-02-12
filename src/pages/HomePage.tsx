@@ -11,6 +11,7 @@ import Footer from '../components/common/Footer';
 import { useMemberStore } from '../stores/useMemberStore';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import { toTastingKey } from '../utils/tastingType';
+import { getDaysAgo } from '../utils/date';
 
 const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
@@ -22,6 +23,11 @@ const HomePage = () => {
   const safeCode = toTastingKey(rawCode);
 
   // const { data, isLoading } = useSpaceDetail();
+
+  const pastDiagnosisDate = useMemberStore(
+    (s) => s.profile?.currentType?.createdAt
+  );
+  const daysAgo = getDaysAgo(pastDiagnosisDate);
 
   return (
     <>
@@ -55,7 +61,7 @@ const HomePage = () => {
             </Carousel> */}
           </div>
           <HomeComponent />
-          <SideBarTest />
+          <SideBarTest pastDiagnosisDate={daysAgo} />
         </div>
       </div>
       <div className="pt-[52px]">
