@@ -73,7 +73,64 @@
 | **Vite Plugin SVGR** | `v4.5.0` | SVG 컴포넌트 변환 도구 |
 
 ---
-## 프로젝트 구조
+## 📂 Project Structure
+
+FE/
+├── public/
+├── src/
+│   ├── apis/                   # API 통신 모듈
+│   │   ├── auth/               # 인증 관련 API (로그인, 회원가입)
+│   │   ├── diagnosis/          # 테이스팅 노트 진단 API
+│   │   ├── spaces/             # 공간(지도) 및 검색 API
+│   │   ├── teabag/             # 마이 티백 API
+│   │   ├── axios.ts            # Axios 인스턴스 및 인터셉터 설정
+│   │   └── member.ts           # 사용자 정보 관련 API
+│   ├── assets/                 # 리소스 (아이콘, 이미지)
+│   ├── components/             # 재사용 가능한 UI 컴포넌트
+│   │   ├── Button/             # 공통 버튼 컴포넌트
+│   │   ├── common/             # 기타 공통 컴포넌트
+│   │   ├── Diagnosis/          # 진단 질문 및 진행바 컴포넌트
+│   │   ├── Feedback/           # 피드백 UI 컴포넌트
+│   │   ├── LoadingSpinner/     # 로딩 인디케이터
+│   │   ├── MyPage/             # 프로필 카드 및 설정 컴포넌트
+│   │   ├── PlaceTest/          # 공간 테스트 관련 컴포넌트
+│   │   ├── Search/             # 검색 결과 리스트 컴포넌트
+│   │   ├── SearchBar/          # 검색 입력바 컴포넌트
+│   │   ├── SideBar/            # 네비게이션 사이드바
+│   │   ├── SignUp/             # 회원가입 폼 컴포넌트
+│   │   └── Toast/              # 토스트 메시지 컴포넌트
+│   ├── constants/              # 상수 데이터
+│   ├── hooks/                  # 커스텀 훅
+│   ├── layouts/                # 레이아웃
+│   ├── lib/                    # 라이브러리 설정
+│   ├── pages/                  # 페이지 컴포넌트 (라우팅 단위)
+│   │   ├── Diagnosis/          # 진단
+│   │   ├── Login/              # 로그인
+│   │   ├── Map/                # 지도 및 공간 탐색
+│   │   ├── MyPage/             # 마이페이지
+│   │   ├── MyTasting/          # 마이 테이스팅 노트
+│   │   ├── ErrorPage.tsx       # 404 및 에러 처리 페이지
+│   │   ├── HomePage.tsx        # 메인 홈 페이지
+│   │   ├── MyTeabagPage.tsx    # 마이 티백 (저장한 공간) 페이지
+│   │   ├── OAuthCallbackPage.tsx # 카카오 소셜 로그인 리다이렉트 처리 페이지
+│   │   ├── SignUpPage.tsx      # 회원가입 및 초기 프로필 설정 페이지
+│   │   └── SpaceRecommendPage.tsx # 맞춤 공간 추천 페이지
+│   ├── routes/                 # 라우팅 설정
+│   │   ├── ProtectedRoutes.tsx 
+│   │   ├── PublicRoutes.tsx   
+│   │   └── index.ts          
+│   ├── styles/                 # 스타일
+│   ├── types/                  # 타입 정의
+│   ├── utils/                  # 유틸리티 함수
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── vite-env.d.ts
+├── .env
+├── package.json
+├── tailwind.config.js
+├── tsconfig.json
+└── vite.config.ts
+
 
 ---
 
