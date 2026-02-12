@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import SpaceRecommendation from "../../components/common/SpaceRecommendation";
 import FeedbackButton from "../../components/Feedback/FeedbackButton";
 import refreshIcon from "../../assets/refresh.svg";
@@ -8,30 +9,12 @@ import { showToast } from "../../components/Toast/ToastHost";
 import { useSpaceRecommend } from "../../hooks/spaces/useSpaceRecommend";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import PlaceList from "../../components/common/PlaceList";
+import { toTastingKey } from "../../utils/tastingType"; 
 
 type RecommendState = {
-  
   resultTypeCode?: string; 
-  
   resultType?: TastingKey; 
 };
-
-const CODE_TO_KEY: Record<string, TastingKey> = {
-  FLORAL: "floral",
-  FRUITY: "fruity",
-  OCEANIC: "oceanic",
-  EARTHY: "earthy",
-  NUTTY: "nutty",
-  SMOKY: "smoky",
-  SPICES: "spices",
-  SWEET: "sweet",
-};
-
-function toTastingKey(code?: string): TastingKey {
-  if (!code) return "floral";
-  const upper = String(code).toUpperCase();
-  return CODE_TO_KEY[upper] ?? "floral";
-}
 
 export default function DiagnosisSpaceRecommendPage() {
   const navigate = useNavigate();
@@ -44,8 +27,15 @@ export default function DiagnosisSpaceRecommendPage() {
 
   
   const tastingTypeCode = useMemo(() => {
-    const code = state.resultTypeCode ?? (state.resultType ? state.resultType.toUpperCase() : undefined);
-    return (code ?? "FLORAL").toUpperCase();
+    if (state.resultTypeCode) {
+      return state.resultTypeCode.toUpperCase();
+    }
+
+    if (state.resultType) {
+      return state.resultType.toUpperCase();
+    }
+
+    return "FLORAL";
   }, [state.resultTypeCode, state.resultType]);
 
   
@@ -54,7 +44,7 @@ export default function DiagnosisSpaceRecommendPage() {
   }, [state.resultType, state.resultTypeCode]);
 
   const { data, isLoading, isError, refetch } = useSpaceRecommend({
-    tastingTypeCode, 
+    tastingTypeCode,
   });
 
   const onSubmit = (value: "good" | "bad") => {
@@ -86,7 +76,9 @@ export default function DiagnosisSpaceRecommendPage() {
               <p className="font-body text-body-title text-footer">공간 추천</p>
 
               <div className="flex items-center gap-[8px]">
-                <span className="font-body text-body-4 text-gray-100">공간 다시 우리기</span>
+                <span className="font-body text-body-4 text-gray-100">
+                  공간 다시 우리기
+                </span>
                 <button
                   type="button"
                   onClick={() => refetch()}
@@ -114,7 +106,9 @@ export default function DiagnosisSpaceRecommendPage() {
                     />
                   ))
                 ) : (
-                  <p className="font-body text-body-5 text-gray-100">추천 공간이 없습니다.</p>
+                  <p className="font-body text-body-5 text-gray-100">
+                    추천 공간이 없습니다.
+                  </p>
                 )}
               </div>
             </div>
