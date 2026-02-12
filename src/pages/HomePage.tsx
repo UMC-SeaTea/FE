@@ -2,7 +2,7 @@ import NavBar from '../components/common/NavBar';
 import menu from '../assets/menu_black.svg';
 import HomeTestType from '../components/common/HomeTestType';
 // import SpaceCardMini from '../components/common/SpaceCardMini';
-import SideBarTest from '../components/common/SideBarTest';
+// import SideBarTest from '../components/common/SideBarTest';
 // import Carousel from '../components/common/Carousel';
 import SideBarContainer from '../components/SideBar/SideBarContainer';
 import HomeComponent from '../components/common/HomeComponent';
