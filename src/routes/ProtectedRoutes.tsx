@@ -1,12 +1,14 @@
-import MainLayout from '../layouts/MainLayout';
+import React from 'react';
+import HomePage from '../pages/HomePage';
+import { ProtectedWrapper } from './wrappers/AuthWrappers';
 
 export const protectedRoutes = [
   {
-    element: <MainLayout />,
+    element: React.createElement(ProtectedWrapper),
     children: [
       {
-        path: ':',
-        element: <></>,
+        path: '/',
+        element: <HomePage />,
       },
     ],
   },

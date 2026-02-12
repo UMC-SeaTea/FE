@@ -28,7 +28,6 @@ export const publicRoutes = [
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/', element: <HomePage /> },
       { path: '/map', element: <MapPage /> },
       { path: '/map/search', element: <MapSearchPage /> },
       { path: '/map/:sid', element: <MapDetailPage /> },
