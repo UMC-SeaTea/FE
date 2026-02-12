@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import SpaceRecommendation from "../../components/common/SpaceRecommendation";
 import FeedbackButton from "../../components/Feedback/FeedbackButton";
 import refreshIcon from "../../assets/refresh.svg";
