@@ -50,15 +50,25 @@
 
 ## 🛠 Tech Stack
 
-| Category | Stack |
-|--------|------|
-| Language | TypeScript |
-| Framework | React |
-| Build Tool | Vite |
-| Styling | TailwindCSS |
-| Package Manager | npm |
-| Lint / Format | ESLint, Prettier |
-| Collaboration | Git, GitHub |
+### Frontend
+| Package | Version | Description |
+| :--- | :--- | :--- |
+| **React** | `v19.2.0` | UI 라이브러리 |
+| **TypeScript** | `v5.9.3` | 정적 타입 언어 |
+| **Vite** | `v7.2.4` | 빌드 툴 & 개발 서버 |
+| **React Router** | `v7.11.0` | 페이지 라우팅 |
+| **TanStack Query** | `v5.90.20` | 서버 상태 관리 & 데이터 패칭 |
+| **Axios** | `v1.13.4` | HTTP 클라이언트 |
+| **Tailwind CSS** | `v4.1.18` | 유틸리티 퍼스트 CSS 프레임워크 |
+| **React Icons** | `v5.5.0` | 아이콘 라이브러리 |
+| **CLSX** | `v2.1.1` | 조건부 클래스 병합 유틸리티 |
+
+### Development Tools
+| Package | Version | Description |
+| :--- | :--- | :--- |
+| **ESLint** | `v9.39.2` | 코드 린팅 도구 |
+| **Prettier** | `v3.8.1` | 코드 포맷터 |
+| **Vite Plugin SVGR** | `v4.5.0` | SVG 컴포넌트 변환 도구 |
 
 ## 📌 Commit Convention
 ### Format
