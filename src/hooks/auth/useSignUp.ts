@@ -12,7 +12,6 @@ import {
 
 export const useSignUp = () => {
   const navigate = useNavigate();
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
