@@ -8,6 +8,7 @@ import Footer from '../components/common/Footer';
 
 import { getMyTeabagList, deleteMyTeabag } from '../apis/teabag/myTeabag';
 import type { MyTeabagItem } from '../types/myTeabag';
+import { useMemberStore } from '../stores/useMemberStore';
 
 const MyTeabagPage = () => {
   const [items, setItems] = useState<MyTeabagItem[]>([]);
@@ -22,6 +23,8 @@ const MyTeabagPage = () => {
 
   const [isFooterInView, setIsFooterInView] = useState(false);
   const footerRef = useRef<HTMLDivElement>(null);
+
+  const nickname = useMemberStore((s) => s.profile?.nickname);
 
   const fetchTeabagList = async (
     reset: boolean = false,
@@ -142,7 +145,7 @@ const MyTeabagPage = () => {
       <div className="flex-1 flex flex-col items-center w-[335px] gap-6 mt-[55px] mx-auto">
         <div className="flex items-center self-stretch justify-between">
           <div className="text-black font-body text-[20px] font-semibold leading-[140%] tracking-[-0.5px]">
-            UMC 님의 티백
+            {nickname} 님의 티백
             {items.length > 0 && (
               <span className="ml-2 text-sm font-normal text-gray-500">
                 ({items.length})
