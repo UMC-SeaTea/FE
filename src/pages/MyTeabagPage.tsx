@@ -144,7 +144,7 @@ const MyTeabagPage = () => {
       <div className="flex-1 flex flex-col items-center w-[335px] gap-6 mt-[55px] mx-auto">
         <div className="flex items-center self-stretch justify-between">
           <div className="text-black font-body text-[20px] font-semibold leading-[140%] tracking-[-0.5px]">
-            {nickname} 님의 티백
+            {nickname}님의 티백
             {items.length > 0 && (
               <span className="ml-2 text-sm font-normal text-gray-500">
                 ({items.length})
