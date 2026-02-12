@@ -13,7 +13,6 @@ const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
     closeOnEsc: true,
   });
-  // const { data, isLoading } = useSpaceDetail();
 
   return (
     <>
