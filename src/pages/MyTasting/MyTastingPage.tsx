@@ -12,10 +12,6 @@ import useSideBar from '../../hooks/useSideBar';
 import moveButton from '../../assets/moveButton_gray.svg';
 import { useNavigate } from 'react-router-dom';
 import { useMemberStore } from '../../stores/useMemberStore';
-import {
-  isTastingKey,
-  type TastingKey,
-} from '../../types/tastingType/tastingType';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { toTastingKey } from '../../utils/tastingType';
 

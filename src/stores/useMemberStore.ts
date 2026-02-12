@@ -8,7 +8,7 @@ type MemberState = {
   error: string | null;
 
   setProfile: (profile: MemberProfileResult | null) => void;
-  updateProfile: (currentType: MemberProfileResult['currentType']) => void;
+  setCurrentTypeCode: (code: string) => void;
   fetchProfile: () => Promise<void>;
   clearProfile: () => void;
 };
@@ -20,10 +20,20 @@ export const useMemberStore = create<MemberState>((set) => ({
 
   setProfile: (profile) => set({ profile }),
 
-  updateProfile: (currentType) =>
-    set((state) => ({
-      profile: state.profile ? { ...state.profile, currentType } : null,
-    })),
+  setCurrentTypeCode: (code) =>
+    set((state) => {
+      if (!state.profile) return {};
+
+      return {
+        profile: {
+          ...state.profile,
+          currentType: {
+            ...state.profile.currentType,
+            code,
+          } as typeof state.profile.currentType,
+        },
+      };
+    }),
 
   fetchProfile: async () => {
     set({ isLoading: true, error: null });
