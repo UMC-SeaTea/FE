@@ -14,10 +14,9 @@ export const useAuth = () => {
 
     onSuccess: (response) => {
       if (response.isSuccess && response.result) {
-        const { accessToken, refreshToken, id } = response.result;
+        const { accessToken, id } = response.result;
 
         localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, accessToken);
-        localStorage.setItem(LOCAL_STORAGE_KEYS.refreshToken, refreshToken);
 
         if (id) {
           localStorage.setItem(LOCAL_STORAGE_KEYS.memberId, String(id));
@@ -45,8 +44,7 @@ export const useAuth = () => {
 
   const logout = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.refreshToken);
-    localStorage.removeItem('memberId');
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.memberId);
 
     queryClient.removeQueries({ queryKey: ['user'] });
     queryClient.clear();
