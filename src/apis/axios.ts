@@ -19,11 +19,16 @@ export const refreshInstance = (refresh: string): AxiosInstance =>
     },
   });
 
+let isRedirecting = false;
+
 // 토큰 오류시 토큰 제거 후 로그인 페이지로 리다이렉트 로직
 const handleTokenError = (error: any) => {
   localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
   localStorage.removeItem(LOCAL_STORAGE_KEYS.refreshToken);
-  window.location.href = '/login/start';
+  if (!isRedirecting) {
+    isRedirecting = true;
+    window.location.href = '/login/start';
+  }
   return Promise.reject(error);
 };
 
@@ -60,41 +65,44 @@ axiosInstance.interceptors.response.use(
     }
 
     // 401 에러면서, 아직 재시도 하지 않은 요청 경우 처리
-    if (status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const refreshToken = localStorage.getItem(
-          LOCAL_STORAGE_KEYS.refreshToken
-        );
-        if (!refreshToken) {
-          throw new Error('토큰이 없습니다.');
-        }
+    // if (status === 401 && !originalRequest._retry) {
+    //   originalRequest._retry = true;
+    //   try {
+    //     const refreshToken = localStorage.getItem(
+    //       LOCAL_STORAGE_KEYS.refreshToken
+    //     );
+    //     if (!refreshToken) {
+    //       throw new Error('토큰이 없습니다.');
+    //     }
 
-        const response =
-          await refreshInstance(refreshToken).post('/api/auth/reissue');
+    //     const response =
+    //       await refreshInstance(refreshToken).post('/api/auth/reissue');
 
-        const result = response.data.result || response.data;
-        const newAccessToken = result?.accessToken;
+    //     const result = response.data.result || response.data;
+    //     const newAccessToken = result?.accessToken;
 
-        if (!newAccessToken) {
-          throw new Error('새로운 토큰을 받지 못했습니다.');
-        }
+    //     if (!newAccessToken) {
+    //       throw new Error('새로운 토큰을 받지 못했습니다.');
+    //     }
 
-        localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, newAccessToken);
+    //     localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, newAccessToken);
 
-        const newRefreshToken = result?.refreshToken;
-        if (newRefreshToken) {
-          localStorage.setItem(
-            LOCAL_STORAGE_KEYS.refreshToken,
-            newRefreshToken
-          );
-        }
+    //     const newRefreshToken = result?.refreshToken;
+    //     if (newRefreshToken) {
+    //       localStorage.setItem(
+    //         LOCAL_STORAGE_KEYS.refreshToken,
+    //         newRefreshToken
+    //       );
+    //     }
 
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return axiosInstance(originalRequest);
-      } catch (reissueError) {
-        return handleTokenError(reissueError);
-      }
+    //     originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+    //     return axiosInstance(originalRequest);
+    //   } catch (reissueError) {
+    //     return handleTokenError(reissueError);
+    //   }
+    // }
+    if (status === 401) {
+      return handleTokenError(error);
     }
 
     // 403 에러, 접근 권한이 없는 경우

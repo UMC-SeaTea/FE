@@ -64,6 +64,7 @@
 | **Tailwind CSS** | `v4.1.18` | 유틸리티 퍼스트 CSS 프레임워크 |
 | **React Icons** | `v5.5.0` | 아이콘 라이브러리 |
 | **CLSX** | `v2.1.1` | 조건부 클래스 병합 유틸리티 |
+| **Zustand** | `v5.0.11` | 글로벌 클라이언트 상태 관리 라이브러리 |
 
 ### Development Tools
 | Package | Version | Description |
