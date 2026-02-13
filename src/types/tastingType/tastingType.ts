@@ -1,4 +1,3 @@
-//src/types/tastingType/tastingType.ts
 export const TASTING_KEYS = [
   'floral',
   'nutty',

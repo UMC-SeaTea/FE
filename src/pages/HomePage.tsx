@@ -18,7 +18,6 @@ const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
     closeOnEsc: true,
   });
-  // const { data, isLoading } = useSpaceDetail();
 
   const { data, isLoading, isError } = useSpaceRecent({ size: 10 });
   const items = data?.result?.items ?? [];
