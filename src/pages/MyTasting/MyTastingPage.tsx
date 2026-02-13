@@ -1,8 +1,7 @@
-// src/pages/MyTasting/MyTastingPage.tsx
-import { useMemo, useState } from "react";
-import { useDiagnosisHistory } from "../../hooks/diagnosis/useDiagnosisHistory";
-import { formatDate } from "../../lib/formatDate";
-import type { DiagnosisHistoryItem } from "../../types/diagnosis/history";
+import { useMemo, useState } from 'react';
+import { useDiagnosisHistory } from '../../hooks/diagnosis/useDiagnosisHistory';
+import { formatDate } from '../../lib/formatDate';
+import type { DiagnosisHistoryItem } from '../../types/diagnosis/history';
 import NavBar from '../../components/common/NavBar';
 import menuIcon from '../../assets/menu_black.svg';
 import HomeTestType from '../../components/common/HomeTestType';
@@ -25,7 +24,6 @@ const MyTastingPage = () => {
     closeOnEsc: true,
   });
   const navigate = useNavigate();
-
 
   const {
     data: historyData,
@@ -58,7 +56,6 @@ const MyTastingPage = () => {
         onClick={toggleSideBar}
       />
       <SideBarContainer open={open} onClose={closeSideBar} />
-
       <div className="pt-[50px] flex flex-col gap-[12px]">
         <div className="flex items-center gap-[4px]">
           <p className="pl-[20px] font-body text-body-title text-black">
@@ -80,7 +77,6 @@ const MyTastingPage = () => {
 
       <div className="flex flex-col pt-[42px] px-[20px] gap-[42px] pb-[37px]">
         {isOpenInfo && <TastingNote />}
-
         {/* 새로 진단하기 */}
         <div>
           <p className="pb-[24px] text-body-title font-body text-black">
@@ -107,11 +103,13 @@ const MyTastingPage = () => {
         {/* 과거 진단내역 */}
         <div className="flex flex-col gap-[20px]">
           <div className="flex items-center justify-between">
-            <p className="font-body text-body-title text-black">과거 진단내역</p>
+            <p className="font-body text-body-title text-black">
+              과거 진단내역
+            </p>
 
             <button
               className="flex items-center gap-[2px] cursor-pointer"
-              onClick={() => navigate("/mytasting/past")}
+              onClick={() => navigate('/mytasting/past')}
             >
               <p className="font-body text-body-4 text-gray-100">더보기</p>
               <img src={moveButton} alt="더보기 아이콘" />

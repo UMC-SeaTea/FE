@@ -4,7 +4,7 @@ import SearchBarDefault from '../../components/SearchBar/SearchBarDefault';
 import Map from '../../components/common/Map';
 import Chip from '../../components/common/Chip';
 import Carousel from '../../components/common/Carousel';
-import { useEffect, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import GPSIcon from '../../assets/RoundButton/gps_btn.svg';
 import useLocation from '../../hooks/useLocation';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';
@@ -13,7 +13,6 @@ import { CHIP_LIST } from '../../constants/chip';
 import { type SpaceBoundParams } from '../../types/spaces/spaceBound';
 import useDebounce from '../../hooks/useDebounce';
 import { useSpaceBound } from '../../hooks/spaces/useSpaceBound';
-// import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const MapPage = () => {
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
@@ -45,17 +44,6 @@ const MapPage = () => {
   }, [data, selectedChip]);
 
   const { location, setCurrentLocation, loading, error } = useLocation();
-
-  useEffect(() => {
-    if (!location) return;
-    console.log('현재 위치:', location.lat, location.lng);
-  }, [location]);
-
-  useEffect(() => {
-    if (!debouncedBounds) return;
-
-    console.log('API params:', debouncedBounds);
-  }, [debouncedBounds]);
 
   return (
     <>
