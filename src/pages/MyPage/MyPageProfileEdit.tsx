@@ -10,7 +10,7 @@ import ProfileEditInput from '../../components/MyPage/MyPageProfileEditInput';
 import ProfileReadOnly from '../../components/MyPage/MyPageProfileReadOnly';
 import { useMemberProfile, useUpdateProfile } from '../../hooks/useMember';
 import { getProfileImageUrl } from '../../lib/utils';
-import { validateNickname } from '../../lib/utils'; //
+import { validateNickname } from '../../lib/utils';
 
 const MyPageProfileEdit = () => {
   const navigate = useNavigate();
