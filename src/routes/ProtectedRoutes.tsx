@@ -58,7 +58,6 @@ export const protectedRoutes = [
             path: '/diagnosis/advanced-loading',
             element: <DiagnosisAdvancedLoading />,
           },
-          { path: '*', element: <ErrorPage /> },
         ],
       },
     ],
