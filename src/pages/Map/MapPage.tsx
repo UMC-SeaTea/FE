@@ -14,6 +14,7 @@ import { type SpaceBoundParams } from '../../types/spaces/spaceBound';
 import useDebounce from '../../hooks/useDebounce';
 import { useSpaceBound } from '../../hooks/spaces/useSpaceBound';
 import { useDiagnosisHistory } from '../../hooks/diagnosis/useDiagnosisHistory';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const MapPage = () => {
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
@@ -69,7 +70,7 @@ const MapPage = () => {
 
     const items = data?.result?.items || [];
 
-    const allPins = items.map((it: any) => ({
+    const allPins = items.map((it) => ({
       spaceId: it.spaceId,
       name: it.name,
       lat: it.lat,
@@ -128,13 +129,13 @@ const MapPage = () => {
         </div>
         {isLoading && (
           <div className="absolute inset-0 z-[80] flex items-center justify-center bg-white/60">
-            {/* <LoadingSpinner /> */}
+            <LoadingSpinner />
           </div>
         )}
 
         {!isLoading && isFetching && (
           <div className="absolute top-3 right-3 z-[80]">
-            {/* <LoadingSpinner /> */}
+            <LoadingSpinner />
           </div>
         )}
         {isError && <p>에러가 발생했습니다.</p>}
