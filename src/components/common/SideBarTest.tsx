@@ -18,7 +18,7 @@ const SideBarTest = ({ pastDiagnosisDate }: SideBarTestProps) => {
               <p className="font-body text-body-1 text-black">
                 마음의 상태가 바뀌었나요?
               </p>
-              <p className="w-[212px] font-body text-detail-4 text-gray-100">
+              <p className="w-[212px] font-body text-detail-4 text-gray-100 whitespace-nowrap">
                 가장 마지막으로 진단받은 날짜는{' '}
                 {pastDiagnosisDate != null
                   ? `${pastDiagnosisDate}일 전`
