@@ -15,6 +15,7 @@ export const publicRoutes = [
           { path: '/login', element: <LoginPage /> },
           { path: '/login/start', element: <LoginStartPage /> },
           { path: '/signup', element: <SignUpPage /> },
+          { path: '*', element: <ErrorPage /> },
         ],
       },
     ],
