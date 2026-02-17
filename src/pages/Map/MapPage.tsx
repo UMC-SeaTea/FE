@@ -4,7 +4,7 @@ import SearchBarDefault from '../../components/SearchBar/SearchBarDefault';
 import Map from '../../components/common/Map';
 import Chip from '../../components/common/Chip';
 import Carousel from '../../components/common/Carousel';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import GPSIcon from '../../assets/RoundButton/gps_btn.svg';
 import useLocation from '../../hooks/useLocation';
 import SideBarContainer from '../../components/SideBar/SideBarContainer';
@@ -13,6 +13,7 @@ import { CHIP_LIST } from '../../constants/chip';
 import { type SpaceBoundParams } from '../../types/spaces/spaceBound';
 import useDebounce from '../../hooks/useDebounce';
 import { useSpaceBound } from '../../hooks/spaces/useSpaceBound';
+import { useDiagnosisHistory } from '../../hooks/diagnosis/useDiagnosisHistory';
 
 const MapPage = () => {
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
@@ -25,7 +26,47 @@ const MapPage = () => {
   const { data, isLoading, isError, isFetching } =
     useSpaceBound(debouncedBounds);
 
+  const { location, setCurrentLocation, loading, error } = useLocation();
+
+  const { data: historyData, refetch: refetchHistory } = useDiagnosisHistory(
+    0,
+    100
+  );
+
+  useEffect(() => {
+    refetchHistory();
+  }, []);
+
+  // 사용자가 진단 받은 타입
+  const myCodes = useMemo(() => {
+    const list = historyData?.result?.content ?? [];
+
+    const seen = new Set<string>();
+
+    return list
+      .map((h) => h.typeCode)
+      .filter((code) => {
+        if (!code || seen.has(code)) return false;
+        seen.add(code);
+        return true;
+      });
+  }, [historyData]);
+
+  const myChipList = useMemo(() => {
+    return myCodes
+      .map((code) => CHIP_LIST.find((chip) => chip.value === code))
+      .filter((chip): chip is (typeof CHIP_LIST)[number] => Boolean(chip));
+  }, [myCodes]);
+
+  useEffect(() => {
+    if (selectedChip && !myCodes.includes(selectedChip)) {
+      setSelectedChip(null);
+    }
+  }, [selectedChip, myCodes]);
+
   const pins = useMemo(() => {
+    if (myChipList.length === 0) return [];
+
     const items = data?.result?.items || [];
 
     const allPins = items.map((it: any) => ({
@@ -36,14 +77,15 @@ const MapPage = () => {
       tastingTypeCode: it.tastingTypeCode,
     }));
 
-    // 선택된 칩 없으면 전체 표시
-    if (!selectedChip) return allPins;
+    // 내가 가진 타입
+    const myTypePins = allPins.filter((p) =>
+      myCodes.includes(p.tastingTypeCode)
+    );
 
-    // 칩 선택 있으면 타입만 필터
-    return allPins.filter((p) => p.tastingTypeCode === selectedChip);
-  }, [data, selectedChip]);
-
-  const { location, setCurrentLocation, loading, error } = useLocation();
+    // 칩 선택하면 해당 타입만 핀
+    if (!selectedChip) return myTypePins;
+    return myTypePins.filter((p) => p.tastingTypeCode === selectedChip);
+  }, [data, selectedChip, myChipList.length]);
 
   return (
     <>
@@ -64,21 +106,23 @@ const MapPage = () => {
         <div className="absolute top-[30px] left-1/2 -translate-x-1/2 z-10 w-[375px] pl-[20px]">
           <div className="flex flex-col gap-[12px]">
             <SearchBarDefault />
-            <Carousel>
-              {CHIP_LIST.map((chip) => (
-                <Chip
-                  key={chip.value}
-                  label={chip.label}
-                  textColor={chip.textColor}
-                  active={selectedChip === chip.value}
-                  onClick={() =>
-                    setSelectedChip(
-                      selectedChip === chip.value ? null : chip.value
-                    )
-                  }
-                />
-              ))}
-            </Carousel>
+            {myChipList.length > 0 && (
+              <Carousel>
+                {myChipList.map((chip) => (
+                  <Chip
+                    key={chip.value}
+                    label={chip.label}
+                    textColor={chip.textColor}
+                    active={selectedChip === chip.value}
+                    onClick={() =>
+                      setSelectedChip(
+                        selectedChip === chip.value ? null : chip.value
+                      )
+                    }
+                  />
+                ))}
+              </Carousel>
+            )}
           </div>
           {error && <p>{error}</p>}
         </div>
