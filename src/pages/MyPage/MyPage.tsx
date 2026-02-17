@@ -8,6 +8,7 @@ import useSideBar from '../../hooks/useSideBar';
 import Footer from '../../components/common/Footer';
 import { useMemberProfile } from '../../hooks/useMember';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { useAuth } from '../../hooks/auth/useAuth';
 
 const FullScreenCenter = ({ children }: { children: React.ReactNode }) => (
   <div className="w-full min-h-screen bg-[#0A0A0A] flex justify-center items-center">
@@ -21,6 +22,8 @@ const MyPage = () => {
     closeOnEsc: true,
   });
 
+  const { logout } = useAuth();
+
   const { data, isLoading, isError } = useMemberProfile();
   const userProfile = data?.result;
 
@@ -28,10 +31,16 @@ const MyPage = () => {
     { id: 1, title: '나의 티백', path: '/myteabag' },
     { id: 2, title: '알림 설정', path: '' },
     { id: 3, title: '고객센터', path: '' },
-    { id: 4, title: '로그아웃 · 탈퇴', path: '' },
+    { id: 4, title: '로그아웃', path: '' },
   ];
 
-  const handleMenuClick = (path: To) => {
+  const handleMenuClick = (path: To, id: number) => {
+    if (id === 4) {
+      alert('로그아웃되었습니다.');
+      logout();
+      return;
+    }
+
     if (!path) {
       alert('준비중입니다. 다음 업데이트를 기다려주세요! 감사합니다.');
     } else {
@@ -89,7 +98,7 @@ const MyPage = () => {
                 {menuItems.map((item) => (
                   <div
                     key={item.id}
-                    onClick={() => handleMenuClick(item.path)}
+                    onClick={() => handleMenuClick(item.path, item.id)}
                     className="flex flex-col justify-center items-center gap-[10px] self-stretch py-3 px-[18px] cursor-pointer"
                   >
                     <div className="flex justify-between items-center self-stretch">
