@@ -13,6 +13,7 @@ import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import { useMemberStore } from '../stores/useMemberStore';
 import { toTastingKey } from '../utils/tastingType';
 import { getDaysAgo } from '../utils/date';
+import { useDiagnosisHistory } from '../hooks/diagnosis/useDiagnosisHistory';
 
 const HomePage = () => {
   const { open, toggleSideBar, closeSideBar } = useSideBar(false, {
@@ -25,9 +26,8 @@ const HomePage = () => {
   const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
   const safeCode = toTastingKey(rawCode);
 
-  const pastDiagnosisDate = useMemberStore(
-    (s) => s.profile?.currentType?.createdAt
-  );
+  const pastDiagnosisDate = useDiagnosisHistory(0, 1).data?.result?.content[0]
+    ?.createdAt;
   const daysAgo = getDaysAgo(pastDiagnosisDate);
 
   if (isLoading) {
