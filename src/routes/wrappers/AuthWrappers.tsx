@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { LOCAL_STORAGE_KEYS } from '../../constants/key';
 import { useDiagnosisHistory } from '../../hooks/diagnosis/useDiagnosisHistory';
@@ -28,7 +27,5 @@ export const ProtectedWrapper = () => {
 export const PublicWrapper = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.accessToken);
 
-  return token
-    ? React.createElement(Navigate, { to: '/', replace: true })
-    : React.createElement(Outlet);
+  return token ? <Navigate to="/" replace /> : <Outlet />;
 };
