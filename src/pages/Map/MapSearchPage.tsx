@@ -90,7 +90,9 @@ const MapSearchPage = () => {
           </p>
 
           {isLoading ? (
-            <LoadingSpinner />
+            <div className="pt-[156px]">
+              <LoadingSpinner />
+            </div>
           ) : isError ? (
             <p className="font-body text-body-4 py-4 text-center text-gray-100">
               검색 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.
