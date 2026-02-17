@@ -4,6 +4,7 @@ import { login, getMyInfo } from '../../apis/auth/auth';
 import type { LoginRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
 import { LOCAL_STORAGE_KEYS } from '../../constants/key';
+import { axiosInstance } from '../../apis/axios';
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -42,13 +43,20 @@ export const useAuth = () => {
     enabled: !!localStorage.getItem(LOCAL_STORAGE_KEYS.accessToken),
   });
 
-  const logout = () => {
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.memberId);
+  const logout = async () => {
+    try {
+      await axiosInstance.post('/api/logout');
+    } catch (error) {
+      console.error('로그아웃 요청 실패:', error);
+    } finally {
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.memberId);
 
-    queryClient.removeQueries({ queryKey: ['user'] });
-    queryClient.clear();
-    navigate('/login/start');
+      queryClient.removeQueries({ queryKey: ['user'] });
+      queryClient.clear();
+
+      navigate('/login/start');
+    }
   };
 
   return {

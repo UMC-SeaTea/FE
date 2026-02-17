@@ -20,3 +20,9 @@ export const getProfileImageUrl = (
 
   return `${cleanBase}${cleanUrl}`;
 };
+
+export const NICKNAME_REGEX = /^[a-zA-Z0-9가-힣]{4,}$/;
+
+export const validateNickname = (nickname: string): boolean => {
+  return NICKNAME_REGEX.test(nickname);
+};

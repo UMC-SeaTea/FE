@@ -5,13 +5,12 @@ import NavBar from '../../components/common/NavBar';
 import ImageSelectionPopup from '../../components/common/ImageSelectionPopup';
 import backIcon from '../../assets/backButton_white.svg';
 import editCameraIcon from '../../assets/profileEdit_cameraIcon.svg';
-import defaultProfile from '../../assets/profile_default.png';
+import defaultProfile from '../../assets/defaultProfileImage.svg';
 import ProfileEditInput from '../../components/MyPage/MyPageProfileEditInput';
 import ProfileReadOnly from '../../components/MyPage/MyPageProfileReadOnly';
 import { useMemberProfile, useUpdateProfile } from '../../hooks/useMember';
 import { getProfileImageUrl } from '../../lib/utils';
-
-const NAME_VALIDATION_REGEX = /^[a-zA-Z0-9가-힣]{4,}$/;
+import { validateNickname } from '../../lib/utils';
 
 const MyPageProfileEdit = () => {
   const navigate = useNavigate();
@@ -62,7 +61,7 @@ const MyPageProfileEdit = () => {
     setIsChanged(isNameChanged || isImageChanged);
   }, [name, previewImage, initialData]);
 
-  const isValidName = NAME_VALIDATION_REGEX.test(name);
+  const isValidName = validateNickname(name);
   const canSave = isChanged && isValidName && !isPending;
 
   const handleBack = () => {

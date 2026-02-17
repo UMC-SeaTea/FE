@@ -1,5 +1,5 @@
 import backButton from '../../assets/backButton_white.svg';
-import profileDefault from '../../assets/profile_default.png';
+import profileDefault from '../../assets/defaultProfileImage.svg';
 import NoteSearch from '../common/NoteSearch';
 import { useNavigate } from 'react-router-dom';
 import type { MemberProfileResponse } from '../../types/member';
