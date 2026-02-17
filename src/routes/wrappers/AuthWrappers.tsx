@@ -8,7 +8,7 @@ export const ProtectedWrapper = () => {
   const location = useLocation();
 
   if (!token) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
+    return <Navigate to="/login/start" replace state={{ from: location }} />;
   }
   const { data, isLoading } = useDiagnosisHistory(1, 1);
 
