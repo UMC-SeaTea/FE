@@ -56,7 +56,11 @@ const MapPage = () => {
       />
       <SideBarContainer open={open} onClose={closeSideBar} />
 
-      <div className="relative w-[375px]">
+      <div className="fixed inset-0 z-0">
+        <Map center={location} onBoundsChange={setBounds} pins={pins} />
+      </div>
+
+      <div className="relative w-[375px] mx-auto">
         <div className="absolute top-[30px] left-1/2 -translate-x-1/2 z-10 w-[375px] pl-[20px]">
           <div className="flex flex-col gap-[12px]">
             <SearchBarDefault />
@@ -78,32 +82,28 @@ const MapPage = () => {
           </div>
           {error && <p>{error}</p>}
         </div>
-        <div className="relative">
-          <Map center={location} onBoundsChange={setBounds} pins={pins} />
+        {isLoading && (
+          <div className="absolute inset-0 z-[80] flex items-center justify-center bg-white/60">
+            {/* <LoadingSpinner /> */}
+          </div>
+        )}
 
-          {isLoading && (
-            <div className="absolute inset-0 z-[80] flex items-center justify-center bg-white/60">
-              {/* <LoadingSpinner /> */}
-            </div>
-          )}
-
-          {!isLoading && isFetching && (
-            <div className="absolute top-3 right-3 z-[80]">
-              {/* <LoadingSpinner /> */}
-            </div>
-          )}
-          {isError && <p>에러가 발생했습니다.</p>}
-        </div>
-
-        <button
-          type="button"
-          onClick={setCurrentLocation}
-          className="fixed bottom-[68px] right-[20px] cursor-pointer"
-          disabled={loading}
-        >
-          <img src={GPSIcon} alt="GPS icon" className="w-[62px] h-[62px]" />
-        </button>
+        {!isLoading && isFetching && (
+          <div className="absolute top-3 right-3 z-[80]">
+            {/* <LoadingSpinner /> */}
+          </div>
+        )}
+        {isError && <p>에러가 발생했습니다.</p>}
       </div>
+
+      <button
+        type="button"
+        onClick={setCurrentLocation}
+        className="fixed bottom-[68px] right-[20px] cursor-pointer"
+        disabled={loading}
+      >
+        <img src={GPSIcon} alt="GPS icon" className="w-[62px] h-[62px]" />
+      </button>
     </>
   );
 };
