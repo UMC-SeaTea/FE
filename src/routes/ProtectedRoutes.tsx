@@ -20,10 +20,12 @@ import DiagnosisSpaceRecommendPage from '../pages/Diagnosis/DiagnosisSpaceRecomm
 import DiagnosisAdvancedLoading from '../pages/Diagnosis/DiagnosisAdvancedLoading';
 
 import MainLayout from '../layouts/MainLayout';
+import ErrorPage from '../pages/ErrorPage';
 
 export const protectedRoutes = [
   {
     element: <ProtectedWrapper />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <MainLayout />,

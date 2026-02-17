@@ -7,10 +7,10 @@ import { PublicWrapper } from './wrappers/AuthWrappers';
 export const publicRoutes = [
   {
     element: <PublicWrapper />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <MainLayout />,
-        errorElement: <ErrorPage />,
         children: [
           { path: '/login', element: <LoginPage /> },
           { path: '/login/start', element: <LoginStartPage /> },
