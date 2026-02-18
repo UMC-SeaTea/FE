@@ -49,7 +49,7 @@ const bgConfigMap: Record<string, BgConfig> = {
 
 const defaultConfig: BgConfig = {
   src: bgFloral,
-  position: 'center center',
+  position: 'center 85%',
 };
 
 interface PastResultProps {
