@@ -1,21 +1,55 @@
-import bgFloral from '../../assets/images/pastResultBgImages/bgFloral.jpg';
-import bgNutty from '../../assets/images/pastResultBgImages/bgNutty.jpg';
-import bgSweet from '../../assets/images/pastResultBgImages/bgSweet.jpg';
-import bgSpices from '../../assets/images/pastResultBgImages/bgSpices.jpg';
-import bgSmoky from '../../assets/images/pastResultBgImages/bgSmoky.jpg';
-import bgFruity from '../../assets/images/pastResultBgImages/bgFruity.jpg';
+import bgFloral from '../../assets/images/pastResultBgImages/bgFloral.png';
+import bgNutty from '../../assets/images/pastResultBgImages/bgNutty.png';
+import bgSweet from '../../assets/images/pastResultBgImages/bgSweet.png';
+import bgSpices from '../../assets/images/pastResultBgImages/bgSpices.png';
+import bgSmoky from '../../assets/images/pastResultBgImages/bgSmoky.png';
+import bgFruity from '../../assets/images/pastResultBgImages/bgFruity.png';
 import bgOceanic from '../../assets/images/pastResultBgImages/bgOceanic.jpg';
-import bgEarthy from '../../assets/images/pastResultBgImages/bgEarthy.jpg';
+import bgEarthy from '../../assets/images/pastResultBgImages/bgEarthy.png';
 
-const bgImageMap: Record<string, string> = {
-  floral: bgFloral,
-  nutty: bgNutty,
-  sweet: bgSweet,
-  spices: bgSpices,
-  smoky: bgSmoky,
-  fruity: bgFruity,
-  oceanic: bgOceanic,
-  earthy: bgEarthy,
+interface BgConfig {
+  src: string;
+  position: string;
+}
+
+const bgConfigMap: Record<string, BgConfig> = {
+  floral: {
+    src: bgFloral,
+    position: 'center 85%',
+  },
+  nutty: {
+    src: bgNutty,
+    position: 'center 78%',
+  },
+  sweet: {
+    src: bgSweet,
+    position: 'center 95%',
+  },
+  spices: {
+    src: bgSpices,
+    position: 'center 97%',
+  },
+  smoky: {
+    src: bgSmoky,
+    position: 'center 73%',
+  },
+  fruity: {
+    src: bgFruity,
+    position: 'center 85%',
+  },
+  oceanic: {
+    src: bgOceanic,
+    position: 'center 56%',
+  },
+  earthy: {
+    src: bgEarthy,
+    position: 'center 60%',
+  },
+};
+
+const defaultConfig: BgConfig = {
+  src: bgFloral,
+  position: 'center 85%',
 };
 
 interface PastResultProps {
@@ -24,7 +58,7 @@ interface PastResultProps {
 }
 
 const PastResult = ({ type, date }: PastResultProps) => {
-  const bgImage = bgImageMap[type] || bgFloral;
+  const config = bgConfigMap[type] || defaultConfig;
 
   return (
     <div
@@ -33,10 +67,10 @@ const PastResult = ({ type, date }: PastResultProps) => {
         backgroundImage: `
           linear-gradient(270deg, #000 16.87%, rgba(0, 0, 0, 0.00) 52.54%), 
           linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), 
-          url(${bgImage})
+          url(${config.src})
         `,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundPosition: config.position,
         backgroundRepeat: 'no-repeat',
       }}
     >
