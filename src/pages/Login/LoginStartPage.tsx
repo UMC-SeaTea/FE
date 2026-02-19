@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import loginLogo from '../../assets/logo.svg';
 import kakaoLogo from '../../assets/kakao_logo.svg';
+import { handleKakaoLogin } from '../../hooks/auth/useKakaoLogin';
 
 const LoginStartPage = () => {
   const navigate = useNavigate();
@@ -41,7 +42,10 @@ const LoginStartPage = () => {
               회원가입
             </div>
           </div>
-          <div className="flex justify-center items-center w-full h-[50px] pt-[12px] pb-[13px] bg-[#F4DD02] rounded-[25px] gap-[9px] cursor-pointer">
+          <div
+            onClick={handleKakaoLogin}
+            className="flex justify-center items-center w-full h-[50px] pt-[12px] pb-[13px] bg-[#F4DD02] rounded-[25px] gap-[9px] cursor-pointer"
+          >
             <img
               src={kakaoLogo}
               alt="kakao logo"

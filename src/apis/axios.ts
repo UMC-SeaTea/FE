@@ -67,12 +67,11 @@ axiosInstance.interceptors.request.use(
 );
 
 // Response Interceptor
-// axiosInstance의 response를 가로채어 401 에러 발생 시 refresh 토큰으로 accessToken을 재발급.
 axiosInstance.interceptors.response.use(
-  (response) => response, // 성공 시 응답 반환
+  (response) => response,
   async (error) => {
-    const status = error.response?.status;
-    const originalRequest: CustomInternalAxiosRequestConfig = error.config;
+    const originalRequest = error.config as CustomInternalAxiosRequestConfig;
+    const { status } = error.response || {};
 
     // status 없는 경우 처리
     if (!status) {
@@ -103,9 +102,8 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    // 403 에러, 접근 권한이 없는 경우
     if (status === 403) {
-      alert('접근 권한이 없습니다. 관리자에게 문의하세요.');
+      alert('접근 권한이 없습니다.');
       window.location.href = '/';
       return Promise.reject(error);
     }
