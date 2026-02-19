@@ -2,6 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { LOCAL_STORAGE_KEYS } from '../../constants/key';
 import { useDiagnosisHistory } from '../../hooks/diagnosis/useDiagnosisHistory';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { useEffect } from 'react';
 
 export const ProtectedWrapper = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.accessToken);
@@ -10,7 +11,11 @@ export const ProtectedWrapper = () => {
   if (!token) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
-  const { data, isLoading } = useDiagnosisHistory(1, 1);
+  const { data, isLoading, refetch } = useDiagnosisHistory(0, 1);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   if (isLoading) return <LoadingSpinner />;
 
