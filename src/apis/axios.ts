@@ -104,6 +104,8 @@ axiosInstance.interceptors.response.use(
 
     if (status === 403) {
       alert('접근 권한이 없습니다.');
+      window.location.href = '/';
+      return Promise.reject(error);
     }
 
     return Promise.reject(error);
