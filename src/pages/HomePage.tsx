@@ -20,7 +20,7 @@ const HomePage = () => {
     closeOnEsc: true,
   });
 
-  const { data, isLoading, isError } = useSpaceRecent({ size: 10 });
+  const { data, isLoading, isError } = useSpaceRecent({ size: 20 });
   const items = data?.result?.items ?? [];
 
   const rawCode = useMemberStore((s) => s.profile?.currentType?.code);
