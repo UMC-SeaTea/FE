@@ -49,7 +49,9 @@ const HomePage = () => {
             text="SeaTea"
             icon={menu}
             className="border-b border-[#000] relative z-[60]"
-            onClick={toggleSideBar}
+            onClick={() => {
+              toggleSideBar();
+            }}
           />
           <SideBarContainer open={open} onClose={closeSideBar} />
           {isLoading ? (

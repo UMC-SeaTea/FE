@@ -1,16 +1,16 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { LOCAL_STORAGE_KEYS } from '../../constants/key';
-import { useDiagnosisHistory } from '../../hooks/diagnosis/useDiagnosisHistory';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { useDiagnosisHistoryGuard } from '../../hooks/diagnosis/useDiagnosisHistory';
 
 export const ProtectedWrapper = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.accessToken);
   const location = useLocation();
 
   if (!token) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
+    return <Navigate to="/login/start" replace state={{ from: location }} />;
   }
-  const { data, isLoading } = useDiagnosisHistory(1, 1);
+  const { data, isLoading } = useDiagnosisHistoryGuard();
 
   if (isLoading) return <LoadingSpinner />;
 
