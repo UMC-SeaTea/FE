@@ -4,6 +4,7 @@ import FormInput from '../../components/common/FormInput';
 import { useAuth } from '../../hooks/auth/useAuth';
 import backMoveButton from '../../assets/backButton_brand.svg';
 import kakaoLoginButton from '../../assets/kakao_login.svg';
+import { handleKakaoLogin } from '../../hooks/auth/useKakaoLogin';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -69,11 +70,15 @@ const LoginPage = () => {
 
       <img
         src={kakaoLoginButton}
+        onClick={handleKakaoLogin}
         alt="kakao login button"
         className="w-[41px] h-[41px] mt-[22px] cursor-pointer mx-auto"
       />
 
-      <div className="mt-[12px] w-[110px] h-[21px] font-body text-body-3 text-gray-200 text-center mx-auto ">
+      <div
+        onClick={handleKakaoLogin}
+        className="mt-[12px] w-[110px] h-[21px] font-body text-body-3 text-gray-200 text-center mx-auto "
+      >
         카카오톡으로 로그인
       </div>
     </div>

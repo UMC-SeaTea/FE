@@ -47,6 +47,13 @@ export const uploadProfileImage = async (file: File) => {
   return response.data;
 };
 
+export const changeNickname = async (newNickname: string) => {
+  const response = await axiosInstance.patch('/api/users/me/change/nickname', {
+    newNickname,
+  });
+  return response.data;
+};
+
 export const checkEmailDuplicate = async (email: string) => {
   const response = await axiosInstance.get<CommonResponse<string>>(
     '/api/check/email',

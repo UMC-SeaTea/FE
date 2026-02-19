@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import type { SignUpRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
@@ -8,15 +8,20 @@ import {
   signUp,
   uploadProfileImage,
   checkNicknameDuplicate,
+  changeNickname,
 } from '../../apis/auth/auth';
 import { validateNickname } from '../../lib/utils';
 
 export const useSignUp = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  const [step, setStep] = useState<number>(1);
+  const isSocial = location.state?.isSocial;
+  const [step, setStep] = useState<number>(isSocial ? 3 : 1);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -32,6 +37,18 @@ export const useSignUp = () => {
   const [passwordEmptyError, setPasswordEmptyError] = useState('');
   const [confirmPasswordEmptyError, setConfirmPasswordEmptyError] =
     useState('');
+
+  useEffect(() => {
+    if (isSocial && location.state.socialData) {
+      const { nickname: socialNick, profileImage: socialImg } =
+        location.state.socialData;
+
+      if (socialNick) setNickname(socialNick);
+      if (socialImg) setPreviewUrl(socialImg);
+
+      setStep(3);
+    }
+  }, [isSocial, location.state]);
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isPwValid =
@@ -70,8 +87,13 @@ export const useSignUp = () => {
     },
     onSuccess: (response) => {
       if (response.isSuccess) {
-        alert('회원가입이 완료되었습니다! 로그인해주세요.');
-        navigate('/login/start');
+        if (isSocial) {
+          alert('회원가입이 완료되었습니다!');
+          navigate('/', { replace: true });
+        } else {
+          alert('회원가입이 완료되었습니다! 로그인해주세요.');
+          navigate('/login/start');
+        }
       } else {
         alert(response.message || '회원가입에 실패했습니다.');
       }
@@ -80,6 +102,23 @@ export const useSignUp = () => {
       const errorMsg =
         error.response?.data?.message || '회원가입 중 오류가 발생했습니다.';
       alert(errorMsg);
+    },
+  });
+
+  const socialCompleteMutation = useMutation({
+    mutationFn: async () => {
+      return await changeNickname(nickname);
+    },
+    onSuccess: (response) => {
+      if (response.isSuccess) {
+        alert('가입이 완료되었습니다! 환영합니다.');
+        navigate('/', { replace: true });
+      } else {
+        alert(response.message || '정보 설정에 실패했습니다.');
+      }
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      alert(error.response?.data?.message || '오류가 발생했습니다.');
     },
   });
 
@@ -153,9 +192,22 @@ export const useSignUp = () => {
     setStep(3);
   };
 
+  const handleBack = () => {
+    if (isSocial) {
+      if (step === 2) {
+        navigate('/login/start');
+        return;
+      }
+    }
+    step === 1 ? navigate(-1) : setStep(step - 1);
+  };
+
   const handleSubmit = async () => {
     if (!isNicknameValid) return;
-
+    if (isSocial) {
+      socialCompleteMutation.mutate();
+      return;
+    }
     try {
       const checkResponse = await checkNicknameDuplicate(nickname);
 
@@ -186,7 +238,7 @@ export const useSignUp = () => {
       emailEmptyError,
       passwordEmptyError,
       confirmPasswordEmptyError,
-      isPending: signUpMutation.isPending,
+      isPending: signUpMutation.isPending || socialCompleteMutation.isPending,
     },
     refs: { fileInputRef, cameraInputRef },
     computed: {
@@ -225,7 +277,7 @@ export const useSignUp = () => {
       },
       handleCheckEmail,
       handleNextStep1,
-      handleBack: () => (step === 1 ? navigate(-1) : setStep(step - 1)),
+      handleBack,
       setShowImgOption,
       setNickname,
       handleImageUpload,

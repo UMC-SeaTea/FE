@@ -1,9 +1,10 @@
 // src/pages/Diagnosis/SimpleDiagnosisPick.tsx
-import clsx from "clsx";
-import { useMemo, useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import clsx from 'clsx';
+import { useMemo, useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { postQuickDiagnosis } from "../../apis/diagnosis/diagnosis";
+import { postQuickDiagnosis } from '../../apis/diagnosis/diagnosis';
+import { useQueryClient } from '@tanstack/react-query';
 
 function shuffle<T>(arr: T[]) {
   const a = [...arr];
@@ -16,53 +17,54 @@ function shuffle<T>(arr: T[]) {
 
 type KeywordItem = { id: string; label: string };
 
-const BRAND = "#2F16FF";
-const SELECT_BG = "#F2F1FF";
+const BRAND = '#2F16FF';
+const SELECT_BG = '#F2F1FF';
 
 const LABEL_TO_CODE: Record<string, string> = {
-  감각적인: "SENSUAL",
-  부드러운: "SOFT",
-  슈가러시: "SUGAR_RUSH",
-  잔잔한: "TRANQUIL",
-  지평선: "HORIZON",
-  오가닉: "ORGANIC",
-  실험적: "EXPERIMENTAL",
-  취향존중: "TASTE_RESPECT",
-  시원한: "COOL",
-  새콤달콤: "SWEET_SOUR",
-  하이텐션: "HIGH_TENSION",
-  명상적: "MEDITATIVE",
-  리드미컬: "RHYTHMICAL",
-  예측불가: "UNPREDICTABLE",
-  셀프케어: "SELF_CARE",
-  새로운: "NEW",
-  미학적인: "AESTHETIC",
-  컴포트존: "COMFORT_ZONE",
+  감각적인: 'SENSUAL',
+  부드러운: 'SOFT',
+  슈가러시: 'SUGAR_RUSH',
+  잔잔한: 'TRANQUIL',
+  지평선: 'HORIZON',
+  오가닉: 'ORGANIC',
+  실험적: 'EXPERIMENTAL',
+  취향존중: 'TASTE_RESPECT',
+  시원한: 'COOL',
+  새콤달콤: 'SWEET_SOUR',
+  하이텐션: 'HIGH_TENSION',
+  명상적: 'MEDITATIVE',
+  리드미컬: 'RHYTHMICAL',
+  예측불가: 'UNPREDICTABLE',
+  셀프케어: 'SELF_CARE',
+  새로운: 'NEW',
+  미학적인: 'AESTHETIC',
+  컴포트존: 'COMFORT_ZONE',
 };
 
 export default function SimpleDiagnosisPick() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const KEYWORDS = useMemo(
     () => [
-      "감각적인",
-      "부드러운",
-      "슈가러시",
-      "잔잔한",
-      "지평선",
-      "오가닉",
-      "실험적",
-      "취향존중",
-      "시원한",
-      "새콤달콤",
-      "하이텐션",
-      "명상적",
-      "리드미컬",
-      "예측불가",
-      "셀프케어",
-      "새로운",
-      "미학적인",
-      "컴포트존",
+      '감각적인',
+      '부드러운',
+      '슈가러시',
+      '잔잔한',
+      '지평선',
+      '오가닉',
+      '실험적',
+      '취향존중',
+      '시원한',
+      '새콤달콤',
+      '하이텐션',
+      '명상적',
+      '리드미컬',
+      '예측불가',
+      '셀프케어',
+      '새로운',
+      '미학적인',
+      '컴포트존',
     ],
     []
   );
@@ -122,7 +124,7 @@ export default function SimpleDiagnosisPick() {
       .filter(Boolean);
 
     if (keywordCodes.length !== 3) {
-      alert("키워드 매핑이 누락됐어요.");
+      alert('키워드 매핑이 누락됐어요.');
       return;
     }
 
@@ -132,18 +134,20 @@ export default function SimpleDiagnosisPick() {
       const data = await postQuickDiagnosis({ keywords: keywordCodes });
 
       if (!data?.isSuccess) {
-        alert(data?.message ?? "간단진단 요청에 실패했어요.");
+        alert(data?.message ?? '간단진단 요청에 실패했어요.');
         return;
       }
 
       if (!data.result) {
-        alert("응답 결과가 비어있어요.");
+        alert('응답 결과가 비어있어요.');
         return;
       }
 
-      navigate("/diagnosis/result/loading", {
+      await queryClient.invalidateQueries({ queryKey: ['diagnosisHistory'] });
+
+      navigate('/diagnosis/result/loading', {
         state: {
-          source: "simple",
+          source: 'simple',
           simpleKeywords: selectedLabels,
           simpleKeywordCodes: keywordCodes,
           quickResult: data.result,
@@ -153,14 +157,14 @@ export default function SimpleDiagnosisPick() {
       const status = err?.response?.status;
 
       if (status === 401) {
-        alert("로그인이 필요해요.");
+        alert('로그인이 필요해요.');
       } else if (status === 403) {
-        alert("접근 권한이 없어요.");
+        alert('접근 권한이 없어요.');
       } else {
-        alert("서버 요청에 실패했어요.");
+        alert('서버 요청에 실패했어요.');
       }
 
-      console.error("Quick diagnosis API error:", err);
+      console.error('Quick diagnosis API error:', err);
     } finally {
       setIsSubmitting(false);
     }
@@ -219,9 +223,9 @@ export default function SimpleDiagnosisPick() {
                         type="button"
                         onClick={() => toggleKeyword(item.id)}
                         style={{
-                          backgroundColor: isOn ? SELECT_BG : "#FFFFFF",
-                          borderColor: isOn ? BRAND : "transparent",
-                          color: isOn ? BRAND : "#77767E",
+                          backgroundColor: isOn ? SELECT_BG : '#FFFFFF',
+                          borderColor: isOn ? BRAND : 'transparent',
+                          color: isOn ? BRAND : '#77767E',
                         }}
                         className="
                           h-[46px] px-[20px] rounded-[100px]
@@ -248,7 +252,7 @@ export default function SimpleDiagnosisPick() {
         <p className="mb-[14px] text-center font-body text-[14px] leading-[140%] tracking-[-0.02em] text-gray-100">
           지금 당신의 마음에 가장 가까운
           <br />
-          키워드{" "}
+          키워드{' '}
           <span className="font-body text-body-3 text-gray-100">3개</span>를
           선택해주세요.
         </p>
@@ -258,14 +262,14 @@ export default function SimpleDiagnosisPick() {
           onClick={handleSubmit}
           disabled={!canSubmit || isSubmitting}
           className={clsx(
-            "w-[350px] h-[53px] rounded-[25px]",
-            "font-body text-body-title transition-all duration-150",
+            'w-[350px] h-[53px] rounded-[25px]',
+            'font-body text-body-title transition-all duration-150',
             canSubmit && !isSubmitting
-              ? "bg-[#2F16FF] text-white border border-transparent cursor-pointer"
-              : "bg-transparent text-light-blue border border-light-blue cursor-not-allowed"
+              ? 'bg-[#2F16FF] text-white border border-transparent cursor-pointer'
+              : 'bg-transparent text-light-blue border border-light-blue cursor-not-allowed'
           )}
         >
-          {isSubmitting ? "진단 중..." : "결과 확인하기"}
+          {isSubmitting ? '진단 중...' : '결과 확인하기'}
         </button>
       </section>
     </main>
