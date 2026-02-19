@@ -18,13 +18,20 @@ const LoginPage = () => {
   const isFormValid = emailRegex.test(emailAdress) && password.length >= 8;
 
   const handleLoginClick = () => {
+    if (isLoggingIn) return;
     if (!isFormValid) return;
 
     login({ email: emailAdress, password: password });
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleLoginClick();
+      }}
+      className="w-full min-h-screen flex flex-col"
+    >
       <div className="flex justify-start mt-[87px] gap-[122px] w-[331px] h-[30px] ml-[22px] items-center">
         <img
           src={backMoveButton}
@@ -55,8 +62,8 @@ const LoginPage = () => {
       </div>
 
       <button
+        type="submit"
         disabled={!isFormValid || isLoggingIn}
-        onClick={handleLoginClick}
         className={`flex flex-col justify-center items-center self-stretch mx-auto w-[335px] h-[50px] mt-[32px] rounded-[25px] font-body text-body-title shrink-0 transition-colors ${
           isFormValid ? 'bg-brand text-white' : 'bg-gray-400 text-gray-200'
         }`}
@@ -81,7 +88,7 @@ const LoginPage = () => {
       >
         카카오톡으로 로그인
       </div>
-    </div>
+    </form>
   );
 };
 
