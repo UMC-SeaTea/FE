@@ -128,13 +128,13 @@ const MapPage = () => {
           {error && <p>{error}</p>}
         </div>
         {isLoading && (
-          <div className="absolute inset-0 z-[80] flex items-center justify-center bg-white/60">
+          <div className="absolute inset-0 pt-[280px] flex items-center justify-center">
             <LoadingSpinner />
           </div>
         )}
 
         {!isLoading && isFetching && (
-          <div className="absolute top-3 right-3 z-[80]">
+          <div className="absolute top-3 right-3 pt-[280px]">
             <LoadingSpinner />
           </div>
         )}
