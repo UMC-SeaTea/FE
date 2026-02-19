@@ -1,23 +1,20 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { LOCAL_STORAGE_KEYS } from '../../constants/key';
-import { useDiagnosisHistory } from '../../hooks/diagnosis/useDiagnosisHistory';
+import { useDiagnosisHisotryGuard } from '../../hooks/diagnosis/useDiagnosisHistory';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import { useEffect } from 'react';
 
 export const ProtectedWrapper = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.accessToken);
   const location = useLocation();
 
   if (!token) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
+    return <Navigate to="/login/start" replace state={{ from: location }} />;
   }
-  const { data, isLoading, refetch } = useDiagnosisHistory(0, 1);
+  const { data, isLoading, isFetching, isError } = useDiagnosisHisotryGuard();
 
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
+  if (isLoading || isFetching) return <LoadingSpinner />;
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <Outlet />;
 
   const hasDiagnosis = (data?.result?.content?.length ?? 0) > 0;
   const isOnDiagnosisFlow = location.pathname.startsWith('/diagnosis');
