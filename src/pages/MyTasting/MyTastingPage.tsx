@@ -89,6 +89,7 @@ const MyTastingPage = () => {
               badgeTextColor="text-white"
               title="휴식 유형 상세 진단"
               durationText="약 1-2분 소요"
+              navigateTo="/diagnosis/loading"
             />
             <PlaceTestCard
               badgeText="지금 바로"
@@ -96,6 +97,7 @@ const MyTastingPage = () => {
               badgeTextColor="text-brand"
               title="휴식 유형 간단 진단"
               durationText="10초 완성!"
+              navigateTo="/diagnosis/simple"
             />
           </div>
         </div>
