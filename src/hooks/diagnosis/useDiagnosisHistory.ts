@@ -10,7 +10,7 @@ export const useDiagnosisHistory = (page: number, size = 10) => {
   });
 };
 
-export const useDiagnosisHisotryGuard = () => {
+export const useDiagnosisHistoryGuard = () => {
   return useQuery<DiagnosisHistoryResponse>({
     queryKey: ['diagnosisHistory', 0, 10],
     queryFn: () => getDiagnosisHistory(0, 10),

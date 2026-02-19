@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { LOCAL_STORAGE_KEYS } from '../../constants/key';
-import { useDiagnosisHisotryGuard } from '../../hooks/diagnosis/useDiagnosisHistory';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { useDiagnosisHistoryGuard } from '../../hooks/diagnosis/useDiagnosisHistory';
 
 export const ProtectedWrapper = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.accessToken);
@@ -10,11 +10,9 @@ export const ProtectedWrapper = () => {
   if (!token) {
     return <Navigate to="/login/start" replace state={{ from: location }} />;
   }
-  const { data, isLoading, isFetching, isError } = useDiagnosisHisotryGuard();
+  const { data, isLoading } = useDiagnosisHistoryGuard();
 
-  if (isLoading || isFetching) return <LoadingSpinner />;
-
-  if (isError) return <Outlet />;
+  if (isLoading) return <LoadingSpinner />;
 
   const hasDiagnosis = (data?.result?.content?.length ?? 0) > 0;
   const isOnDiagnosisFlow = location.pathname.startsWith('/diagnosis');
