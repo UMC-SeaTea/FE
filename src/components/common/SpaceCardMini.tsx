@@ -6,11 +6,11 @@ import DeleteIcon from '../../assets/teaBag.svg';
 type SpaceCardMiniProps = {
   className?: string;
   name: string;
-  roadAddress: string;
+  roadAddress?: string;
   thumbnailImageUrl: string;
   spaceId: number;
 
-  isEditMode: boolean;
+  isEditMode?: boolean;
   isSelected?: boolean;
   onSelect?: (id: number) => void;
   onDelete?: (id: number) => void;
@@ -56,7 +56,9 @@ const SpaceCardMini = ({
       onClick={handleCardClick}
     >
       <img
-        src={thumbnailImageUrl?.startsWith('http') ? thumbnailImageUrl : ''}
+        src={
+          thumbnailImageUrl?.startsWith('http') ? thumbnailImageUrl : undefined
+        }
         alt={name}
         className="absolute inset-0 w-full h-full object-cover"
       />

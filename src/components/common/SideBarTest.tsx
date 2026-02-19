@@ -2,7 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import teatImg from '../../assets/images/tea.png';
 import ButtonMedium from '../Button/ButtonMedium';
 
-const SideBarTest = () => {
+type SideBarTestProps = {
+  pastDiagnosisDate?: number | null;
+};
+
+const SideBarTest = ({ pastDiagnosisDate }: SideBarTestProps) => {
   const navigate = useNavigate();
   return (
     <>
@@ -14,8 +18,12 @@ const SideBarTest = () => {
               <p className="font-body text-body-1 text-black">
                 마음의 상태가 바뀌었나요?
               </p>
-              <p className="w-[212px] font-body text-detail-4 text-gray-100">
-                가장 마지막으로 진단받은 날짜는 7일 전이에요
+              <p className="w-[212px] font-body text-detail-4 text-gray-100 whitespace-nowrap">
+                가장 마지막으로 진단받은 날짜는{' '}
+                {pastDiagnosisDate != null
+                  ? `${pastDiagnosisDate}일 전`
+                  : '0일 전'}
+                이에요
               </p>
             </div>
             {/* 티백 이미지 */}

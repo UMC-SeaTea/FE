@@ -37,7 +37,7 @@ const SearchBarTouched = ({
               type="text"
               value={value}
               placeholder="키워드를 검색해보세요"
-              className="text-center w-[271px] font-body text-body-2 outline-none
+              className="text-center pr-[24px] w-[271px] font-body text-body-2 outline-none
             placeholder:text-gray-200 focus:placeholder:text-transparent"
               onChange={(e) => onChange(e.target.value)}
             />

@@ -8,6 +8,7 @@ type PlaceTestCardProps = {
   badgeTextColor: string;
   title: string;
   durationText: string;
+  navigateTo?: string;
 };
 
 const PlaceTestCard = ({
@@ -16,6 +17,7 @@ const PlaceTestCard = ({
   badgeTextColor,
   title,
   durationText,
+  navigateTo,
 }: PlaceTestCardProps) => {
   const navigate = useNavigate();
 
@@ -49,7 +51,10 @@ const PlaceTestCard = ({
       </div>
 
       {/* 이동 버튼 */}
-      <button className="cursor-pointer" onClick={() => navigate('/diagnosis')}>
+      <button
+        className="cursor-pointer"
+        onClick={() => navigate(navigateTo ?? '')}
+      >
         <img src={moveButton} alt="moveButton" className="w-8 h-8" />
       </button>
     </div>

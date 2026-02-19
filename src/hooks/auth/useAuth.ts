@@ -4,6 +4,7 @@ import { login, getMyInfo } from '../../apis/auth/auth';
 import type { LoginRequest } from '../../types/auth/auth';
 import { AxiosError } from 'axios';
 import { LOCAL_STORAGE_KEYS } from '../../constants/key';
+import { axiosInstance } from '../../apis/axios';
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -14,10 +15,9 @@ export const useAuth = () => {
 
     onSuccess: (response) => {
       if (response.isSuccess && response.result) {
-        const { accessToken, refreshToken, id } = response.result;
+        const { accessToken, id } = response.result;
 
         localStorage.setItem(LOCAL_STORAGE_KEYS.accessToken, accessToken);
-        localStorage.setItem(LOCAL_STORAGE_KEYS.refreshToken, refreshToken);
 
         if (id) {
           localStorage.setItem(LOCAL_STORAGE_KEYS.memberId, String(id));
@@ -43,14 +43,20 @@ export const useAuth = () => {
     enabled: !!localStorage.getItem(LOCAL_STORAGE_KEYS.accessToken),
   });
 
-  const logout = () => {
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.refreshToken);
-    localStorage.removeItem('memberId');
+  const logout = async () => {
+    try {
+      await axiosInstance.post('/api/logout');
+    } catch (error) {
+      console.error('로그아웃 요청 실패:', error);
+    } finally {
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.accessToken);
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.memberId);
 
-    queryClient.removeQueries({ queryKey: ['user'] });
-    queryClient.clear();
-    navigate('/login/start');
+      queryClient.removeQueries({ queryKey: ['user'] });
+      queryClient.clear();
+
+      navigate('/login/start');
+    }
   };
 
   return {

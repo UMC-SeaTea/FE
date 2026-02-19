@@ -10,6 +10,7 @@ import {
   checkNicknameDuplicate,
   changeNickname,
 } from '../../apis/auth/auth';
+import { validateNickname } from '../../lib/utils';
 
 export const useSignUp = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ export const useSignUp = () => {
     /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+|~={}\[\]:;<>?,./]).{8,20}$/.test(
       password
     );
-  const isNicknameValid = /^[a-zA-Z0-9가-힣]{4,}$/.test(nickname);
+  const isNicknameValid = validateNickname(nickname);
 
   const signUpMutation = useMutation({
     mutationFn: async () => {

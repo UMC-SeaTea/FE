@@ -153,27 +153,31 @@ const MapDetailPage = () => {
               </div>
             </div>
             {/* 영업 시간 */}
-            <div className="flex items-center gap-[4px]">
-              <img
-                src={timeIcon}
-                alt="time icon"
-                className="w-[20px] h-[20px]"
-              />
-              <p className="h-[20px] flex items-center">
-                {data?.result?.openingHours}
-              </p>
-            </div>
+            {data?.result?.openingHours && (
+              <div className="flex items-center gap-[4px]">
+                <img
+                  src={timeIcon}
+                  alt="time icon"
+                  className="w-[20px] h-[20px]"
+                />
+                <p className="h-[20px] flex items-center">
+                  {data?.result?.openingHours}
+                </p>
+              </div>
+            )}
             {/* 전화 번호 */}
-            <div className="flex items-center gap-[4px]">
-              <img
-                src={phoneIcon}
-                alt="phone icon"
-                className="w-[20px] h-[20px]"
-              />
-              <p className="h-[20px] flex items-center text-[14px]">
-                {data?.result?.phone}
-              </p>
-            </div>
+            {data?.result?.phone && (
+              <div className="flex items-center gap-[4px]">
+                <img
+                  src={phoneIcon}
+                  alt="phone icon"
+                  className="w-[20px] h-[20px]"
+                />
+                <p className="h-[20px] flex items-center text-[14px]">
+                  {data?.result?.phone}
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <button

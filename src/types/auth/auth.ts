@@ -11,7 +11,6 @@ export interface LoginResult {
   role: string;
   profile_image: string | null;
   accessToken: string;
-  refreshToken: string;
 }
 
 export interface SignUpRequest {

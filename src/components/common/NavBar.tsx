@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import searchIcon from '../../assets/search.svg';
+import { useNavigate } from 'react-router-dom';
 
 type Variant = '1' | '2' | '3' | '4' | '5' | '6';
 
@@ -52,6 +53,7 @@ const VARIANT_STYLE: Record<
 
 const NavBar = ({ variant, text, icon, className, onClick }: ButtonProps) => {
   const styles = VARIANT_STYLE[variant || '1'];
+  const navigate = useNavigate();
 
   return (
     <>
@@ -76,6 +78,7 @@ const NavBar = ({ variant, text, icon, className, onClick }: ButtonProps) => {
               src={searchIcon}
               alt="search"
               className={clsx('cursor-pointer', 'w-[42px]', 'h-[42px]')}
+              onClick={() => navigate('/map/search')}
             />
           )}
         </div>

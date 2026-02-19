@@ -136,7 +136,7 @@ const Map = ({ center, onBoundsChange, pins = [] }: Props) => {
     pinsRef.current = markers;
   }, [pins]);
 
-  return <div id="map" className="w-[375px] h-[770px]" />;
+  return <div id="map" className="w-full h-full" />;
 };
 
 export default Map;
